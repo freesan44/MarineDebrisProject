@@ -4,11 +4,22 @@ const translations = {
     languageLabel: '言語',
     heroTitle: '海洋ゴミが日本の海洋環境に与える影響',
     heroSubtitle: '浮遊プラスチック、漁具、ペットボトルなど、日本沿岸で増え続けるゴミと海の生きものへの負担を、学びながら体験します。',
-    introTitle: 'インタラクティブで学ぶ',
-    introText: 'このページでは、アニメーション、ドラッグ＆ドロップ、データビジュアライゼーションを使って、日本周辺の海洋ゴミ問題を体験できます。',
+    startButton: '体験を開始する',
+    introTitle: '海洋ゴミの発生源と影響',
+    introText: '日本沿岸でよく見られる海洋ゴミの種類と生態系への破壊的な影響について学びます。',
+    homeTabsTitle: '学習モジュール',
+    homeTabsDescription: '下のタブでテーマ別ページを切り替えます。',
+    tabIntro: '概要',
+    tabEmpathy: '映像',
+    tabGame: '清掃ゲーム',
+    tabCleanup: '参加変化',
+    tabChart: 'データ',
+    tabMap: '地図',
+    tabImpact: '影響',
+    tabActions: '行動',
     gameTitle: '海ごみ清掃ゲーム',
-    gameDescription: 'ゴミを正しい回収先にドラッグすると、海の健康度が回復します。',
-    gameInstructions: 'ゴミを「資源回収ボート」または「一般ゴミボート」にドラッグしてください。',
+    gameDescription: '毎回表示されるごみを見て、正しい回収先ボタンを選ぶと海の健康度が回復します。',
+    gameInstructions: '毎回表示されるごみを見て、「資源回収ボート」か「一般ゴミボート」をクリックしてください。',
     recycleBoat: '資源回収ボート',
     trashBoat: '一般ゴミボート',
     debrisPlastic: 'プラスチックボトル',
@@ -42,15 +53,30 @@ const translations = {
     instructionCorrect: '✅ {item} — スコア +{score}。合計スコア: {totalScore}。',
     instructionWrong: '❌ {item} ではありません。もう一度試してみてください。',
     instructionUnknown: '不明なゴミです。正しい場所に戻してください。',
-    empathyTitle: '真实感强的日本海洋画面',
-    empathyDescription: '探索日本沿岸真实影像，从视觉上引发共鸣，理解海洋保护为何如此重要。',
+    empathyTitle: '視覚的共感：リアルな海洋画像',
+    empathyDescription: '日本沿岸の実際の画像を通じて感情的な共感を呼び起こし、海洋保護の重要性を理解します。',
     imageCaption1: '北海道の漁村と漂着ゴミ',
     imageCaption2: '沖縄近海の珊瑚と海の生き物',
     imageCaption3: '地域漁業と海洋環境のつながり',
+    officialImageNote: '画像出典：環境省（公開ページ）',
     impactInteractiveTitle: '親手で参加し、変化を観察する',
     impactInteractiveDescription: '清掃ごとに水質と生態が変化し、「手で修復する」体験ができます。',
     beforeLabel: '清掃前',
     afterLabel: '清掃後',
+    impactPhoto1: '海岸清掃の現場（環境省）',
+    impactPhoto2: '国立公園海岸の清掃前後比較',
+    impactPhoto3: '海ごみの回収と分別',
+    cleanupImageNote: '以上の写真は環境省地方環境事務所の公開資料です。',
+    gameDashboardTitle: '進捗ダッシュボード',
+    gameScoreLabel: 'スコア',
+    gameCorrectLabel: '正解数',
+    gameRemainingLabel: '残りごみ',
+    gameAccuracyLabel: '正答率',
+    gameProgressText: '完了: {percent}%',
+    restartGameButton: 'もう一度プレイ',
+    gameStep1: '表示されたごみの種類を確認し、正しい回収ボートをクリックします。',
+    gameStep2: '正解で加点。誤りは減点なしで再挑戦できます。',
+    gameStep3: 'すべて清掃すると水質回復ゲージが最大になります。',
     statusText: '水質回復: {percent}%',
     shareButton: '海の守りを共有する',
     shareSuccess: '共有テキストをクリップボードにコピーしました！',
@@ -61,11 +87,22 @@ const translations = {
     languageLabel: '语言',
     heroTitle: '海洋垃圾对日本沿海环境的影响',
     heroSubtitle: '通过浮游塑料、渔具、饮料瓶等实例，体验不断增加的垃圾对海洋生命的负担。',
-    introTitle: '互动式学习',
-    introText: '本页面使用动画、拖放和数据可视化，带您体验日本周边海洋垃圾问题。',
+    startButton: '开始体验',
+    introTitle: '海洋垃圾来源与危害',
+    introText: '了解日本沿岸常见的海洋垃圾类型及其对生态环境的破坏性影响。',
+    homeTabsTitle: '学习模块',
+    homeTabsDescription: '通过下方标签切换不同主题页面。',
+    tabIntro: '概览',
+    tabEmpathy: '影像',
+    tabGame: '清理游戏',
+    tabCleanup: '参与变化',
+    tabChart: '数据',
+    tabMap: '地图',
+    tabImpact: '影响',
+    tabActions: '行动',
     gameTitle: '海洋垃圾清理游戏',
-    gameDescription: '将垃圾拖到正确回收区，可让海洋健康度恢复。',
-    gameInstructions: '请把垃圾拖到“资源回收船”或“一般垃圾船”。',
+    gameDescription: '每次查看当前垃圾并点击正确回收船，可让海洋健康度恢复。',
+    gameInstructions: '每次显示一件垃圾，请点击“资源回收船”或“一般垃圾船”。',
     recycleBoat: '资源回收船',
     trashBoat: '一般垃圾船',
     debrisPlastic: '塑料瓶',
@@ -99,15 +136,30 @@ const translations = {
     instructionCorrect: '✅ {item} — 得分 +{score}。当前总分: {totalScore}。',
     instructionWrong: '❌ {item} 放错了，请再试一次。',
     instructionUnknown: '未知垃圾。请放回正确位置。',
-    empathyTitle: '真实感强的日本海洋画面',
-    empathyDescription: '探索日本沿岸真实影像，从视觉上引发共鸣，理解海洋保护为何如此重要。',
+    empathyTitle: '视觉共情：真实海洋画面',
+    empathyDescription: '通过日本沿岸的真实影像，引发情感共鸣，理解海洋保护的重要性。',
     imageCaption1: '北海道的渔村与漂流垃圾',
     imageCaption2: '冲绳珊瑚礁与海洋生物',
     imageCaption3: '渔业与海洋环境的联系',
+    officialImageNote: '图片来源：日本环境省（公開資料）',
     impactInteractiveTitle: '亲手参与，观察变化',
     impactInteractiveDescription: '每次清理动作都会改变水质和生机，体验“手动修复”的过程。',
     beforeLabel: '清理前',
     afterLabel: '清理后',
+    impactPhoto1: '海岸清理作业现场（环境省）',
+    impactPhoto2: '国立公园海岸清理前后对比',
+    impactPhoto3: '回收海洋垃圾与分类处理',
+    cleanupImageNote: '以上照片来自日本环境省地方环境事务所公开资料。',
+    gameDashboardTitle: '清理进度面板',
+    gameScoreLabel: '得分',
+    gameCorrectLabel: '正确投放',
+    gameRemainingLabel: '剩余垃圾',
+    gameAccuracyLabel: '正确率',
+    gameProgressText: '已完成: {percent}%',
+    restartGameButton: '再来一局',
+    gameStep1: '先看当前垃圾类别，再点击对应回收船。',
+    gameStep2: '投放正确会加分，错误不会扣分但会提示重试。',
+    gameStep3: '全部清理完成后，水质恢复条将提升到最高。',
     statusText: '水质恢复: {percent}%',
     shareButton: '分享你的海洋守护成果',
     shareSuccess: '已复制分享内容！',
@@ -118,11 +170,22 @@ const translations = {
     languageLabel: 'Language',
     heroTitle: 'Marine debris impacts on Japan’s ocean environment',
     heroSubtitle: 'Experience how floating plastics, fishing gear, and bottles burden marine life around Japan’s coasts.',
-    introTitle: 'Interactive learning',
-    introText: 'This page uses animation, drag-and-drop, and data visualization to explore marine debris around Japan.',
+    startButton: 'Start Experience',
+    introTitle: 'Marine debris sources and impacts',
+    introText: 'Learn about common types of marine debris along Japan’s coasts and their destructive effects on ecosystems.',
+    homeTabsTitle: 'Learning Modules',
+    homeTabsDescription: 'Switch topic pages quickly with the tabs below.',
+    tabIntro: 'Overview',
+    tabEmpathy: 'Imagery',
+    tabGame: 'Cleanup Game',
+    tabCleanup: 'Hands-on',
+    tabChart: 'Data',
+    tabMap: 'Map',
+    tabImpact: 'Impact',
+    tabActions: 'Actions',
     gameTitle: 'Marine debris cleanup game',
-    gameDescription: 'Drag trash to the correct collection boat to restore ocean health.',
-    gameInstructions: 'Drag debris to the “Recycle Boat” or “Trash Boat”.',
+    gameDescription: 'Review each debris item and click the correct collection boat to restore ocean health.',
+    gameInstructions: 'For each item shown, click “Recycle Boat” or “Trash Boat”.',
     recycleBoat: 'Recycle Boat',
     trashBoat: 'Trash Boat',
     debrisPlastic: 'Plastic bottle',
@@ -156,15 +219,30 @@ const translations = {
     instructionCorrect: '✅ {item} — +{score} points. Total: {totalScore}.',
     instructionWrong: '❌ {item} is not correct. Try again.',
     instructionUnknown: 'Unknown debris. Put it back in the correct place.',
-    empathyTitle: 'Visually powerful Japanese ocean scenes',
-    empathyDescription: 'Explore coastal imagery from Japan to build emotional resonance and support marine protection.',
+    empathyTitle: 'Visual Empathy: Authentic Ocean Imagery',
+    empathyDescription: 'Experience real coastal images from Japan to evoke emotional connection and understand the importance of ocean protection.',
     imageCaption1: 'Fishing village with coastal debris',
     imageCaption2: 'Coral life near Okinawa',
     imageCaption3: 'Fishing communities and ocean health',
+    officialImageNote: 'Image source: Ministry of the Environment, Japan (public pages).',
     impactInteractiveTitle: 'Participate and observe change',
     impactInteractiveDescription: 'Each cleanup action changes water quality and marine life, showing restoration in real time.',
     beforeLabel: 'Before cleanup',
     afterLabel: 'After cleanup',
+    impactPhoto1: 'On-site beach cleanup operations (MOE Japan)',
+    impactPhoto2: 'Before/after cleanup comparison in a national park',
+    impactPhoto3: 'Collected marine debris and sorting process',
+    cleanupImageNote: 'Photos above are from public materials by MOE Japan regional offices.',
+    gameDashboardTitle: 'Cleanup dashboard',
+    gameScoreLabel: 'Score',
+    gameCorrectLabel: 'Correct drops',
+    gameRemainingLabel: 'Remaining',
+    gameAccuracyLabel: 'Accuracy',
+    gameProgressText: 'Completed: {percent}%',
+    restartGameButton: 'Play Again',
+    gameStep1: 'Check the debris type shown, then click the right collection boat.',
+    gameStep2: 'Correct moves add points; incorrect moves let you retry.',
+    gameStep3: 'When all debris is cleaned, water restoration reaches maximum.',
     statusText: 'Water quality restored: {percent}%',
     shareButton: 'Share your ocean protection',
     shareSuccess: 'Share text copied to clipboard!',
@@ -273,9 +351,26 @@ const statusFill = document.getElementById('statusFill');
 const statusText = document.getElementById('statusText');
 const shareButton = document.getElementById('shareButton');
 const impactVisual = document.getElementById('impactVisual');
+const startButton = document.getElementById('startExperience');
+const gameScoreEl = document.getElementById('gameScore');
+const gameCorrectEl = document.getElementById('gameCorrect');
+const gameRemainingEl = document.getElementById('gameRemaining');
+const gameAccuracyEl = document.getElementById('gameAccuracy');
+const gameProgressFill = document.getElementById('gameProgressFill');
+const gameProgressText = document.getElementById('gameProgressText');
+const currentDebrisCard = document.getElementById('currentDebrisCard');
+const choiceButtons = document.querySelectorAll('.choice-button');
+const restartGameButton = document.getElementById('restartGameButton');
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabPages = document.querySelectorAll('.tab-page');
 let currentLanguage = 'ja';
 let totalScore = 0;
 let selectedRegion = null;
+let totalAttempts = 0;
+let correctAttempts = 0;
+let totalDebrisCount = 0;
+let gameQueue = [];
+let currentDebrisType = null;
 
 function translatePage() {
   document.documentElement.lang = currentLanguage;
@@ -293,6 +388,10 @@ function translatePage() {
   updateRegionCards();
   drawChart();
   updateInstructions(translations[currentLanguage].gameInstructions, true);
+  if (currentDebrisType && currentDebrisCard) {
+    currentDebrisCard.textContent = getLocalizedLabel(debrisPieces[currentDebrisType].labelKey);
+  }
+  updateGameDashboard();
 }
 
 function formatTemplate(template, values) {
@@ -300,6 +399,7 @@ function formatTemplate(template, values) {
 }
 
 function updateInstructions(message, success = true) {
+  if (!gameInstructionsElement) return;
   gameInstructionsElement.textContent = message;
   gameInstructionsElement.style.color = success ? 'var(--accent-strong)' : 'var(--danger)';
 }
@@ -315,6 +415,7 @@ function getWeightColor(weight) {
 }
 
 function updateRegionCards() {
+  if (!regionCards) return;
   regionCards.innerHTML = '';
   regionMapData.forEach(region => {
     const card = document.createElement('article');
@@ -350,6 +451,87 @@ function updateCleanupImpact() {
   }
 }
 
+function updateGameDashboard() {
+  const remaining = currentDebrisType ? gameQueue.length + 1 : gameQueue.length;
+  const cleaned = Math.max(0, totalDebrisCount - remaining);
+  const completion = totalDebrisCount ? Math.round((cleaned / totalDebrisCount) * 100) : 0;
+  const accuracy = totalAttempts ? Math.round((correctAttempts / totalAttempts) * 100) : 0;
+
+  if (gameScoreEl) gameScoreEl.textContent = String(totalScore);
+  if (gameCorrectEl) gameCorrectEl.textContent = String(correctAttempts);
+  if (gameRemainingEl) gameRemainingEl.textContent = String(remaining);
+  if (gameAccuracyEl) gameAccuracyEl.textContent = `${accuracy}%`;
+  if (gameProgressFill) gameProgressFill.style.width = `${completion}%`;
+  if (gameProgressText) {
+    gameProgressText.textContent = formatTemplate(translations[currentLanguage].gameProgressText, { percent: completion });
+  }
+}
+
+function showCurrentDebris() {
+  if (!currentDebrisCard) return;
+  currentDebrisType = gameQueue.shift() || null;
+  if (!currentDebrisType) {
+    currentDebrisCard.textContent = '✅';
+    choiceButtons.forEach(btn => { btn.disabled = true; });
+    updateInstructions(
+      formatTemplate(translations[currentLanguage].gameProgressText, { percent: 100 }),
+      true
+    );
+    updateGameDashboard();
+    return;
+  }
+  const debris = debrisPieces[currentDebrisType];
+  currentDebrisCard.textContent = getLocalizedLabel(debris.labelKey);
+  choiceButtons.forEach(btn => { btn.disabled = false; });
+  updateGameDashboard();
+}
+
+function setupSortingGame() {
+  gameQueue = Object.keys(debrisPieces);
+  totalDebrisCount = gameQueue.length;
+  totalScore = 0;
+  totalAttempts = 0;
+  correctAttempts = 0;
+  showCurrentDebris();
+  updateCleanupImpact();
+  updateGameDashboard();
+}
+
+function setupChoiceButtons() {
+  choiceButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      if (!currentDebrisType) return;
+      handleChoice(button.dataset.target);
+    });
+  });
+}
+
+function setupRestartGameButton() {
+  if (!restartGameButton) return;
+  restartGameButton.addEventListener('click', () => {
+    setupSortingGame();
+    updateInstructions(translations[currentLanguage].gameInstructions, true);
+  });
+}
+
+function setupTabs() {
+  if (!tabButtons.length || !tabPages.length) return;
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.pageTarget;
+      tabButtons.forEach(item => {
+        const active = item === btn;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      tabPages.forEach(page => {
+        page.classList.toggle('active', page.id === target);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+}
+
 function setupShareButton() {
   if (!shareButton) return;
   shareButton.addEventListener('click', async () => {
@@ -360,6 +542,21 @@ function setupShareButton() {
     } catch (error) {
       alert(translations[currentLanguage].shareFallback);
     }
+  });
+}
+
+function setupStartButton() {
+  if (!startButton) return;
+  startButton.addEventListener('click', () => {
+    const oceanScene = document.querySelector('.ocean-scene');
+    if (oceanScene) {
+      oceanScene.classList.remove('polluted');
+      oceanScene.classList.add('clean');
+    }
+    startButton.style.display = 'none';
+    setTimeout(() => {
+      window.location.href = new URL('../empathy/index.html', window.location.href).href;
+    }, 450);
   });
 }
 
@@ -414,8 +611,9 @@ function renderChartBars() {
 }
 
 function drawChart() {
-  updateChartLabels();
   const canvas = document.getElementById('debrisChart');
+  if (!canvas) return;
+  updateChartLabels();
   const ctx = canvas.getContext('2d');
   const width = canvas.width;
   const height = canvas.height;
@@ -458,67 +656,46 @@ function drawChart() {
   renderChartBars();
 }
 
-function setupDragAndDrop() {
-  const draggableItems = document.querySelectorAll('.draggable');
-  const targets = document.querySelectorAll('.pickup-zone');
+function handleChoice(target) {
+  const type = currentDebrisType;
+  const debris = debrisPieces[type];
+  const correct = debris?.target === target;
+  const itemLabel = getLocalizedLabel(debris?.labelKey || '');
+  totalAttempts += 1;
 
-  draggableItems.forEach(item => {
-    item.addEventListener('dragstart', event => {
-      event.dataTransfer.setData('text/plain', item.dataset.type);
-      event.dataTransfer.effectAllowed = 'move';
-    });
-  });
+  if (!debris) {
+    updateInstructions(translations[currentLanguage].instructionUnknown, false);
+    return;
+  }
 
-  targets.forEach(zone => {
-    zone.addEventListener('dragover', event => {
-      event.preventDefault();
-      zone.classList.add('active');
-    });
-
-    zone.addEventListener('dragleave', () => {
-      zone.classList.remove('active');
-    });
-
-    zone.addEventListener('drop', event => {
-      event.preventDefault();
-      zone.classList.remove('active');
-      const type = event.dataTransfer.getData('text/plain');
-      const debris = debrisPieces[type];
-      const correct = debris?.target === zone.dataset.target;
-      const itemLabel = getLocalizedLabel(debris?.labelKey || '');
-
-      if (!debris) {
-        updateInstructions(translations[currentLanguage].instructionUnknown, false);
-        return;
-      }
-
-      if (correct) {
-        totalScore += debris.score;
-        updateInstructions(
-          formatTemplate(translations[currentLanguage].instructionCorrect, {
-            item: itemLabel,
-            score: debris.score,
-            totalScore
-          }),
-          true
-        );
-        const card = document.querySelector(`.draggable[data-type="${type}"]`);
-        card?.remove();
-        updateCleanupImpact();
-      } else {
-        updateInstructions(
-          formatTemplate(translations[currentLanguage].instructionWrong, {
-            item: itemLabel
-          }),
-          false
-        );
-      }
-    });
-  });
+  if (correct) {
+    totalScore += debris.score;
+    correctAttempts += 1;
+    updateInstructions(
+      formatTemplate(translations[currentLanguage].instructionCorrect, {
+        item: itemLabel,
+        score: debris.score,
+        totalScore
+      }),
+      true
+    );
+    showCurrentDebris();
+    updateCleanupImpact();
+    updateGameDashboard();
+  } else {
+    updateInstructions(
+      formatTemplate(translations[currentLanguage].instructionWrong, {
+        item: itemLabel
+      }),
+      false
+    );
+    updateGameDashboard();
+  }
 }
 
 function resizeCanvas() {
   const canvas = document.getElementById('debrisChart');
+  if (!canvas) return;
   const ratio = window.devicePixelRatio || 1;
   const displayedWidth = canvas.clientWidth;
   canvas.width = displayedWidth * ratio;
@@ -527,14 +704,17 @@ function resizeCanvas() {
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 }
 
-languageSelect.addEventListener('change', event => {
-  currentLanguage = event.target.value;
-  translatePage();
-  setMapColors();
-  if (selectedRegion) {
-    showRegionDetail(selectedRegion);
-  }
-});
+if (languageSelect) {
+  languageSelect.addEventListener('change', event => {
+    currentLanguage = event.target.value;
+    localStorage.setItem('marineDebrisLanguage', currentLanguage);
+    translatePage();
+    setMapColors();
+    if (selectedRegion) {
+      showRegionDetail(selectedRegion);
+    }
+  });
+}
 
 regionShapes.forEach(shape => {
   shape.addEventListener('mouseenter', () => {
@@ -568,15 +748,23 @@ window.addEventListener('resize', () => {
 });
 
 function init() {
-  currentLanguage = navigator.language.startsWith('zh') ? 'zh' : navigator.language.startsWith('en') ? 'en' : 'ja';
-  languageSelect.value = currentLanguage;
+  const savedLanguage = localStorage.getItem('marineDebrisLanguage');
+  currentLanguage = savedLanguage || (navigator.language.startsWith('zh') ? 'zh' : navigator.language.startsWith('en') ? 'en' : 'ja');
+  if (languageSelect) {
+    languageSelect.value = currentLanguage;
+  }
   translatePage();
   setMapColors();
-  setupDragAndDrop();
+  setupSortingGame();
+  setupChoiceButtons();
+  setupRestartGameButton();
+  setupTabs();
   setupShareButton();
+  setupStartButton();
   resizeCanvas();
   drawChart();
   updateCleanupImpact();
+  updateGameDashboard();
   if (!selectedRegion && regionMapData.length > 0) {
     selectRegion(regionMapData[0]);
   }

@@ -12,6 +12,12 @@
   --map-low: #c9f3ff;
   --map-medium: #7dd0ff;
   --map-high: #0b6e99;
+  /* 新增污染与清洁对比色 */
+  --clean-bg: #e9f5ff;
+  --polluted-bg: #d3d3d3; /* 灰浊色 */
+  --coral-orange: #ff7f50;
+  --seaweed-green: #2e8b57;
+  --transparent-white: rgba(255, 255, 255, 0.8);
 }
 
 * {
@@ -24,16 +30,57 @@ body {
   background: radial-gradient(circle at top, #cef0ff 0%, #e9f5ff 40%, #f7fbff 100%);
   color: var(--text);
   line-height: 1.65;
+  padding-top: 96px;
 }
 
 img {
   max-width: 100%;
 }
 
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  backdrop-filter: blur(8px);
+  background: rgba(247, 252, 255, 0.88);
+  border-bottom: 1px solid rgba(11, 110, 153, 0.14);
+}
+
+.top-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.brand {
+  color: var(--accent-strong);
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.top-tab-nav {
+  flex: 1;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  padding-bottom: 0.15rem;
+}
+
+.top-tab-nav .tab-btn {
+  white-space: nowrap;
+}
+
 header.hero {
   position: relative;
   overflow: hidden;
-  padding: 4rem 1.5rem 3rem;
+  padding: 2.1rem 1.5rem 1.6rem;
   text-align: center;
 }
 
@@ -47,7 +94,7 @@ header.hero {
 
 .hero-content {
   position: relative;
-  max-width: 900px;
+  max-width: 840px;
   margin: 0 auto;
   z-index: 1;
 }
@@ -100,9 +147,26 @@ h1 {
 
 .hero p {
   margin: 1.25rem auto 0;
-  max-width: 720px;
+  max-width: 660px;
   color: var(--muted);
+  font-size: 1rem;
+}
+
+.cta-button {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 50px;
   font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background: var(--accent-strong);
 }
 
 .ocean-scene {
@@ -110,6 +174,15 @@ h1 {
   margin: 3rem auto 0;
   width: min(960px, 100%);
   height: 280px;
+  transition: background 2s ease;
+}
+
+.ocean-scene.polluted {
+  background: linear-gradient(to bottom, var(--polluted-bg) 0%, #a9a9a9 100%);
+}
+
+.ocean-scene.clean {
+  background: linear-gradient(to bottom, var(--clean-bg) 0%, #87ceeb 100%);
 }
 
 .wave {
@@ -172,10 +245,42 @@ main {
 .section {
   max-width: 1200px;
   margin: 0 auto 2.5rem;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
-  padding: 2rem;
+  padding: 1.6rem;
   box-shadow: var(--shadow);
+}
+
+.tab-nav {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  border: 1px solid rgba(11, 110, 153, 0.2);
+  background: #fff;
+  color: var(--accent-strong);
+  border-radius: 999px;
+  padding: 0.5rem 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.tab-page {
+  display: none;
+}
+
+.tab-page.active {
+  display: block;
 }
 
 .section-head h2 {
@@ -194,6 +299,11 @@ main {
   gap: 1.25rem;
 }
 
+.game-layout {
+  display: grid;
+  gap: 1rem;
+}
+
 .game-instructions {
   padding: 1rem 1.25rem;
   border-radius: 16px;
@@ -201,27 +311,19 @@ main {
   border: 1px solid rgba(11, 110, 153, 0.16);
 }
 
-.pickup-zone {
-  min-height: 90px;
+.sorting-panel {
   padding: 1rem;
-  border: 2px dashed rgba(11, 110, 153, 0.4);
   border-radius: 18px;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.9);
-  font-weight: 700;
-  color: var(--accent-strong);
-}
-
-.pickup-zone.active {
-  border-color: var(--accent);
-  background: rgba(14, 126, 175, 0.08);
-}
-
-.debris-list {
+  background: #f4fbff;
+  border: 1px solid rgba(11, 110, 153, 0.16);
   display: grid;
   gap: 0.9rem;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.current-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 .debris-card {
@@ -230,12 +332,98 @@ main {
   background: linear-gradient(180deg, #f7fbff 0%, #e8f3fb 100%);
   border: 1px solid rgba(11, 110, 153, 0.12);
   box-shadow: 0 14px 30px rgba(12, 76, 114, 0.08);
-  cursor: grab;
+  min-height: 70px;
+  display: grid;
+  place-items: center;
   font-weight: 700;
 }
 
-.debris-card:active {
-  cursor: grabbing;
+.choice-buttons {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.choice-button {
+  border: none;
+  border-radius: 14px;
+  padding: 0.85rem 0.9rem;
+  background: linear-gradient(135deg, var(--accent), #0e85b8);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.choice-button[data-target="trash"] {
+  background: linear-gradient(135deg, #d64f4f, #ef7a48);
+}
+
+.choice-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.restart-button {
+  border: 1px solid rgba(11, 110, 153, 0.26);
+  background: #fff;
+  color: var(--accent-strong);
+  border-radius: 999px;
+  padding: 0.65rem 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.game-dashboard {
+  border-radius: 20px;
+  border: 1px solid rgba(11, 110, 153, 0.16);
+  background: #f6fbff;
+  padding: 1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.game-dashboard h3 {
+  margin: 0;
+  color: var(--accent-strong);
+}
+
+.game-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.game-metrics p {
+  margin: 0;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(11, 110, 153, 0.12);
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.game-metrics strong {
+  font-size: 1.05rem;
+  color: var(--accent-strong);
+}
+
+.game-progress p {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.game-steps {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.92rem;
 }
 
 .chart-panel {
@@ -271,6 +459,12 @@ main {
   background: #f7fbff;
 }
 
+.image-source {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .impact-interactive {
   display: grid;
   gap: 1rem;
@@ -298,14 +492,14 @@ main {
 
 .impact-stage.before {
   background: linear-gradient(180deg, rgba(30, 55, 95, 0.9), rgba(15, 34, 64, 0.8));
-  background-image: url('https://source.unsplash.com/featured/800x600/?pollution,sea');
+  background-image: url('https://chubu.env.go.jp/content/900118206.jpg');
   background-size: cover;
   background-position: center;
 }
 
 .impact-stage.after {
   background: linear-gradient(180deg, rgba(12, 116, 163, 0.85), rgba(17, 123, 148, 0.72));
-  background-image: url('https://source.unsplash.com/featured/800x600/?clean,beach');
+  background-image: url('https://chubu.env.go.jp/content/900118207.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -362,6 +556,36 @@ main {
 .share-button:hover {
   transform: translateY(-1px);
   box-shadow: 0 14px 28px rgba(11, 110, 153, 0.22);
+}
+
+.impact-gallery {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.impact-photo-card {
+  margin: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(11, 110, 153, 0.14);
+  background: #fff;
+}
+
+.impact-photo-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.impact-photo-card figcaption {
+  padding: 0.75rem 0.85rem;
+  background: #f7fbff;
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 600;
 }
 
 .chart-canvas-wrapper {
@@ -675,13 +899,14 @@ footer {
 }
 
 @media (min-width: 900px) {
-  .game-board {
-    grid-template-columns: 1fr 1fr;
+  .game-layout {
+    grid-template-columns: 1.15fr 0.85fr;
     align-items: start;
   }
 
-  .pickup-zone {
-    min-height: 140px;
+  .game-board {
+    grid-template-columns: 1fr;
+    align-items: start;
   }
 
   .map-panel {
@@ -693,5 +918,133 @@ footer {
 @media (min-width: 1100px) {
   .impact-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .top-nav-inner {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .brand {
+    width: 100%;
+    text-align: center;
+  }
+
+  .top-tab-nav {
+    order: 3;
+    width: 100%;
+  }
+
+  header.hero {
+    padding: 2rem 1rem 2rem;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .ocean-scene {
+    height: 200px;
+    margin: 2rem auto 0;
+  }
+
+  .wave {
+    height: 120px;
+  }
+
+  .debris {
+    width: 40px;
+  }
+
+  .section {
+    padding: 2rem 1rem;
+  }
+
+  .tab-nav {
+    gap: 0.5rem;
+  }
+
+  .section-head h2 {
+    font-size: 1.5rem;
+  }
+
+  .section-head p {
+    font-size: 0.95rem;
+  }
+
+  .game-board {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .debris-card {
+    padding: 0.8rem 0.9rem;
+    font-size: 0.9rem;
+    min-height: 44px; /* 触摸友好 */
+  }
+
+  .choice-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .map-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .map svg {
+    height: 300px;
+  }
+
+  .region-card {
+    padding: 1rem;
+  }
+
+  .impact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .impact-interactive {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .impact-visual {
+    order: -1;
+  }
+
+  .status-meter {
+    height: 12px;
+  }
+
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions ul {
+    text-align: left;
+  }
+
+  footer {
+    padding: 1rem;
   }
 }

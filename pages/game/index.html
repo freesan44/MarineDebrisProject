@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>清理游戏 | Marine Debris Project</title>
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body data-page="game">
+  <main>
+    <section class="section game" id="game-page">
+      <div class="section-head">
+        <h2 data-i18n="gameTitle">海ごみ清掃ゲーム</h2>
+        <p data-i18n="gameDescription">ゴミを正しい回収先にドラッグすると、海の健康度が回復します。</p>
+      </div>
+      <div class="game-layout">
+        <div class="game-board">
+          <div class="game-instructions" id="game-instructions" data-i18n="gameInstructions">每次显示一件垃圾，请点击对应回收船完成分类。</div>
+          <div class="sorting-panel">
+            <p class="current-label" data-i18n="currentDebrisLabel">当前垃圾</p>
+            <div class="debris-card" id="currentDebrisCard">-</div>
+            <div class="choice-buttons">
+              <button class="choice-button" type="button" data-target="recycle" data-i18n="recycleBoat">资源回收船</button>
+              <button class="choice-button" type="button" data-target="trash" data-i18n="trashBoat">一般垃圾船</button>
+            </div>
+          </div>
+        </div>
+        <aside class="game-dashboard" aria-live="polite">
+          <h3 data-i18n="gameDashboardTitle">清理进度面板</h3>
+          <div class="game-metrics">
+            <p><span data-i18n="gameScoreLabel">得分</span><strong id="gameScore">0</strong></p>
+            <p><span data-i18n="gameCorrectLabel">正确投放</span><strong id="gameCorrect">0</strong></p>
+            <p><span data-i18n="gameRemainingLabel">剩余垃圾</span><strong id="gameRemaining">4</strong></p>
+            <p><span data-i18n="gameAccuracyLabel">正确率</span><strong id="gameAccuracy">0%</strong></p>
+          </div>
+          <div class="game-progress">
+            <div class="status-meter" aria-hidden="true"><div class="status-fill" id="gameProgressFill"></div></div>
+            <p id="gameProgressText" data-i18n="gameProgressText">已完成: 0%</p>
+          </div>
+          <button id="restartGameButton" class="restart-button" data-i18n="restartGameButton">再来一局</button>
+          <ol class="game-steps">
+            <li data-i18n="gameStep1">先看垃圾类别，再拖放到对应回收船。</li>
+            <li data-i18n="gameStep2">投放正确会加分，错误不会扣分但会提示重试。</li>
+            <li data-i18n="gameStep3">全部清理完成后，水质恢复条将提升到最高。</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../layout.js"></script>
+  <script src="../../script.js"></script>
+</body>
+</html>

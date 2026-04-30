@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数据图表 | Marine Debris Project</title>
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body data-page="chart">
+  <main>
+    <section class="section chart" id="chart-page">
+      <div class="section-head">
+        <h2 data-i18n="chartTitle">日本周辺のゴミ発生源データ</h2>
+        <p data-i18n="chartDescription">沿岸で集められたデータをもとに、どの種類のゴミが多いかを可視化します。</p>
+      </div>
+      <div class="chart-panel">
+        <div class="chart-canvas-wrapper">
+          <canvas id="debrisChart" width="600" height="360" aria-label="海洋ゴミ種類の棒グラフ"></canvas>
+          <div class="chart-badge">
+            <span class="chart-badge-icon">📊</span>
+            <span data-i18n="chartCanvasTitle">日本近海主要海洋ゴミ类型</span>
+          </div>
+        </div>
+        <div class="chart-body">
+          <div class="chart-legend">
+            <div><span class="legend-color recycle"></span><span data-i18n="chartLegendRecycle">資源として回収可能</span></div>
+            <div><span class="legend-color trash"></span><span data-i18n="chartLegendTrash">一般ゴミ</span></div>
+          </div>
+          <div class="chart-bars" id="chartBars" aria-label="海洋ゴミ数据柱状图"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../layout.js"></script>
+  <script src="../../script.js"></script>
+</body>
+</html>
