@@ -1,3 +1,40 @@
+/*
+海洋垃圾项目 - 布局脚本
+Marine Debris Project - Layout Script
+
+此文件负责创建和管理网站的所有页面布局组件。
+This file is responsible for creating and managing all page layout components of the website.
+
+主要功能：
+- 顶部导航栏创建和管理
+- 页面映射和路由配置
+- 语言切换器组件
+- 响应式导航菜单
+
+Main features:
+- Top navigation bar creation and management
+- Page mapping and routing configuration
+- Language switcher component
+- Responsive navigation menu
+
+依赖：
+- shared.js (翻译数据和工具函数)
+- styles.css (样式定义)
+
+Dependencies:
+- shared.js (translation data and utility functions)
+- styles.css (style definitions)
+*/
+
+// ============================================
+// 页面导航配置
+// ============================================
+
+/**
+ * 页面映射对象
+ * 定义所有页面的路由、国际化键和备用文本
+ * @type {Object<string, {href: string, i18n: string, fallback: string}>}
+ */
 const pageMap = {
   intro: { href: '../../pages/intro/index.html', i18n: 'tabIntro', fallback: '概览' },
   empathy: { href: '../../pages/empathy/index.html', i18n: 'tabEmpathy', fallback: '影像' },
@@ -9,6 +46,16 @@ const pageMap = {
   actions: { href: '../../pages/actions/index.html', i18n: 'tabActions', fallback: '行动' }
 };
 
+// ============================================
+// 导航 UI 创建函数
+// ============================================
+
+/**
+ * 创建顶部导航条
+ * 包含品牌名、页面导航链接和语言切换器
+ * @param {string} activePage - 当前活跃页面的标识符
+ * @returns {HTMLElement} 构建的导航条 DOM 元素
+ */
 function createTopNav(activePage) {
   const nav = document.createElement('nav');
   nav.className = 'top-nav';
@@ -42,25 +89,50 @@ function createTopNav(activePage) {
   return nav;
 }
 
+// ============================================
+// 页脚创建函数
+// ============================================
+
+/**
+ * 创建页脚元素
+ * 包含版权或免责声明信息
+ * @returns {HTMLElement} 构建的页脚 DOM 元素
+ */
 function createFooter() {
   const footer = document.createElement('footer');
   footer.innerHTML = `<p data-i18n="footerText">データは日本近海の海洋ごみ調査をもとにした教育用コンテンツです。</p>`;
   return footer;
 }
 
+// ============================================
+// 布局注入和初始化
+// ============================================
+
+/**
+ * 注入全局布局元素（导航和页脚）
+ * 为所有页面提供统一的顶部导航和底部页脚
+ * 自动计算导航条高度并调整页面内边距
+ * 响应式处理窗口大小变化
+ */
 function injectLayout() {
   const body = document.body;
   const activePage = body.dataset.page || 'intro';
+  
+  // 创建并注入顶部导航条
   const nav = createTopNav(activePage);
   body.prepend(nav);
 
+  // 计算导航条高度并设置页面顶部内边距
   const syncBodyOffset = () => {
     const navHeight = nav.offsetHeight || 0;
     body.style.paddingTop = `${navHeight + 12}px`;
   };
   syncBodyOffset();
+  
+  // 监听窗口大小变化，响应式调整内边距
   window.addEventListener('resize', syncBodyOffset);
 
+  // 将页脚插入到主要内容之后，或如果没有main元素则添加到body末尾
   const main = document.querySelector('main');
   if (main) {
     main.insertAdjacentElement('afterend', createFooter());
@@ -69,4 +141,9 @@ function injectLayout() {
   }
 }
 
+// ============================================
+// 应用初始化入口
+// ============================================
+
+// 页面加载完成后立即注入布局
 injectLayout();

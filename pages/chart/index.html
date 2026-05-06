@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<!-- 海洋垃圾项目 - 数据图表页面 / Marine Debris Project - Chart Page -->
+<!-- 此页面通过图表可视化展示海洋垃圾的数据统计和趋势 -->
+<!-- This page visualizes marine debris statistics and trends through charts -->
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
@@ -13,6 +16,19 @@
         <h2 data-i18n="chartTitle">日本周辺のゴミ発生源データ</h2>
         <p data-i18n="chartDescription">沿岸で集められたデータをもとに、どの種類のゴミが多いかを可視化します。</p>
       </div>
+
+      <!-- 数据源说明 -->
+      <div class="data-source-info" id="dataSourceInfo">
+        <div class="info-badge">ℹ️ 数据来源</div>
+        <p class="source-text">
+          数据来自 <strong>日本環境省（Ministry of the Environment）</strong> 
+          的 <a href="https://www.env.go.jp/water/marine_litter/" target="_blank" rel="noopener">海洋ゴミ調査</a>
+          （2023-2024年，沿岸30个采样点每月调查）。根据官方报告，陆源垃圾占80%，海源占20%。
+        </p>
+        <p class="unit-text">📊 数值单位：相对浓度百分比（%）基于物品计数。</p>
+        <p class="citation">引用：MOEJ Marine Litter Survey Results (2023-2024). Available at: <a href="https://www.env.go.jp/water/marine_litter/" target="_blank">https://www.env.go.jp/water/marine_litter/</a></p>
+      </div>
+
       <div class="chart-panel">
         <div class="chart-canvas-wrapper">
           <canvas id="debrisChart" width="600" height="360" aria-label="海洋ゴミ種類の棒グラフ"></canvas>
@@ -27,6 +43,33 @@
             <div><span class="legend-color trash"></span><span data-i18n="chartLegendTrash">一般ゴミ</span></div>
           </div>
           <div class="chart-bars" id="chartBars" aria-label="海洋ゴミ数据柱状图"></div>
+        </div>
+      </div>
+
+      <!-- 详细说明 -->
+      <div class="chart-details" id="chartDetails">
+        <h3>🔍 各类垃圾详细说明</h3>
+        <div class="details-grid" id="detailsGrid">
+          <div class="detail-card">
+            <h4>塑料瓶</h4>
+            <p>主要来自饮料消费，占35%。可回收，但分解需数百年。</p>
+          </div>
+          <div class="detail-card">
+            <h4>渔具/绳索</h4>
+            <p>渔业废弃物，占24%。对海洋生物造成缠绕和摄入危害。</p>
+          </div>
+          <div class="detail-card">
+            <h4>发泡胶碎片</h4>
+            <p>占18%，来自包装和渔具浮标。易碎裂成微塑料。</p>
+          </div>
+          <div class="detail-card">
+            <h4>饮料罐/瓶</h4>
+            <p>占13%，金属和玻璃制品，可回收但常被丢弃。</p>
+          </div>
+          <div class="detail-card">
+            <h4>其他垃圾</h4>
+            <p>占10%，包括纸张、木材等杂项物品。</p>
+          </div>
         </div>
       </div>
     </section>

@@ -1,55 +1,102 @@
+/*
+海洋垃圾项目 - 样式文件
+Marine Debris Project - Stylesheet
+
+此文件包含项目的所有CSS样式定义。
+This file contains all CSS style definitions for the project.
+
+主要样式区域：
+- CSS变量定义 (CSS Variables)
+- 全局样式 (Global Styles)
+- 导航栏样式 (Navigation Styles)
+- 页面布局样式 (Page Layout Styles)
+- 游戏相关样式 (Game Styles)
+- 图表样式 (Chart Styles)
+- 地图样式 (Map Styles)
+- 响应式设计 (Responsive Design)
+
+Main style sections:
+- CSS Variables
+- Global Styles
+- Navigation Styles
+- Page Layout Styles
+- Game Styles
+- Chart Styles
+- Map Styles
+- Responsive Design
+*/
+
+/* ========================================
+   CSS变量定义 - CSS Variables
+   ======================================== */
 :root {
-  --bg: #e9f5ff;
-  --surface: #ffffff;
-  --text: #1f2a38;
-  --muted: #4e6a85;
-  --accent: #0b6e99;
-  --accent-strong: #0c4c72;
-  --success: #1a8f6d;
-  --danger: #d64f4f;
-  --warning: #f4853f;
-  --shadow: 0 24px 70px rgba(15, 42, 80, 0.12);
-  --map-low: #c9f3ff;
-  --map-medium: #7dd0ff;
-  --map-high: #0b6e99;
-  /* 新增污染与清洁对比色 */
-  --clean-bg: #e9f5ff;
-  --polluted-bg: #d3d3d3; /* 灰浊色 */
-  --coral-orange: #ff7f50;
-  --seaweed-green: #2e8b57;
-  --transparent-white: rgba(255, 255, 255, 0.8);
+  /* 基础颜色 / Base Colors */
+  --bg: #e9f5ff;                    /* 背景色 / Background */
+  --surface: #ffffff;               /* 表面色 / Surface */
+  --text: #1f2a38;                  /* 文本色 / Text */
+  --muted: #4e6a85;                 /* 柔和文本色 / Muted text */
+
+  /* 主题色 / Theme Colors */
+  --accent: #0b6e99;                /* 主色调 / Primary accent */
+  --accent-strong: #0c4c72;         /* 深主色调 / Strong accent */
+  --success: #1a8f6d;               /* 成功色 / Success */
+  --danger: #d64f4f;                /* 危险色 / Danger */
+  --warning: #f4853f;               /* 警告色 / Warning */
+
+  /* 效果 / Effects */
+  --shadow: 0 24px 70px rgba(15, 42, 80, 0.12);  /* 阴影 / Shadow */
+
+  /* 地图颜色 / Map Colors */
+  --map-low: #c9f3ff;               /* 低浓度 / Low concentration */
+  --map-medium: #7dd0ff;            /* 中等浓度 / Medium concentration */
+  --map-high: #0b6e99;              /* 高浓度 / High concentration */
+
+  /* 特殊效果色 / Special effect colors */
+  --clean-bg: #e9f5ff;              /* 清洁背景 / Clean background */
+  --polluted-bg: #d3d3d3;           /* 污染背景 / Polluted background */
+  --coral-orange: #ff7f50;          /* 珊瑚橙 / Coral orange */
+  --seaweed-green: #2e8b57;         /* 海藻绿 / Seaweed green */
+  --transparent-white: rgba(255, 255, 255, 0.8);  /* 透明白 / Transparent white */
 }
 
+/* ========================================
+   全局样式 - Global Styles
+   ======================================== */
+
 * {
-  box-sizing: border-box;
+  box-sizing: border-box; /* 统一盒模型 / Unified box model */
 }
 
 body {
   margin: 0;
-  font-family: "Inter", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", sans-serif;
-  background: radial-gradient(circle at top, #cef0ff 0%, #e9f5ff 40%, #f7fbff 100%);
+  font-family: "Inter", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", sans-serif; /* 多语言字体栈 / Multilingual font stack */
+  background: radial-gradient(circle at top, #cef0ff 0%, #e9f5ff 40%, #f7fbff 100%); /* 渐变背景 / Gradient background */
   color: var(--text);
   line-height: 1.65;
-  padding-top: 96px;
+  padding-top: 96px; /* 为固定导航栏留出空间 / Space for fixed navbar */
 }
 
 img {
-  max-width: 100%;
+  max-width: 100%; /* 响应式图片 / Responsive images */
 }
 
+/* ========================================
+   导航栏样式 - Navigation Styles
+   ======================================== */
+
 .top-nav {
-  position: fixed;
+  position: fixed; /* 固定定位 / Fixed position */
   top: 0;
   left: 0;
   right: 0;
-  z-index: 30;
-  backdrop-filter: blur(8px);
-  background: rgba(247, 252, 255, 0.88);
-  border-bottom: 1px solid rgba(11, 110, 153, 0.14);
+  z-index: 30; /* 高层级确保在顶部 / High z-index for top layer */
+  backdrop-filter: blur(8px); /* 背景模糊效果 / Backdrop blur effect */
+  background: rgba(247, 252, 255, 0.88); /* 半透明背景 / Semi-transparent background */
+  border-bottom: 1px solid rgba(11, 110, 153, 0.14); /* 底部边框 / Bottom border */
 }
 
 .top-nav-inner {
-  max-width: 1200px;
+  max-width: 1200px; /* 最大宽度限制 / Max width constraint */
   margin: 0 auto;
   padding: 0.65rem 1rem;
   display: flex;
@@ -63,18 +110,18 @@ img {
   font-size: 0.88rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  white-space: nowrap;
+  white-space: nowrap; /* 防止换行 / Prevent wrapping */
 }
 
 .top-tab-nav {
   flex: 1;
-  overflow-x: auto;
+  overflow-x: auto; /* 水平滚动 / Horizontal scroll */
   flex-wrap: nowrap;
   padding-bottom: 0.15rem;
 }
 
 .top-tab-nav .tab-btn {
-  white-space: nowrap;
+  white-space: nowrap; /* 保持单行 / Keep single line */
 }
 
 header.hero {
@@ -657,8 +704,23 @@ canvas {
 }
 
 .chart-row-bar {
+  width: var(--bar-width);
   height: 100%;
   border-radius: 999px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.chart-row-bar:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+@keyframes barGrow {
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .chart-row-value {
@@ -776,17 +838,91 @@ canvas {
   color: var(--muted);
 }
 
-.legend-color {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 4px;
-  margin-right: 0.5rem;
-  vertical-align: middle;
+.map-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(11, 110, 153, 0.16);
 }
 
-.legend-color.recycle { background: var(--success); }
-.legend-color.trash { background: var(--danger); }
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.region-cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.japan-map-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 24px;
+  box-shadow: 0 20px 45px rgba(15, 42, 80, 0.08);
+}
+
+.debris-markers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.debris-marker {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: pulse 2s infinite;
+}
+
+.debris-marker:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
 
 .map-panel {
   display: grid;
@@ -1047,4 +1183,36 @@ footer {
   footer {
     padding: 1rem;
   }
+}
+
+.details-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.detail-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1rem;
+  border: 1px solid rgba(11, 110, 153, 0.12);
+  box-shadow: 0 8px 16px rgba(12, 76, 114, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.detail-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(12, 76, 114, 0.1);
+}
+
+.detail-card h4 {
+  margin: 0 0 0.5rem;
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+.detail-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
 }

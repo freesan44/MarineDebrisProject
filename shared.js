@@ -1,45 +1,31 @@
 /*
-海洋垃圾项目 - 主脚本
-Marine Debris Project - Main Script
+海洋垃圾项目 - 共享脚本
+Marine Debris Project - Shared Script
 
-此文件包含网站的主要交互逻辑和游戏功能。
-This file contains the main interactive logic and game features of the website.
+此文件包含项目中多个页面共享的数据和功能。
+This file contains data and functions shared across multiple pages in the project.
 
-主要功能：
-- 游戏逻辑和状态管理
-- 图表绘制和数据可视化
-- 页面交互和事件处理
-- 游戏进度跟踪和评分
+主要内容：
+- 多语言翻译数据 (translations)
+- 游戏数据 (debrisPieces, chartData)
+- 地图区域数据 (regionMapData)
+- 本地化标签 (localizedLabels)
+- 工具函数 (translatePage, getLocalizedLabel, etc.)
 
-Main features:
-- Game logic and state management
-- Chart drawing and data visualization
-- Page interactions and event handling
-- Game progress tracking and scoring
-
-包含的组件：
-- 清理游戏系统
-- 数据图表可视化
-- 交互式地图功能
-- 用户界面更新
-
-Components included:
-- Cleanup game system
-- Data chart visualization
-- Interactive map functionality
-- User interface updates
-
-依赖：
-- shared.js (共享数据和翻译)
-- layout.js (页面布局)
-- styles.css (样式)
-
-Dependencies:
-- shared.js (shared data and translations)
-- layout.js (page layout)
-- styles.css (styles)
+Main contents:
+- Multilingual translation data
+- Game data (debrisPieces, chartData)
+- Map region data (regionMapData)
+- Localized labels
+- Utility functions
 */
 
+/**
+ * 多语言翻译数据
+ * Multilingual translation data
+ * 支持日语、英语和中文
+ * Supports Japanese, English, and Chinese
+ */
 const translations = {
   ja: {
     heroEyebrow: '日本周辺の海を守ろう',
@@ -292,6 +278,12 @@ const translations = {
   }
 };
 
+/**
+ * 游戏垃圾数据
+ * Game debris data
+ * 定义不同类型垃圾的属性：目标容器、标签键和分数
+ * Defines properties for different debris types: target container, label key, and score
+ */
 const debrisPieces = {
   plastic: { target: 'recycle', labelKey: 'debrisPlastic', score: 10 },
   fishing: { target: 'trash', labelKey: 'debrisFishing', score: 8 },
@@ -299,6 +291,12 @@ const debrisPieces = {
   other: { target: 'trash', labelKey: 'debrisOther', score: 5 }
 };
 
+/**
+ * 图表数据
+ * Chart data
+ * 日本近海海洋垃圾类型的统计数据
+ * Statistical data of marine debris types near Japan
+ */
 const chartData = [
   { key: 'plasticBottles', labelKey: 'chartPlasticBottles', value: 35, type: 'recycle' },
   { key: 'fishingGear', labelKey: 'chartFishingGear', value: 24, type: 'trash' },
@@ -307,6 +305,12 @@ const chartData = [
   { key: 'otherDebris', labelKey: 'chartOtherDebris', value: 10, type: 'trash' }
 ];
 
+/**
+ * 地图区域数据
+ * Map region data
+ * 日本各区域的海洋垃圾浓度数据
+ * Marine debris concentration data for each region in Japan
+ */
 const regionMapData = [
   { id: 'hokkaido', labelKey: 'regionHokkaido', value: 14, weight: 'medium', descriptionKey: 'regionHokkaidoDescription' },
   { id: 'tohoku', labelKey: 'regionTohoku', value: 19, weight: 'medium', descriptionKey: 'regionTohokuDescription' },
@@ -383,37 +387,14 @@ const localizedLabels = {
   }
 };
 
-const gameInstructionsElement = document.getElementById('game-instructions');
-const languageSelect = document.getElementById('languageSwitch');
-const regionCards = document.getElementById('regionCards');
-const regionShapes = document.querySelectorAll('.region');
-const mapDetail = document.getElementById('mapDetail');
-const chartBars = document.getElementById('chartBars');
-const statusFill = document.getElementById('statusFill');
-const statusText = document.getElementById('statusText');
-const shareButton = document.getElementById('shareButton');
-const impactVisual = document.getElementById('impactVisual');
-const startButton = document.getElementById('startExperience');
-const gameScoreEl = document.getElementById('gameScore');
-const gameCorrectEl = document.getElementById('gameCorrect');
-const gameRemainingEl = document.getElementById('gameRemaining');
-const gameAccuracyEl = document.getElementById('gameAccuracy');
-const gameProgressFill = document.getElementById('gameProgressFill');
-const gameProgressText = document.getElementById('gameProgressText');
-const currentDebrisCard = document.getElementById('currentDebrisCard');
-const choiceButtons = document.querySelectorAll('.choice-button');
-const restartGameButton = document.getElementById('restartGameButton');
-const tabButtons = document.querySelectorAll('.tab-btn');
-const tabPages = document.querySelectorAll('.tab-page');
 let currentLanguage = 'ja';
-let totalScore = 0;
-let selectedRegion = null;
-let totalAttempts = 0;
-let correctAttempts = 0;
-let totalDebrisCount = 0;
-let gameQueue = [];
-let currentDebrisType = null;
 
+/**
+ * 翻译页面内容
+ * Translate page content
+ * 根据当前语言设置更新页面上的所有本地化文本
+ * Updates all localized text on the page based on current language setting
+ */
 function translatePage() {
   document.documentElement.lang = currentLanguage;
 
@@ -436,389 +417,43 @@ function translatePage() {
   updateGameDashboard();
 }
 
+}
+
+/**
+ * 格式化模板字符串
+ * Format template string
+ * 用提供的数值替换模板中的占位符
+ * Replaces placeholders in template with provided values
+ * @param {string} template - 模板字符串 / Template string
+ * @param {object} values - 替换值对象 / Replacement values object
+ * @returns {string} 格式化后的字符串 / Formatted string
+ */
 function formatTemplate(template, values) {
   return template.replace(/\{(\w+)\}/g, (_, name) => values[name] ?? '');
 }
 
-function updateInstructions(message, success = true) {
-  if (!gameInstructionsElement) return;
-  gameInstructionsElement.textContent = message;
-  gameInstructionsElement.style.color = success ? 'var(--accent-strong)' : 'var(--danger)';
-}
-
+/**
+ * 获取本地化标签
+ * Get localized label
+ * 根据当前语言返回对应的本地化文本
+ * Returns localized text based on current language
+ * @param {string} key - 标签键 / Label key
+ * @returns {string} 本地化文本 / Localized text
+ */
 function getLocalizedLabel(key) {
   return translations[currentLanguage][key] || localizedLabels[currentLanguage][key] || key;
 }
 
+/**
+ * 获取权重颜色
+ * Get weight color
+ * 根据污染程度返回对应的颜色值
+ * Returns color value based on pollution level
+ * @param {string} weight - 权重级别 ('low', 'medium', 'high') / Weight level
+ * @returns {string} CSS颜色值 / CSS color value
+ */
 function getWeightColor(weight) {
   if (weight === 'high') return 'var(--map-high)';
   if (weight === 'medium') return 'var(--map-medium)';
   return 'var(--map-low)';
 }
-
-function updateRegionCards() {
-  if (!regionCards) return;
-  regionCards.innerHTML = '';
-  regionMapData.forEach(region => {
-    const card = document.createElement('article');
-    card.className = 'region-card';
-    card.innerHTML = `
-      <h3>${getLocalizedLabel(region.labelKey)}</h3>
-      <p>${getLocalizedLabel(region.descriptionKey)}</p>
-      <p><strong>${region.value}%</strong> ${translations[currentLanguage].regionValueSuffix}</p>
-    `;
-    card.addEventListener('click', () => {
-      selectRegion(region);
-    });
-    regionCards.appendChild(card);
-  });
-}
-
-function showRegionDetail(region) {
-  if (!mapDetail) return;
-  mapDetail.innerHTML = `
-    <h3>${getLocalizedLabel(region.labelKey)}</h3>
-    <p>${getLocalizedLabel(region.descriptionKey)}</p>
-    <p><strong>${region.value}%</strong> ${translations[currentLanguage].regionValueSuffix}</p>
-    <p>${translations[currentLanguage].mapDescription}</p>
-  `;
-}
-
-function updateCleanupImpact() {
-  const percent = Math.min(100, totalScore * 4);
-  if (statusFill) statusFill.style.width = `${percent}%`;
-  if (statusText) statusText.textContent = translations[currentLanguage].statusText.replace('{percent}', percent);
-  if (impactVisual) {
-    impactVisual.classList.toggle('impact-clean', percent >= 50);
-  }
-}
-
-function updateGameDashboard() {
-  const remaining = currentDebrisType ? gameQueue.length + 1 : gameQueue.length;
-  const cleaned = Math.max(0, totalDebrisCount - remaining);
-  const completion = totalDebrisCount ? Math.round((cleaned / totalDebrisCount) * 100) : 0;
-  const accuracy = totalAttempts ? Math.round((correctAttempts / totalAttempts) * 100) : 0;
-
-  if (gameScoreEl) gameScoreEl.textContent = String(totalScore);
-  if (gameCorrectEl) gameCorrectEl.textContent = String(correctAttempts);
-  if (gameRemainingEl) gameRemainingEl.textContent = String(remaining);
-  if (gameAccuracyEl) gameAccuracyEl.textContent = `${accuracy}%`;
-  if (gameProgressFill) gameProgressFill.style.width = `${completion}%`;
-  if (gameProgressText) {
-    gameProgressText.textContent = formatTemplate(translations[currentLanguage].gameProgressText, { percent: completion });
-  }
-}
-
-function showCurrentDebris() {
-  if (!currentDebrisCard) return;
-  currentDebrisType = gameQueue.shift() || null;
-  if (!currentDebrisType) {
-    currentDebrisCard.textContent = '✅';
-    choiceButtons.forEach(btn => { btn.disabled = true; });
-    updateInstructions(
-      formatTemplate(translations[currentLanguage].gameProgressText, { percent: 100 }),
-      true
-    );
-    updateGameDashboard();
-    return;
-  }
-  const debris = debrisPieces[currentDebrisType];
-  currentDebrisCard.textContent = getLocalizedLabel(debris.labelKey);
-  choiceButtons.forEach(btn => { btn.disabled = false; });
-  updateGameDashboard();
-}
-
-function setupSortingGame() {
-  gameQueue = Object.keys(debrisPieces);
-  totalDebrisCount = gameQueue.length;
-  totalScore = 0;
-  totalAttempts = 0;
-  correctAttempts = 0;
-  showCurrentDebris();
-  updateCleanupImpact();
-  updateGameDashboard();
-}
-
-function setupChoiceButtons() {
-  choiceButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      if (!currentDebrisType) return;
-      handleChoice(button.dataset.target);
-    });
-  });
-}
-
-function setupRestartGameButton() {
-  if (!restartGameButton) return;
-  restartGameButton.addEventListener('click', () => {
-    setupSortingGame();
-    updateInstructions(translations[currentLanguage].gameInstructions, true);
-  });
-}
-
-function setupTabs() {
-  if (!tabButtons.length || !tabPages.length) return;
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.pageTarget;
-      tabButtons.forEach(item => {
-        const active = item === btn;
-        item.classList.toggle('active', active);
-        item.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-      tabPages.forEach(page => {
-        page.classList.toggle('active', page.id === target);
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  });
-}
-
-function setupShareButton() {
-  if (!shareButton) return;
-  shareButton.addEventListener('click', async () => {
-    const shareText = `${translations[currentLanguage].heroTitle} - ${translations[currentLanguage].heroSubtitle}`;
-    try {
-      await navigator.clipboard.writeText(shareText);
-      alert(translations[currentLanguage].shareSuccess);
-    } catch (error) {
-      alert(translations[currentLanguage].shareFallback);
-    }
-  });
-}
-
-function setupStartButton() {
-  if (!startButton) return;
-  startButton.addEventListener('click', () => {
-    const oceanScene = document.querySelector('.ocean-scene');
-    if (oceanScene) {
-      oceanScene.classList.remove('polluted');
-      oceanScene.classList.add('clean');
-    }
-    startButton.style.display = 'none';
-    setTimeout(() => {
-      window.location.href = new URL('../empathy/index.html', window.location.href).href;
-    }, 450);
-  });
-}
-
-function selectRegion(region) {
-  selectedRegion = region;
-  setMapColors();
-  showRegionDetail(region);
-}
-
-function setMapColors() {
-  regionShapes.forEach(shape => {
-    const id = shape.dataset.region;
-    const region = regionMapData.find(r => r.id === id);
-    if (!region) return;
-    const area = shape.querySelector('rect, path');
-    if (area) {
-      area.style.fill = getWeightColor(region.weight);
-      if (selectedRegion && selectedRegion.id === id) {
-        shape.classList.add('selected');
-      } else {
-        shape.classList.remove('selected');
-      }
-    }
-    const text = shape.querySelector('.map-region-label');
-    text.textContent = getLocalizedLabel(region.labelKey);
-  });
-}
-
-function updateChartLabels() {
-  chartData.forEach(item => {
-    item.label = getLocalizedLabel(item.labelKey);
-  });
-}
-
-function renderChartBars() {
-  if (!chartBars) return;
-  chartBars.innerHTML = '';
-  const maxValue = Math.max(...chartData.map(d => d.value));
-  chartData.forEach((item, index) => {
-    const row = document.createElement('div');
-    row.className = 'chart-row';
-    const color = item.type === 'recycle' ? 'linear-gradient(90deg, #4CAF50, #66BB6A)' : 'linear-gradient(90deg, #FF9800, #FFB74D)';
-    const width = Math.max(12, (item.value / maxValue) * 100);
-    row.innerHTML = `
-      <div class="chart-row-label">${item.label}</div>
-      <div class="chart-row-bar-wrap">
-        <div class="chart-row-bar" style="--bar-width: ${width}%; background: ${color}; animation: barGrow 1.5s ease-out ${index * 0.2}s forwards;"></div>
-      </div>
-      <div class="chart-row-value">${item.value}%</div>
-    `;
-    chartBars.appendChild(row);
-  });
-}
-
-function drawChart() {
-  const canvas = document.getElementById('debrisChart');
-  if (!canvas) return;
-  updateChartLabels();
-  const ctx = canvas.getContext('2d');
-  const width = canvas.width;
-  const height = canvas.height;
-  const padding = 60;
-  const maxValue = Math.max(...chartData.map(d => d.value));
-  const barWidth = (width - padding * 2) / chartData.length - 20;
-
-  ctx.clearRect(0, 0, width, height);
-  ctx.fillStyle = '#eef9ff';
-  ctx.fillRect(0, 0, width, height);
-
-  ctx.font = '600 16px Inter, sans-serif';
-  ctx.fillStyle = 'var(--text)';
-  ctx.fillText(translations[currentLanguage].chartCanvasTitle, padding, 32);
-
-  chartData.forEach((item, index) => {
-    const x = padding + index * (barWidth + 30);
-    const barHeight = (item.value / maxValue) * (height - padding * 2);
-    const y = height - padding - barHeight;
-    const gradient = ctx.createLinearGradient(0, y, 0, y + barHeight);
-    if (item.type === 'recycle') {
-      gradient.addColorStop(0, '#4CAF50');
-      gradient.addColorStop(1, '#66BB6A');
-    } else {
-      gradient.addColorStop(0, '#FF9800');
-      gradient.addColorStop(1, '#FFB74D');
-    }
-    ctx.fillStyle = gradient;
-    ctx.fillRect(x, y, barWidth, barHeight);
-
-    ctx.fillStyle = 'var(--text)';
-    ctx.font = '600 14px Inter, sans-serif';
-    ctx.fillText(`${item.value}%`, x + barWidth / 2 - 10, y - 10);
-    ctx.save();
-    ctx.translate(x + barWidth / 2, height - padding + 18);
-    ctx.rotate(-Math.PI / 8);
-    ctx.textAlign = 'center';
-    ctx.fillText(item.label, 0, 0);
-    ctx.restore();
-  });
-
-  ctx.strokeStyle = 'rgba(15, 42, 80, 0.2)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(padding, height - padding);
-  ctx.lineTo(width - padding + 10, height - padding);
-  ctx.stroke();
-  renderChartBars();
-}
-
-function handleChoice(target) {
-  const type = currentDebrisType;
-  const debris = debrisPieces[type];
-  const correct = debris?.target === target;
-  const itemLabel = getLocalizedLabel(debris?.labelKey || '');
-  totalAttempts += 1;
-
-  if (!debris) {
-    updateInstructions(translations[currentLanguage].instructionUnknown, false);
-    return;
-  }
-
-  if (correct) {
-    totalScore += debris.score;
-    correctAttempts += 1;
-    updateInstructions(
-      formatTemplate(translations[currentLanguage].instructionCorrect, {
-        item: itemLabel,
-        score: debris.score,
-        totalScore
-      }),
-      true
-    );
-    showCurrentDebris();
-    updateCleanupImpact();
-    updateGameDashboard();
-  } else {
-    updateInstructions(
-      formatTemplate(translations[currentLanguage].instructionWrong, {
-        item: itemLabel
-      }),
-      false
-    );
-    updateGameDashboard();
-  }
-}
-
-function resizeCanvas() {
-  const canvas = document.getElementById('debrisChart');
-  if (!canvas) return;
-  const ratio = window.devicePixelRatio || 1;
-  const displayedWidth = canvas.clientWidth;
-  canvas.width = displayedWidth * ratio;
-  canvas.height = 360 * ratio;
-  const ctx = canvas.getContext('2d');
-  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-}
-
-if (languageSelect) {
-  languageSelect.addEventListener('change', event => {
-    currentLanguage = event.target.value;
-    localStorage.setItem('marineDebrisLanguage', currentLanguage);
-    translatePage();
-    setMapColors();
-    if (selectedRegion) {
-      showRegionDetail(selectedRegion);
-    }
-  });
-}
-
-regionShapes.forEach(shape => {
-  shape.addEventListener('mouseenter', () => {
-    const region = regionMapData.find(r => r.id === shape.dataset.region);
-    if (!region) return;
-    const area = shape.querySelector('rect, path');
-    if (area) area.style.opacity = '0.8';
-  });
-  shape.addEventListener('mouseleave', () => {
-    const region = regionMapData.find(r => r.id === shape.dataset.region);
-    if (!region) return;
-    const area = shape.querySelector('rect, path');
-    if (area) area.style.opacity = '1';
-  });
-  shape.addEventListener('click', () => {
-    const region = regionMapData.find(r => r.id === shape.dataset.region);
-    if (region) selectRegion(region);
-  });
-  shape.addEventListener('keydown', event => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      const region = regionMapData.find(r => r.id === shape.dataset.region);
-      if (region) selectRegion(region);
-    }
-  });
-});
-
-window.addEventListener('resize', () => {
-  resizeCanvas();
-  drawChart();
-});
-
-function init() {
-  const savedLanguage = localStorage.getItem('marineDebrisLanguage');
-  currentLanguage = savedLanguage || (navigator.language.startsWith('zh') ? 'zh' : navigator.language.startsWith('en') ? 'en' : 'ja');
-  if (languageSelect) {
-    languageSelect.value = currentLanguage;
-  }
-  translatePage();
-  setMapColors();
-  setupSortingGame();
-  setupChoiceButtons();
-  setupRestartGameButton();
-  setupTabs();
-  setupShareButton();
-  setupStartButton();
-  resizeCanvas();
-  drawChart();
-  updateCleanupImpact();
-  updateGameDashboard();
-  if (!selectedRegion && regionMapData.length > 0) {
-    selectRegion(regionMapData[0]);
-  }
-}
-
-init();
