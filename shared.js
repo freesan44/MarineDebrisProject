@@ -108,7 +108,22 @@ const translations = {
     statusText: '水質回復: {percent}%',
     shareButton: '海の守りを共有する',
     shareSuccess: '共有テキストをクリップボードにコピーしました！',
-    shareFallback: 'コピーに失敗しました。ページを手動で共有してください。'
+    shareFallback: 'コピーに失敗しました。ページを手動で共有してください。',
+    simulationCurrent: '現在の状態',
+    simulationPartial: '部分的な清掃',
+    simulationFull: '完全な清掃',
+    simulationImageAltCurrent: 'ごみで汚れた海と漂流プラスチック',
+    simulationImageAltPartial: '部分的に清掃された海岸、まだ残るゴミ',
+    simulationImageAltFull: '澄んだ海水と健康な海洋生物',
+    simulationImageCaptionCurrent: '漂うごみで汚れた海水',
+    simulationImageCaptionPartial: '部分清掃後でも続く努力が必要',
+    simulationImageCaptionFull: '完全清掃後の健康な海',
+    marineLifePoor: '海洋生物状態：受損',
+    marineLifeModerate: '海洋生物状態：回復中',
+    marineLifeHealthy: '海洋生物状態：健康',
+    waterCloudy: '海水の色：濁っている',
+    waterModerate: '海水の色：ややクリア',
+    waterClear: '海水の色：澄んでいる'
   },
   zh: {
     heroEyebrow: '守护日本周边海洋',
@@ -191,7 +206,22 @@ const translations = {
     statusText: '水质恢复: {percent}%',
     shareButton: '分享你的海洋守护成果',
     shareSuccess: '已复制分享内容！',
-    shareFallback: '复制失败，请手动分享该页面。'
+    shareFallback: '复制失败，请手动分享该页面。',
+    simulationCurrent: '当前状态',
+    simulationPartial: '部分清理',
+    simulationFull: '完全清理',
+    simulationImageAltCurrent: '污染的海洋与漂浮垃圾',
+    simulationImageAltPartial: '部分清理后的海岸，仍可见垃圾',
+    simulationImageAltFull: '清澈海水与健康海洋生物',
+    simulationImageCaptionCurrent: '漂浮垃圾污染水体',
+    simulationImageCaptionPartial: '部分清理后仍需继续努力',
+    simulationImageCaptionFull: '彻底清理后的健康海洋',
+    marineLifePoor: '海洋生物状态：受损',
+    marineLifeModerate: '海洋生物状态：恢复中',
+    marineLifeHealthy: '海洋生物状态：健康',
+    waterCloudy: '海水颜色：浑浊',
+    waterModerate: '海水颜色：逐渐清澈',
+    waterClear: '海水颜色：清澈'
   },
   en: {
     heroEyebrow: 'Protect Japan’s coastal seas',
@@ -274,7 +304,22 @@ const translations = {
     statusText: 'Water quality restored: {percent}%',
     shareButton: 'Share your ocean protection',
     shareSuccess: 'Share text copied to clipboard!',
-    shareFallback: 'Copy failed; please share the page manually.'
+    shareFallback: 'Copy failed; please share the page manually.',
+    simulationCurrent: 'Current state',
+    simulationPartial: 'Partial cleanup',
+    simulationFull: 'Full cleanup',
+    simulationImageAltCurrent: 'Polluted ocean water with plastic debris',
+    simulationImageAltPartial: 'Partially cleaned coast with remaining debris',
+    simulationImageAltFull: 'Clear ocean water with healthy marine life',
+    simulationImageCaptionCurrent: 'Polluted water with floating debris',
+    simulationImageCaptionPartial: 'Partial cleanup still needs more care',
+    simulationImageCaptionFull: 'Healthy ocean after full cleanup',
+    marineLifePoor: 'Marine life: stressed',
+    marineLifeModerate: 'Marine life: recovering',
+    marineLifeHealthy: 'Marine life: healthy',
+    waterCloudy: 'Water color: cloudy',
+    waterModerate: 'Water color: clearer',
+    waterClear: 'Water color: clear'
   }
 };
 
@@ -390,33 +435,15 @@ const localizedLabels = {
 let currentLanguage = 'ja';
 
 /**
- * 翻译页面内容
- * Translate page content
- * 根据当前语言设置更新页面上的所有本地化文本
- * Updates all localized text on the page based on current language setting
+ * 获取本地化标签
+ * Get localized label
+ * 根据当前语言返回对应的本地化文本
+ * Returns localized text based on current language
+ * @param {string} key - 标签键 / Label key
+ * @returns {string} 本地化文本 / Localized text
  */
-function translatePage() {
-  document.documentElement.lang = currentLanguage;
-
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (!translations[currentLanguage] || !translations[currentLanguage][key]) return;
-    el.textContent = translations[currentLanguage][key];
-  });
-
-  Object.keys(localizedLabels[currentLanguage]).forEach(labelKey => {
-    translations[currentLanguage][labelKey] = localizedLabels[currentLanguage][labelKey];
-  });
-
-  updateRegionCards();
-  drawChart();
-  updateInstructions(translations[currentLanguage].gameInstructions, true);
-  if (currentDebrisType && currentDebrisCard) {
-    currentDebrisCard.textContent = getLocalizedLabel(debrisPieces[currentDebrisType].labelKey);
-  }
-  updateGameDashboard();
-}
-
+function getLocalizedLabel(key) {
+  return translations[currentLanguage][key] || localizedLabels[currentLanguage][key] || key;
 }
 
 /**
@@ -433,15 +460,44 @@ function formatTemplate(template, values) {
 }
 
 /**
- * 获取本地化标签
- * Get localized label
- * 根据当前语言返回对应的本地化文本
- * Returns localized text based on current language
- * @param {string} key - 标签键 / Label key
- * @returns {string} 本地化文本 / Localized text
+ * 更新页面翻译内容
+ * Update localized page text
+ * 遍历页面中的 data-i18n 属性并替换为当前语言文本
  */
-function getLocalizedLabel(key) {
-  return translations[currentLanguage][key] || localizedLabels[currentLanguage][key] || key;
+function translatePage() {
+  document.documentElement.lang = currentLanguage;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (!translations[currentLanguage] || !translations[currentLanguage][key]) return;
+    el.textContent = translations[currentLanguage][key];
+  });
+}
+
+/**
+ * 初始化语言切换器
+ * Initialize the language selector and load saved语言设置
+ */
+function initLanguageSwitcher() {
+  const savedLanguage = localStorage.getItem('marineDebrisLanguage');
+  currentLanguage = savedLanguage || (navigator.language.startsWith('zh') ? 'zh' : navigator.language.startsWith('en') ? 'en' : 'ja');
+
+  const languageSelect = document.getElementById('languageSwitch');
+  if (languageSelect) {
+    languageSelect.value = currentLanguage;
+    languageSelect.addEventListener('change', event => {
+      currentLanguage = event.target.value;
+      localStorage.setItem('marineDebrisLanguage', currentLanguage);
+      translatePage();
+      if (typeof window.onLanguageChanged === 'function') {
+        window.onLanguageChanged();
+      }
+    });
+  }
+
+  translatePage();
+  if (typeof window.onLanguageChanged === 'function') {
+    window.onLanguageChanged();
+  }
 }
 
 /**

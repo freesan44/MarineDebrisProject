@@ -63,19 +63,9 @@ function updateInstructions(message, success = true) {
   gameInstructionsElement.style.color = success ? 'var(--accent-strong)' : 'var(--danger)';
 }
 
-function updateCleanupImpact() {
-  const percent = Math.min(100, totalScore * 4);
-  if (statusFill) statusFill.style.width = `${percent}%`;
-  if (statusText) statusText.textContent = translations[currentLanguage].statusText.replace('{percent}', percent);
-  if (impactVisual) {
-    impactVisual.classList.toggle('impact-clean', percent >= 50);
-  }
-}
-
 function updateGameDashboard() {
   const remaining = currentDebrisType ? gameQueue.length + 1 : gameQueue.length;
-  const cleaned = Math.max(0, totalDebrisCount - remaining);
-  const completion = totalDebrisCount ? Math.round((cleaned / totalDebrisCount) * 100) : 0;
+  const completion = totalDebrisCount ? Math.round(((totalDebrisCount - remaining) / totalDebrisCount) * 100) : 0;
   const accuracy = totalAttempts ? Math.round((correctAttempts / totalAttempts) * 100) : 0;
 
   if (gameScoreEl) gameScoreEl.textContent = String(totalScore);
@@ -86,6 +76,16 @@ function updateGameDashboard() {
   if (gameProgressText) {
     gameProgressText.textContent = formatTemplate(translations[currentLanguage].gameProgressText, { percent: completion });
   }
+}
+
+function refreshCurrentDebrisLabel() {
+  if (!currentDebrisCard) return;
+  if (!currentDebrisType) {
+    currentDebrisCard.textContent = '✅';
+    return;
+  }
+  const debris = debrisPieces[currentDebrisType];
+  currentDebrisCard.textContent = getLocalizedLabel(debris.labelKey);
 }
 
 function showCurrentDebris() {
@@ -101,8 +101,7 @@ function showCurrentDebris() {
     updateGameDashboard();
     return;
   }
-  const debris = debrisPieces[currentDebrisType];
-  currentDebrisCard.textContent = getLocalizedLabel(debris.labelKey);
+  refreshCurrentDebrisLabel();
   choiceButtons.forEach(btn => { btn.disabled = false; });
   updateGameDashboard();
 }
@@ -114,7 +113,6 @@ function setupSortingGame() {
   totalAttempts = 0;
   correctAttempts = 0;
   showCurrentDebris();
-  updateCleanupImpact();
   updateGameDashboard();
 }
 
@@ -138,7 +136,6 @@ function setupRestartGameButton() {
 function handleChoice(target) {
   const type = currentDebrisType;
   const debris = debrisPieces[type];
-  const correct = debris?.target === target;
   const itemLabel = getLocalizedLabel(debris?.labelKey || '');
   totalAttempts += 1;
 
@@ -147,6 +144,7 @@ function handleChoice(target) {
     return;
   }
 
+  const correct = debris.target === target;
   if (correct) {
     totalScore += debris.score;
     correctAttempts += 1;
@@ -159,7 +157,6 @@ function handleChoice(target) {
       true
     );
     showCurrentDebris();
-    updateCleanupImpact();
     updateGameDashboard();
   } else {
     updateInstructions(
@@ -171,3 +168,17 @@ function handleChoice(target) {
     updateGameDashboard();
   }
 }
+
+window.onLanguageChanged = () => {
+  refreshCurrentDebrisLabel();
+  updateGameDashboard();
+  updateInstructions(translations[currentLanguage].gameInstructions, true);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  initLanguageSwitcher();
+  setupChoiceButtons();
+  setupRestartGameButton();
+  setupSortingGame();
+  updateInstructions(translations[currentLanguage].gameInstructions, true);
+});

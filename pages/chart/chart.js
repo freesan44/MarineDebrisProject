@@ -38,6 +38,8 @@ Dependencies:
 - styles.css (chart styles)
 */
 
+const chartBars = document.getElementById('chartBars');
+
 function updateChartLabels() {
   chartData.forEach(item => {
     item.label = getLocalizedLabel(item.labelKey);
@@ -128,3 +130,16 @@ function resizeCanvas() {
   const ctx = canvas.getContext('2d');
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 }
+
+window.onLanguageChanged = () => {
+  updateChartLabels();
+  drawChart();
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  initLanguageSwitcher();
+  updateChartLabels();
+  resizeCanvas();
+  drawChart();
+  window.addEventListener('resize', resizeCanvas);
+});

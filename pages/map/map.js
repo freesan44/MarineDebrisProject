@@ -42,7 +42,6 @@ Dependencies:
 const MAP_CONFIG = {
   width: 800,
   height: 1000,
-  // 日本地理边界（经纬度）
   bounds: {
     north: 45.5,
     south: 31.0,
@@ -51,18 +50,14 @@ const MAP_CONFIG = {
   }
 };
 
-// 将地理坐标转换为图片像素坐标
 function geoToPixel(lat, lng) {
   const latRange = MAP_CONFIG.bounds.north - MAP_CONFIG.bounds.south;
   const lngRange = MAP_CONFIG.bounds.east - MAP_CONFIG.bounds.west;
-
   const x = ((lng - MAP_CONFIG.bounds.west) / lngRange) * MAP_CONFIG.width;
   const y = ((MAP_CONFIG.bounds.north - lat) / latRange) * MAP_CONFIG.height;
-
   return { x, y };
 }
 
-// 日本沿岸区域坐标数据（像素位置）
 const regionPixelCoordinates = {
   hokkaido: geoToPixel(43.5, 142.5),
   tohoku: geoToPixel(39.0, 141.0),
@@ -76,54 +71,50 @@ const regionPixelCoordinates = {
 let selectedRegion = null;
 
 function initMap() {
-  // 添加垃圾分布标记
   addDebrisMarkers();
+  updateRegionCards();
+  if (regionMapData.length > 0) {
+    selectRegion(regionMapData[0]);
+  }
 }
 
 function addDebrisMarkers() {
   const markersContainer = document.getElementById('debris-markers');
   if (!markersContainer) return;
+  markersContainer.innerHTML = '';
 
   regionMapData.forEach(region => {
     const coords = regionPixelCoordinates[region.id];
     if (!coords) return;
-
-    // 根据垃圾浓度设置颜色
     let color;
     if (region.weight === 'low') color = '#00ff00';
     else if (region.weight === 'medium') color = '#ffff00';
     else color = '#ff0000';
 
-    // 创建标记元素
-    const marker = document.createElement('div');
+    const marker = document.createElement('button');
+    marker.type = 'button';
     marker.className = 'debris-marker';
     marker.style.left = `${coords.x}px`;
     marker.style.top = `${coords.y}px`;
     marker.style.backgroundColor = color;
     marker.style.width = `${Math.max(region.value * 2, 12)}px`;
     marker.style.height = `${Math.max(region.value * 2, 12)}px`;
+    marker.setAttribute('aria-label', `${getLocalizedLabel(region.labelKey)} ${region.value}%`);
 
-    // 添加点击事件
     marker.addEventListener('click', () => {
       selectRegion(region);
     });
 
-    // 添加悬停提示
-    marker.title = `${getLocalizedLabel(region.labelKey)} - ゴミ濃度: ${region.value}%`;
-
+    marker.title = `${getLocalizedLabel(region.labelKey)} - ${region.value}%`;
     markersContainer.appendChild(marker);
   });
-}
-
-function addRegionBoundaries() {
-  // 可选：添加日本区域边界（需要GeoJSON数据）
-  // 这里简化处理，使用标记代替
 }
 
 function updateRegionCards() {
   const regionCards = document.getElementById('regionCards');
   if (!regionCards) return;
   regionCards.innerHTML = '';
+
   regionMapData.forEach(region => {
     const card = document.createElement('article');
     card.className = 'region-card';
@@ -134,10 +125,9 @@ function updateRegionCards() {
     `;
     card.addEventListener('click', () => {
       selectRegion(region);
-      // 移动地图到选中区域
-      const coords = regionCoordinates[region.id];
-      if (coords) {
-        map.setView([coords.lat, coords.lng], 7);
+      const mapContainer = document.querySelector('.map-container');
+      if (mapContainer) {
+        mapContainer.scrollIntoView({ behavior: 'smooth' });
       }
     });
     regionCards.appendChild(card);
@@ -155,45 +145,26 @@ function showRegionDetail(region) {
   `;
 }
 
-// 初始化
-document.addEventListener('DOMContentLoaded', () => {
-  initMap();
-  updateRegionCards();
-});
-
 function selectRegion(region) {
   selectedRegion = region;
   showRegionDetail(region);
-
-  // 高亮选中的标记（可选）
   const markers = document.querySelectorAll('.debris-marker');
-  markers.forEach(marker => {
-    marker.classList.remove('selected');
-  });
-
-  // 这里可以添加选中状态的视觉反馈
+  markers.forEach(marker => marker.classList.remove('selected'));
+  const markerIndex = regionMapData.findIndex(item => item.id === region.id);
+  if (markerIndex >= 0) {
+    markers[markerIndex]?.classList.add('selected');
+  }
 }
 
-function updateRegionCards() {
-  const regionCards = document.getElementById('regionCards');
-  if (!regionCards) return;
-  regionCards.innerHTML = '';
-  regionMapData.forEach(region => {
-    const card = document.createElement('article');
-    card.className = 'region-card';
-    card.innerHTML = `
-      <h3>${getLocalizedLabel(region.labelKey)}</h3>
-      <p>${getLocalizedLabel(region.descriptionKey)}</p>
-      <p><strong>${region.value}%</strong> ${translations[currentLanguage].regionValueSuffix}</p>
-    `;
-    card.addEventListener('click', () => {
-      selectRegion(region);
-      // 可选：滚动到地图区域
-      const mapContainer = document.querySelector('.map-container');
-      if (mapContainer) {
-        mapContainer.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-    regionCards.appendChild(card);
-  });
-}
+window.onLanguageChanged = () => {
+  addDebrisMarkers();
+  updateRegionCards();
+  if (selectedRegion) {
+    showRegionDetail(selectedRegion);
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  initLanguageSwitcher();
+  initMap();
+});

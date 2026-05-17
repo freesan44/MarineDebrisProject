@@ -122,7 +122,26 @@ const translations = {
     statusText: '水質回復: {percent}%',
     shareButton: '海の守りを共有する',
     shareSuccess: '共有テキストをクリップボードにコピーしました！',
-    shareFallback: 'コピーに失敗しました。ページを手動で共有してください。'
+    shareFallback: 'コピーに失敗しました。ページを手動で共有してください。',
+    simulationTitle: '模拟影响',
+    simulationCurrent: '当前状态',
+    simulationPartial: '部分清理',
+    simulationFull: '完全清理',
+    debrisLevelLabel: '垃圾量',
+    marineLifeLabel: '海洋生物',
+    waterColorLabel: '海水',
+    marineLifePoor: '受损',
+    marineLifeModerate: '部分恢复',
+    marineLifeHealthy: '健康',
+    waterCloudy: '浑浊',
+    waterModerate: '略显清澈',
+    waterClear: '清澈',
+    simulationImageAltCurrent: '污染的海洋与漂浮垃圾',
+    simulationImageAltPartial: '部分清理后的海岸，仍可见垃圾',
+    simulationImageAltFull: '清澈海水与健康海洋生物',
+    simulationImageCaptionCurrent: '污染水体中的塑料垃圾',
+    simulationImageCaptionPartial: '部分清理后仍需继续努力',
+    simulationImageCaptionFull: '彻底清理后的健康海洋'
   },
   zh: {
     heroEyebrow: '守护日本周边海洋',
@@ -205,7 +224,26 @@ const translations = {
     statusText: '水质恢复: {percent}%',
     shareButton: '分享你的海洋守护成果',
     shareSuccess: '已复制分享内容！',
-    shareFallback: '复制失败，请手动分享该页面。'
+    shareFallback: '复制失败，请手动分享该页面。',
+    simulationTitle: '模拟影响',
+    simulationCurrent: '当前状态',
+    simulationPartial: '部分清理',
+    simulationFull: '完全清理',
+    debrisLevelLabel: '垃圾量',
+    marineLifeLabel: '海洋生物',
+    waterColorLabel: '海水',
+    marineLifePoor: '受损',
+    marineLifeModerate: '部分恢复',
+    marineLifeHealthy: '健康',
+    waterCloudy: '浑浊',
+    waterModerate: '略显清澈',
+    waterClear: '清澈',
+    simulationImageAltCurrent: '污染的海洋与漂浮垃圾',
+    simulationImageAltPartial: '部分清理后的海岸，仍可见垃圾',
+    simulationImageAltFull: '清澈海水与健康海洋生物',
+    simulationImageCaptionCurrent: '污染水体中的塑料垃圾',
+    simulationImageCaptionPartial: '部分清理后仍需继续努力',
+    simulationImageCaptionFull: '彻底清理后的健康海洋'
   },
   en: {
     heroEyebrow: 'Protect Japan’s coastal seas',
@@ -288,7 +326,26 @@ const translations = {
     statusText: 'Water quality restored: {percent}%',
     shareButton: 'Share your ocean protection',
     shareSuccess: 'Share text copied to clipboard!',
-    shareFallback: 'Copy failed; please share the page manually.'
+    shareFallback: 'Copy failed; please share the page manually.',
+    simulationTitle: 'Simulation outcome',
+    simulationCurrent: 'Current state',
+    simulationPartial: 'Partial cleanup',
+    simulationFull: 'Full cleanup',
+    debrisLevelLabel: 'Debris amount',
+    marineLifeLabel: 'Marine life',
+    waterColorLabel: 'Water color',
+    marineLifePoor: 'Harmed',
+    marineLifeModerate: 'Recovering',
+    marineLifeHealthy: 'Healthy',
+    waterCloudy: 'Cloudy',
+    waterModerate: 'Improving',
+    waterClear: 'Clear',
+    simulationImageAltCurrent: 'Polluted ocean water with plastic debris',
+    simulationImageAltPartial: 'Partially cleaned coast with remaining debris',
+    simulationImageAltFull: 'Clear ocean water with healthy marine life',
+    simulationImageCaptionCurrent: 'Polluted water with floating debris',
+    simulationImageCaptionPartial: 'Partial cleanup still needs more care',
+    simulationImageCaptionFull: 'Healthy ocean after full cleanup'
   }
 };
 
@@ -393,6 +450,12 @@ const statusFill = document.getElementById('statusFill');
 const statusText = document.getElementById('statusText');
 const shareButton = document.getElementById('shareButton');
 const impactVisual = document.getElementById('impactVisual');
+const simulationImage = document.getElementById('simulationImage');
+const simulationImageCaption = document.getElementById('simulationImageCaption');
+const simulationButtons = document.querySelectorAll('.simulation-button');
+const debrisLevelText = document.getElementById('debrisLevelText');
+const marineLifeText = document.getElementById('marineLifeText');
+const waterColorText = document.getElementById('waterColorText');
 const startButton = document.getElementById('startExperience');
 const gameScoreEl = document.getElementById('gameScore');
 const gameCorrectEl = document.getElementById('gameCorrect');
@@ -413,6 +476,40 @@ let correctAttempts = 0;
 let totalDebrisCount = 0;
 let gameQueue = [];
 let currentDebrisType = null;
+let currentScenario = 'current';
+
+const simulationScenarios = {
+  current: {
+    labelKey: 'simulationCurrent',
+    debris: 80,
+    marineLifeKey: 'marineLifePoor',
+    waterColorKey: 'waterCloudy',
+    imageSrc: 'https://images.unsplash.com/photo-1528735583853-468c6d9238d8?auto=format&fit=crop&w=900&q=80',
+    imageAltKey: 'simulationImageAltCurrent',
+    imageCaptionKey: 'simulationImageCaptionCurrent',
+    impactClass: 'impact-current'
+  },
+  partial: {
+    labelKey: 'simulationPartial',
+    debris: 45,
+    marineLifeKey: 'marineLifeModerate',
+    waterColorKey: 'waterModerate',
+    imageSrc: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80',
+    imageAltKey: 'simulationImageAltPartial',
+    imageCaptionKey: 'simulationImageCaptionPartial',
+    impactClass: 'impact-moderate'
+  },
+  full: {
+    labelKey: 'simulationFull',
+    debris: 10,
+    marineLifeKey: 'marineLifeHealthy',
+    waterColorKey: 'waterClear',
+    imageSrc: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80',
+    imageAltKey: 'simulationImageAltFull',
+    imageCaptionKey: 'simulationImageCaptionFull',
+    impactClass: 'impact-clean'
+  }
+};
 
 function translatePage() {
   document.documentElement.lang = currentLanguage;
@@ -434,6 +531,7 @@ function translatePage() {
     currentDebrisCard.textContent = getLocalizedLabel(debrisPieces[currentDebrisType].labelKey);
   }
   updateGameDashboard();
+  updateSimulationInfo(currentScenario);
 }
 
 function formatTemplate(template, values) {
@@ -484,13 +582,41 @@ function showRegionDetail(region) {
   `;
 }
 
-function updateCleanupImpact() {
-  const percent = Math.min(100, totalScore * 4);
+function updateCleanupImpact(scenarioKey = currentScenario) {
+  const scenario = simulationScenarios[scenarioKey] || simulationScenarios.current;
+  const percent = Math.min(100, Math.max(0, 100 - scenario.debris));
   if (statusFill) statusFill.style.width = `${percent}%`;
   if (statusText) statusText.textContent = translations[currentLanguage].statusText.replace('{percent}', percent);
   if (impactVisual) {
-    impactVisual.classList.toggle('impact-clean', percent >= 50);
+    impactVisual.classList.remove('impact-current', 'impact-moderate', 'impact-clean');
+    impactVisual.classList.add(scenario.impactClass);
   }
+}
+
+function updateSimulationInfo(scenarioKey) {
+  const scenario = simulationScenarios[scenarioKey] || simulationScenarios.current;
+  currentScenario = scenarioKey;
+  simulationButtons.forEach(button => {
+    button.classList.toggle('active', button.dataset.scenario === scenarioKey);
+  });
+  if (debrisLevelText) debrisLevelText.textContent = `${scenario.debris}%`;
+  if (marineLifeText) marineLifeText.textContent = translations[currentLanguage][scenario.marineLifeKey] || scenario.marineLifeKey;
+  if (waterColorText) waterColorText.textContent = translations[currentLanguage][scenario.waterColorKey] || scenario.waterColorKey;
+  if (simulationImage && scenario.imageSrc) simulationImage.src = scenario.imageSrc;
+  if (simulationImage && scenario.imageAltKey) simulationImage.alt = translations[currentLanguage][scenario.imageAltKey] || scenario.imageAltKey;
+  if (simulationImageCaption) simulationImageCaption.textContent = translations[currentLanguage][scenario.imageCaptionKey] || scenario.imageCaptionKey;
+  updateCleanupImpact(scenarioKey);
+}
+
+function setupSimulationControls() {
+  if (!simulationButtons.length) return;
+  simulationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const scenario = button.dataset.scenario;
+      if (!scenario || !simulationScenarios[scenario]) return;
+      updateSimulationInfo(scenario);
+    });
+  });
 }
 
 function updateGameDashboard() {
@@ -812,6 +938,7 @@ function init() {
   setupTabs();
   setupShareButton();
   setupStartButton();
+  setupSimulationControls();
   resizeCanvas();
   drawChart();
   updateCleanupImpact();
