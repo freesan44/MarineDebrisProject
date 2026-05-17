@@ -940,6 +940,13 @@ canvas {
   box-shadow: 0 18px 30px rgba(12, 76, 114, 0.12);
 }
 
+.region-card.active {
+  background: #e8f4ff;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 4px rgba(0, 142, 214, 0.15), 0 12px 26px rgba(12, 76, 114, 0.12);
+  transition: all 0.3s ease;
+}
+
 .region-card h3 {
   margin: 0 0 0.5rem;
   color: var(--accent-strong);
@@ -959,6 +966,31 @@ canvas {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
   border: 1px solid rgba(11, 110, 153, 0.16);
+}
+
+.map-controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.map-control-button {
+  border: 1px solid rgba(11, 110, 153, 0.18);
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.map-control-button:hover,
+.map-control-button.active {
+  border-color: var(--accent);
+  background: rgba(0, 142, 214, 0.1);
+  transform: translateY(-1px);
 }
 
 .legend-item {
@@ -988,12 +1020,16 @@ canvas {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
 }
 
 .japan-map-image {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;
   border-radius: 24px;
   box-shadow: 0 20px 45px rgba(15, 42, 80, 0.08);
 }
@@ -1015,13 +1051,18 @@ canvas {
   cursor: pointer;
   pointer-events: auto;
   transform: translate(-50%, -50%);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, width 0.2s ease, height 0.2s ease;
   animation: pulse 2s infinite;
 }
 
 .debris-marker:hover {
   transform: translate(-50%, -50%) scale(1.2);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.debris-marker.selected {
+  transform: translate(-50%, -50%) scale(1.3);
+  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.55), 0 6px 18px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes pulse {
@@ -1108,6 +1149,7 @@ canvas {
   background: #ffffff;
   border: 1px solid rgba(11, 110, 153, 0.12);
   box-shadow: 0 12px 26px rgba(12, 76, 114, 0.06);
+  cursor: pointer;
 }
 
 .region-card h3 {

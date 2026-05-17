@@ -35,47 +35,51 @@ Technical implementation:
 
 Dependencies:
 - shared.js (region data and translations)
-- japan_map.svg (map image)
+- 外部真实地图图片 URL (map image)
 */
 
-// 日本地图图片尺寸和坐标映射
+// 日本地图图片的地理坐标范围（基于真实地图投影）
+// 图片显示范围大约：西125°E 东150°E 南24°N 北46°N
 const MAP_CONFIG = {
   width: 800,
   height: 1000,
   bounds: {
-    north: 45.5,
-    south: 31.0,
-    east: 146.0,
-    west: 128.0
+    north: 46.0,
+    south: 24.0,
+    east: 150.0,
+    west: 125.0
   }
 };
 
-function geoToPixel(lat, lng) {
+function geoToPercent(lat, lng) {
   const latRange = MAP_CONFIG.bounds.north - MAP_CONFIG.bounds.south;
   const lngRange = MAP_CONFIG.bounds.east - MAP_CONFIG.bounds.west;
-  const x = ((lng - MAP_CONFIG.bounds.west) / lngRange) * MAP_CONFIG.width;
-  const y = ((MAP_CONFIG.bounds.north - lat) / latRange) * MAP_CONFIG.height;
+  const x = ((lng - MAP_CONFIG.bounds.west) / lngRange) * 100;
+  const y = ((MAP_CONFIG.bounds.north - lat) / latRange) * 100;
   return { x, y };
 }
 
-const regionPixelCoordinates = {
-  hokkaido: geoToPixel(43.5, 142.5),
-  tohoku: geoToPixel(39.0, 141.0),
-  kanto: geoToPixel(35.7, 139.7),
-  chubu: geoToPixel(35.0, 137.0),
-  kansai: geoToPixel(34.7, 135.5),
-  chugoku_shikoku: geoToPixel(34.0, 133.0),
-  kyushu_okinawa: geoToPixel(31.5, 130.5)
+// 日本各地区在地图上的正确位置（单位：度）
+const regionRelativeCoordinates = {
+  hokkaido: geoToPercent(42.5, 144.0),      // 北海道 - 右上方
+  tohoku: geoToPercent(39.5, 142.0),        // 东北 - 中上方
+  kanto: geoToPercent(36.5, 141.0),         // 关东 - 右侧中上
+  chubu: geoToPercent(35.5, 137.5),         // 中部 - 中间
+  kansai: geoToPercent(34.5, 135.5),        // 关西 - 中下方
+  chugoku_shikoku: geoToPercent(34.5, 133.0), // 中国四国 - 中下方左
+  kyushu_okinawa: geoToPercent(32.5, 131.0)   // 九州冲绳 - 下方
 };
 
 let selectedRegion = null;
+let currentMapFilter = 'all';
+
+function getVisibleRegions() {
+  return regionMapData.filter(region => currentMapFilter === 'all' || region.weight === currentMapFilter);
+}
 
 function initMap() {
-  addDebrisMarkers();
-  updateRegionCards();
-  if (regionMapData.length > 0) {
-    selectRegion(regionMapData[0]);
-  }
+  initMapControls();
+  updateMapDisplay();
 }
 
 function addDebrisMarkers() {
@@ -83,8 +87,8 @@ function addDebrisMarkers() {
   if (!markersContainer) return;
   markersContainer.innerHTML = '';
 
-  regionMapData.forEach(region => {
-    const coords = regionPixelCoordinates[region.id];
+  getVisibleRegions().forEach(region => {
+    const coords = regionRelativeCoordinates[region.id];
     if (!coords) return;
     let color;
     if (region.weight === 'low') color = '#00ff00';
@@ -94,16 +98,24 @@ function addDebrisMarkers() {
     const marker = document.createElement('button');
     marker.type = 'button';
     marker.className = 'debris-marker';
-    marker.style.left = `${coords.x}px`;
-    marker.style.top = `${coords.y}px`;
+    marker.style.left = `${coords.x}%`;
+    marker.style.top = `${coords.y}%`;
     marker.style.backgroundColor = color;
-    marker.style.width = `${Math.max(region.value * 2, 12)}px`;
-    marker.style.height = `${Math.max(region.value * 2, 12)}px`;
+    
+    // 针对不同地区调整标记大小
+    let markerSize;
+      markerSize = Math.max(region.value * 1.8, 16);
+    marker.style.width = `${markerSize}px`;
+    marker.style.height = `${markerSize}px`;
     marker.setAttribute('aria-label', `${getLocalizedLabel(region.labelKey)} ${region.value}%`);
 
     marker.addEventListener('click', () => {
       selectRegion(region);
     });
+
+    if (selectedRegion && selectedRegion.id === region.id) {
+      marker.classList.add('selected');
+    }
 
     marker.title = `${getLocalizedLabel(region.labelKey)} - ${region.value}%`;
     markersContainer.appendChild(marker);
@@ -115,9 +127,10 @@ function updateRegionCards() {
   if (!regionCards) return;
   regionCards.innerHTML = '';
 
-  regionMapData.forEach(region => {
+  getVisibleRegions().forEach(region => {
     const card = document.createElement('article');
     card.className = 'region-card';
+    card.id = `region-card-${region.id}`;
     card.innerHTML = `
       <h3>${getLocalizedLabel(region.labelKey)}</h3>
       <p>${getLocalizedLabel(region.descriptionKey)}</p>
@@ -125,10 +138,6 @@ function updateRegionCards() {
     `;
     card.addEventListener('click', () => {
       selectRegion(region);
-      const mapContainer = document.querySelector('.map-container');
-      if (mapContainer) {
-        mapContainer.scrollIntoView({ behavior: 'smooth' });
-      }
     });
     regionCards.appendChild(card);
   });
@@ -145,23 +154,73 @@ function showRegionDetail(region) {
   `;
 }
 
+function updateMapDisplay() {
+  addDebrisMarkers();
+  updateRegionCards();
+
+  const visibleRegions = getVisibleRegions();
+  if (visibleRegions.length === 0) {
+    document.getElementById('mapDetail').innerHTML = `<p>${translations[currentLanguage].mapNoData || 'No data for selected filter.'}</p>`;
+    selectedRegion = null;
+    return;
+  }
+
+  if (!selectedRegion || !visibleRegions.some(region => region.id === selectedRegion.id)) {
+    selectRegion(visibleRegions[0]);
+    return;
+  }
+
+  showRegionDetail(selectedRegion);
+}
+
+function setMapFilter(filter) {
+  currentMapFilter = filter;
+  document.querySelectorAll('.map-control-button').forEach(button => {
+    button.classList.toggle('active', button.dataset.filter === filter);
+  });
+  updateMapDisplay();
+}
+
+function initMapControls() {
+  const mapControls = document.getElementById('mapControls');
+  if (!mapControls) return;
+
+  mapControls.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => {
+      setMapFilter(button.dataset.filter || 'all');
+    });
+  });
+}
+
 function selectRegion(region) {
   selectedRegion = region;
   showRegionDetail(region);
+  
+  // 移除所有标记的选中状态
   const markers = document.querySelectorAll('.debris-marker');
   markers.forEach(marker => marker.classList.remove('selected'));
-  const markerIndex = regionMapData.findIndex(item => item.id === region.id);
-  if (markerIndex >= 0) {
-    markers[markerIndex]?.classList.add('selected');
+  
+  // 移除所有卡片的高亮
+  document.querySelectorAll('.region-card').forEach(card => card.classList.remove('active'));
+  
+  // 高亮对应标记
+  markers.forEach((marker, index) => {
+    const visibleRegions = getVisibleRegions();
+    if (visibleRegions[index] && visibleRegions[index].id === region.id) {
+      marker.classList.add('selected');
+    }
+  });
+  
+  // 高亮对应卡片并滚动
+  const regionCard = document.getElementById(`region-card-${region.id}`);
+  if (regionCard) {
+    regionCard.classList.add('active');
+    regionCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 
 window.onLanguageChanged = () => {
-  addDebrisMarkers();
-  updateRegionCards();
-  if (selectedRegion) {
-    showRegionDetail(selectedRegion);
-  }
+  updateMapDisplay();
 };
 
 document.addEventListener('DOMContentLoaded', () => {

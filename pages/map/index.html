@@ -19,7 +19,7 @@
       <div class="map-panel">
         <div class="map-container" aria-label="日本の海洋ゴミマップ">
           <div class="map-wrapper">
-            <img src="japan_map.svg" alt="日本地图" class="japan-map-image" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Japan_relief_location_map.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="日本实景地图" class="japan-map-image" />
             <div id="debris-markers" class="debris-markers"></div>
           </div>
         </div>
@@ -36,6 +36,12 @@
             <span class="legend-color" style="background-color: #ff0000;"></span>
             <span data-i18n="mapHigh">高</span>
           </div>
+        </div>
+        <div id="mapControls" class="map-controls" aria-label="Map filter controls">
+          <button type="button" class="map-control-button active" data-filter="all" data-i18n="mapFilterAll">全部</button>
+          <button type="button" class="map-control-button" data-filter="low" data-i18n="mapLow">低</button>
+          <button type="button" class="map-control-button" data-filter="medium" data-i18n="mapMedium">中</button>
+          <button type="button" class="map-control-button" data-filter="high" data-i18n="mapHigh">高</button>
         </div>
       </div>
       <div id="regionCards" class="region-cards"></div>
