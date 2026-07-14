@@ -8,7 +8,6 @@ This script handles scenario switching, localization, and cleanup impact visuali
 
 const statusFill = document.getElementById('statusFill');
 const statusText = document.getElementById('statusText');
-const shareButton = document.getElementById('shareButton');
 const impactVisual = document.getElementById('impactVisual');
 const simulationButtons = document.querySelectorAll('.simulation-button');
 const simulationImage = document.getElementById('simulationImage');
@@ -25,7 +24,7 @@ const simulationScenarios = {
     debris: 80,
     marineLifeKey: 'marineLifePoor',
     waterColorKey: 'waterCloudy',
-    imageSrc: 'https://images.unsplash.com/photo-1528735583853-468c6d9238d8?auto=format&fit=crop&w=900&q=80',
+    imageSrc: '../../assets/generated/simulation-current.png',
     imageAltKey: 'simulationImageAltCurrent',
     imageCaptionKey: 'simulationImageCaptionCurrent',
     impactClass: 'impact-current'
@@ -35,7 +34,7 @@ const simulationScenarios = {
     debris: 45,
     marineLifeKey: 'marineLifeModerate',
     waterColorKey: 'waterModerate',
-    imageSrc: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80',
+    imageSrc: '../../assets/generated/simulation-partial.png',
     imageAltKey: 'simulationImageAltPartial',
     imageCaptionKey: 'simulationImageCaptionPartial',
     impactClass: 'impact-moderate'
@@ -45,7 +44,7 @@ const simulationScenarios = {
     debris: 10,
     marineLifeKey: 'marineLifeHealthy',
     waterColorKey: 'waterClear',
-    imageSrc: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80',
+    imageSrc: '../../assets/generated/simulation-full.png',
     imageAltKey: 'simulationImageAltFull',
     imageCaptionKey: 'simulationImageCaptionFull',
     impactClass: 'impact-clean'
@@ -102,23 +101,6 @@ function setupSimulationControls() {
   });
 }
 
-/**
- * 初始化分享按钮交互
- * Initialize share button interaction
- */
-function setupShareButton() {
-  if (!shareButton) return;
-  shareButton.addEventListener('click', async () => {
-    const shareText = `${translations[currentLanguage].heroTitle} - ${translations[currentLanguage].heroSubtitle}`;
-    try {
-      await navigator.clipboard.writeText(shareText);
-      alert(translations[currentLanguage].shareSuccess);
-    } catch (error) {
-      alert(translations[currentLanguage].shareFallback);
-    }
-  });
-}
-
 window.onLanguageChanged = () => {
   updateSimulationInfo(currentScenario);
 };
@@ -126,6 +108,5 @@ window.onLanguageChanged = () => {
 document.addEventListener('DOMContentLoaded', () => {
   initLanguageSwitcher();
   setupSimulationControls();
-  setupShareButton();
   updateSimulationInfo(currentScenario);
 });

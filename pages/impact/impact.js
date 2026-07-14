@@ -9,10 +9,10 @@ This script initializes language support for the impact page and adds highlight 
 document.addEventListener('DOMContentLoaded', () => {
   initLanguageSwitcher();
 
-  const impactArticles = document.querySelectorAll('.impact-grid article');
+  const impactArticles = document.querySelectorAll('.impact-path-card');
   impactArticles.forEach(article => {
     article.addEventListener('click', () => {
-      impactArticles.forEach(item => item.classList.remove('selected'));
+      impactArticles.forEach(item => item.classList.remove('selected', 'active'));
       article.classList.add('selected');
     });
   });

@@ -1,145 +1,182 @@
-/*
-海洋垃圾项目 - 图表页面脚本
-Marine Debris Project - Chart Page Script
-
-此文件负责图表页面的数据可视化和交互功能。
-This file handles data visualization and interactive features for the chart page.
-
-主要功能：
-- 柱状图和饼图的绘制
-- 数据标签的本地化更新
-- 动画效果的实现
-- 响应式图表布局
-
-Main features:
-- Bar chart and pie chart drawing
-- Localized data label updates
-- Animation effects implementation
-- Responsive chart layout
-
-技术实现：
-- Canvas API 绘制饼图
-- CSS 动画实现柱状图增长效果
-- 动态数据绑定和更新
-- 颜色编码区分不同类型数据
-
-Technical implementation:
-- Canvas API for pie chart drawing
-- CSS animations for bar chart growth effects
-- Dynamic data binding and updates
-- Color coding for different data types
-
-依赖：
-- shared.js (图表数据和翻译)
-- styles.css (图表样式)
-
-Dependencies:
-- shared.js (chart data and translations)
-- styles.css (chart styles)
-*/
-
 const chartBars = document.getElementById('chartBars');
+const leadingCategory = document.getElementById('leadingCategory');
 
-function updateChartLabels() {
-  chartData.forEach(item => {
-    item.label = getLocalizedLabel(item.labelKey);
-  });
+const chartTheme = {
+  macro: {
+    start: '#0b6e99',
+    end: '#75d5ff',
+    soft: 'rgba(117, 213, 255, 0.18)'
+  },
+  micro: {
+    start: '#3157d5',
+    end: '#9eb5ff',
+    soft: 'rgba(49, 87, 213, 0.15)'
+  },
+  additive: {
+    start: '#00a38a',
+    end: '#9cf2d6',
+    soft: 'rgba(0, 163, 138, 0.16)'
+  },
+  fiber: {
+    start: '#7c4fd6',
+    end: '#c5a8ff',
+    soft: 'rgba(124, 79, 214, 0.14)'
+  },
+  pellet: {
+    start: '#d77a15',
+    end: '#ffd166',
+    soft: 'rgba(215, 122, 21, 0.16)'
+  },
+  detergent: {
+    start: '#d24b79',
+    end: '#ff9dbc',
+    soft: 'rgba(210, 75, 121, 0.14)'
+  },
+  total: {
+    start: '#08304a',
+    end: '#0b6e99',
+    soft: 'rgba(8, 48, 74, 0.15)'
+  }
+};
+
+function getChartItems() {
+  return chartData.map(item => ({
+    ...item,
+    label: getLocalizedLabel(item.labelKey),
+    source: item.sourceKey ? getLocalizedLabel(item.sourceKey) : '',
+    minValue: item.min ?? item.value ?? 0,
+    maxValue: item.max ?? item.value ?? 0
+  }));
+}
+
+function trimDecimal(value) {
+  return Number(value.toFixed(1)).toLocaleString();
+}
+
+function formatWeight(value) {
+  if (currentLanguage === 'ja') {
+    if (value >= 10000) return `${trimDecimal(value / 10000)}万トン`;
+    return `${value.toLocaleString()}トン`;
+  }
+
+  if (currentLanguage === 'en') {
+    if (value >= 10000) return `${trimDecimal(value / 1000)} thousand tons`;
+    return `${value.toLocaleString()} tons`;
+  }
+
+  if (value >= 10000) return `${trimDecimal(value / 10000)}万吨`;
+  return `${value.toLocaleString()} 吨`;
+}
+
+function formatRange(item) {
+  const prefixes = {
+    ja: '年間 約',
+    zh: '每年约 ',
+    en: 'about '
+  };
+  const suffixes = {
+    ja: '',
+    zh: '',
+    en: ' each year'
+  };
+  const prefix = prefixes[currentLanguage] ?? prefixes.en;
+  const suffix = suffixes[currentLanguage] ?? suffixes.en;
+
+  if (item.minValue === item.maxValue) {
+    return `${prefix}${formatWeight(item.maxValue)}${suffix}`;
+  }
+
+  if (currentLanguage === 'zh' && item.minValue < 10000 && item.maxValue < 10000) {
+    return `${prefix}${item.minValue.toLocaleString()}-${item.maxValue.toLocaleString()} 吨`;
+  }
+
+  if (currentLanguage === 'zh' && item.minValue >= 10000 && item.maxValue >= 10000) {
+    return `${prefix}${trimDecimal(item.minValue / 10000)}万-${trimDecimal(item.maxValue / 10000)}万吨`;
+  }
+
+  if (currentLanguage === 'ja' && item.minValue < 10000 && item.maxValue < 10000) {
+    return `${prefix}${item.minValue.toLocaleString()}-${item.maxValue.toLocaleString()}トン`;
+  }
+
+  if (currentLanguage === 'ja' && item.minValue >= 10000 && item.maxValue >= 10000) {
+    return `${prefix}${trimDecimal(item.minValue / 10000)}万-${trimDecimal(item.maxValue / 10000)}万トン`;
+  }
+
+  if (currentLanguage === 'en' && item.minValue < 10000 && item.maxValue < 10000) {
+    return `${prefix}${item.minValue.toLocaleString()}-${item.maxValue.toLocaleString()} tons${suffix}`;
+  }
+
+  return `${prefix}${formatWeight(item.minValue)}-${formatWeight(item.maxValue)}${suffix}`;
+}
+
+function formatMinimumLabel(value) {
+  const labels = {
+    ja: '下限',
+    zh: '下限',
+    en: 'min'
+  };
+
+  return `${labels[currentLanguage] || labels.en} ${formatWeight(value)}`;
+}
+
+function setLeadingMetric(items) {
+  if (!leadingCategory) return;
+
+  const total = items.find(item => item.type === 'total');
+  leadingCategory.textContent = total ? formatRange(total) : '';
 }
 
 function renderChartBars() {
   if (!chartBars) return;
+
+  const items = getChartItems();
+  const spatialItems = items.filter(item => item.type !== 'total');
+  const maxValue = Math.max(...spatialItems.map(item => item.maxValue));
+  const fragment = document.createDocumentFragment();
+
   chartBars.innerHTML = '';
-  const maxValue = Math.max(...chartData.map(d => d.value));
-  chartData.forEach((item, index) => {
-    const row = document.createElement('div');
-    row.className = 'chart-row';
-    const color = item.type === 'recycle' ? 'linear-gradient(90deg, #4CAF50, #66BB6A)' : 'linear-gradient(90deg, #FF9800, #FFB74D)';
-    const width = Math.max(12, (item.value / maxValue) * 100);
+  setLeadingMetric(items);
+
+  spatialItems.forEach((item, index) => {
+    const palette = chartTheme[item.type] || chartTheme.micro;
+    const width = Math.max(7, (item.maxValue / maxValue) * 100);
+    const markerLeft = Math.min(100, Math.max(0, (item.minValue / maxValue) * 100));
+    const rangeLabel = item.minValue === item.maxValue ? '' : formatMinimumLabel(item.minValue);
+    const row = document.createElement('article');
+
+    row.className = 'spatial-bar-card';
+    row.style.setProperty('--bar-width', `${width}%`);
+    row.style.setProperty('--marker-left', `${markerLeft}%`);
+    row.style.setProperty('--bar-start', palette.start);
+    row.style.setProperty('--bar-end', palette.end);
+    row.style.setProperty('--bar-soft', palette.soft);
+    row.style.setProperty('--bar-delay', `${index * 110}ms`);
     row.innerHTML = `
-      <div class="chart-row-label">${item.label}</div>
-      <div class="chart-row-bar-wrap">
-        <div class="chart-row-bar" style="--bar-width: ${width}%; background: ${color}; animation: barGrow 1.5s ease-out ${index * 0.2}s forwards;"></div>
+      <div class="spatial-bar-top">
+        <div>
+          <span class="spatial-index">0${index + 1}</span>
+          <h4>${item.label}</h4>
+        </div>
+        <strong>${formatRange(item)}</strong>
       </div>
-      <div class="chart-row-value">${item.value}%</div>
+      <div class="spatial-track">
+        <span class="spatial-fill"></span>
+        <span class="spatial-marker${rangeLabel ? '' : ' is-fixed'}" aria-hidden="true"></span>
+      </div>
+      <div class="spatial-bar-foot">
+        <small>${item.source}</small>
+        <span>${rangeLabel || item.label}</span>
+      </div>
     `;
-    chartBars.appendChild(row);
-  });
-}
-
-function drawChart() {
-  const canvas = document.getElementById('debrisChart');
-  if (!canvas) return;
-  updateChartLabels();
-  const ctx = canvas.getContext('2d');
-  const width = canvas.width;
-  const height = canvas.height;
-  const padding = 60;
-  const maxValue = Math.max(...chartData.map(d => d.value));
-  const barWidth = (width - padding * 2) / chartData.length - 20;
-
-  ctx.clearRect(0, 0, width, height);
-  ctx.fillStyle = '#eef9ff';
-  ctx.fillRect(0, 0, width, height);
-
-  ctx.font = '600 16px Inter, sans-serif';
-  ctx.fillStyle = 'var(--text)';
-  ctx.fillText(translations[currentLanguage].chartCanvasTitle, padding, 32);
-
-  chartData.forEach((item, index) => {
-    const x = padding + index * (barWidth + 30);
-    const barHeight = (item.value / maxValue) * (height - padding * 2);
-    const y = height - padding - barHeight;
-    const gradient = ctx.createLinearGradient(0, y, 0, y + barHeight);
-    if (item.type === 'recycle') {
-      gradient.addColorStop(0, '#4CAF50');
-      gradient.addColorStop(1, '#66BB6A');
-    } else {
-      gradient.addColorStop(0, '#FF9800');
-      gradient.addColorStop(1, '#FFB74D');
-    }
-    ctx.fillStyle = gradient;
-    ctx.fillRect(x, y, barWidth, barHeight);
-
-    ctx.fillStyle = 'var(--text)';
-    ctx.font = '600 14px Inter, sans-serif';
-    ctx.fillText(`${item.value}%`, x + barWidth / 2 - 10, y - 10);
-    ctx.save();
-    ctx.translate(x + barWidth / 2, height - padding + 18);
-    ctx.rotate(-Math.PI / 8);
-    ctx.textAlign = 'center';
-    ctx.fillText(item.label, 0, 0);
-    ctx.restore();
+    fragment.appendChild(row);
   });
 
-  ctx.strokeStyle = 'rgba(15, 42, 80, 0.2)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(padding, height - padding);
-  ctx.lineTo(width - padding + 10, height - padding);
-  ctx.stroke();
-  renderChartBars();
+  chartBars.appendChild(fragment);
 }
 
-function resizeCanvas() {
-  const canvas = document.getElementById('debrisChart');
-  if (!canvas) return;
-  const ratio = window.devicePixelRatio || 1;
-  const displayedWidth = canvas.clientWidth;
-  canvas.width = displayedWidth * ratio;
-  canvas.height = 360 * ratio;
-  const ctx = canvas.getContext('2d');
-  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-}
-
-window.onLanguageChanged = () => {
-  updateChartLabels();
-  drawChart();
-};
+window.onLanguageChanged = renderChartBars;
 
 document.addEventListener('DOMContentLoaded', () => {
   initLanguageSwitcher();
-  updateChartLabels();
-  resizeCanvas();
-  drawChart();
-  window.addEventListener('resize', resizeCanvas);
+  renderChartBars();
 });

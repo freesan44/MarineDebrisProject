@@ -11,71 +11,94 @@
 </head>
 <body data-page="chart">
   <main>
-    <section class="section chart" id="chart-page">
-      <div class="section-head">
-        <h2 data-i18n="chartTitle">日本周辺のゴミ発生源データ</h2>
-        <p data-i18n="chartDescription">沿岸で集められたデータをもとに、どの種類のゴミが多いかを可視化します。</p>
-      </div>
-
-      <!-- 数据源说明 -->
-      <div class="data-source-info" id="dataSourceInfo">
-        <div class="info-badge">ℹ️ 数据来源</div>
-        <p class="source-text">
-          数据来自 <strong>日本環境省（Ministry of the Environment）</strong> 
-          的 <a href="https://www.env.go.jp/water/marine_litter/" target="_blank" rel="noopener">海洋ゴミ調査</a>
-          （2023-2024年，沿岸30个采样点每月调查）。根据官方报告，陆源垃圾占80%，海源占20%。
-        </p>
-        <p class="unit-text">📊 数值单位：相对浓度百分比（%）基于物品计数。</p>
-        <p class="citation">引用：MOEJ Marine Litter Survey Results (2023-2024). Available at: <a href="https://www.env.go.jp/water/marine_litter/" target="_blank">https://www.env.go.jp/water/marine_litter/</a></p>
-      </div>
-
-      <div class="chart-panel">
-        <div class="chart-canvas-wrapper">
-          <canvas id="debrisChart" width="600" height="360" aria-label="海洋ゴミ種類の棒グラフ"></canvas>
-          <div class="chart-badge">
-            <span class="chart-badge-icon">📊</span>
-            <span data-i18n="chartCanvasTitle">日本近海主要海洋ゴミ类型</span>
-          </div>
+    <section class="section chart summary-page data-redesign" id="chart-page">
+      <div class="data-hero">
+        <div>
+          <p class="section-kicker" data-i18n="chartKicker">数据证据</p>
+          <h2 data-i18n="chartTitle">日本周边海洋垃圾量：按垃圾类型看影响</h2>
+          <p data-i18n="chartDescription">这里使用日本环境省的年度推计资料，把塑料垃圾、道路粉尘、衣物纤维、洗涤用品等可量化来源放在一起比较，让用户更直观地看到哪些日常垃圾正在影响日本周边海洋。</p>
         </div>
-        <div class="chart-body">
-          <div class="chart-legend">
-            <div><span class="legend-color recycle"></span><span data-i18n="chartLegendRecycle">資源として回収可能</span></div>
-            <div><span class="legend-color trash"></span><span data-i18n="chartLegendTrash">一般ゴミ</span></div>
-          </div>
-          <div class="chart-bars" id="chartBars" aria-label="海洋ゴミ数据柱状图"></div>
+        <div class="data-method-card">
+          <span data-i18n="chartMethodLabel">阅读方式</span>
+          <strong data-i18n="chartMethodValue">日本周边 · 每年约多少吨</strong>
+          <small data-i18n="chartMethodNote">把复杂的推计值换成更容易读懂的生活化数量。</small>
         </div>
       </div>
 
-      <!-- 详细说明 -->
-      <div class="chart-details" id="chartDetails">
-        <h3>🔍 各类垃圾详细说明</h3>
-        <div class="details-grid" id="detailsGrid">
-          <div class="detail-card">
-            <h4>塑料瓶</h4>
-            <p>主要来自饮料消费，占35%。可回收，但分解需数百年。</p>
+      <div class="summary-grid evidence-grid" id="dataSourceInfo">
+        <article class="summary-tile evidence-tile">
+          <span data-i18n="chartInputLabel">年度总量</span>
+          <strong data-i18n="chartInputValue">每年约 1.6万-3.1万吨</strong>
+          <small data-i18n="chartInputNote">日本环境省按来源和品目估算进入海洋的塑料垃圾总量。</small>
+          <a href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener" data-i18n="chartSourceMOE2025">环境省 FY2025</a>
+        </article>
+        <article class="summary-tile evidence-tile emphasis">
+          <span data-i18n="chartPlasticLabel">大块塑料垃圾</span>
+          <strong>每年约 1,300-8,600 吨</strong>
+          <small data-i18n="chartPlasticNote">包含被丢弃的塑料、海岸投弃物等看得见、捡得起的垃圾。</small>
+          <a href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener" data-i18n="chartSourceMOE2025">环境省 FY2025</a>
+        </article>
+        <article class="summary-tile evidence-tile">
+          <span data-i18n="chartLandLabel">微塑料粉尘</span>
+          <strong>每年约 1.4万-2.0万吨</strong>
+          <small data-i18n="chartLandNote">轮胎、道路标线、涂料、人工草坪等磨损后，会变成细小颗粒随雨水进入水域。</small>
+          <a href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener" data-i18n="chartSourceMOE2025">环境省 FY2025</a>
+        </article>
+        <article class="summary-tile evidence-tile">
+          <span data-i18n="chartRiverLabel">衣物纤维与洗剂</span>
+          <strong>纤维约 230-240 吨</strong>
+          <small data-i18n="chartRiverNote">洗衣掉落的纤维、洗涤用品里的微胶囊，也会通过污水系统进入海洋。</small>
+          <a href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener" data-i18n="chartSourceMOE2025">环境省 FY2025</a>
+        </article>
+      </div>
+
+      <div class="chart-panel marine-volume-board">
+        <div class="volume-spotlight">
+          <p data-i18n="chartCompositionLabel">类型对比</p>
+          <h3 data-i18n="chartCompositionTitle">哪些垃圾正在流向日本周边海洋</h3>
+          <div class="volume-highlights" aria-label="数据阅读提示">
+            <span data-i18n="chartHighlightOne">最大项来自轮胎、道路标线等磨损粉尘</span>
+            <span data-i18n="chartHighlightTwo">衣物纤维来自每一次日常洗衣</span>
+            <span data-i18n="chartHighlightThree">洗剂香味胶囊虽少，却很贴近日常生活</span>
           </div>
-          <div class="detail-card">
-            <h4>渔具/绳索</h4>
-            <p>渔业废弃物，占24%。对海洋生物造成缠绕和摄入危害。</p>
-          </div>
-          <div class="detail-card">
-            <h4>发泡胶碎片</h4>
-            <p>占18%，来自包装和渔具浮标。易碎裂成微塑料。</p>
-          </div>
-          <div class="detail-card">
-            <h4>饮料罐/瓶</h4>
-            <p>占13%，金属和玻璃制品，可回收但常被丢弃。</p>
-          </div>
-          <div class="detail-card">
-            <h4>其他垃圾</h4>
-            <p>占10%，包括纸张、木材等杂项物品。</p>
-          </div>
+          <strong id="leadingCategory">每年约 1.6万-3.1万吨</strong>
+          <span data-i18n="chartVolumeTotalLabel">日本海洋塑料垃圾流出总量</span>
+          <small data-i18n="chartVolumeNote">包含大块塑料、微塑料、洗衣纤维、洗剂香味胶囊、道路和轮胎粉尘等已可估算项目。</small>
+        </div>
+        <div class="chart-bars spatial-bars" id="chartBars" aria-label="日本周边海洋垃圾类型数量柱状图"></div>
+      </div>
+
+      <div class="chart-details source-panel" id="chartDetails">
+        <div class="chart-details-head">
+          <p data-i18n="chartDetailsKicker">来源说明</p>
+          <h3 data-i18n="chartDetailsTitle">数据从哪里来，应该怎么读</h3>
+        </div>
+        <div class="source-list">
+          <a class="source-link-card" href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener">
+            <span data-i18n="chartSourceMOEEstimate">环境省推计资料</span>
+            <strong data-i18n="chartSourceMOEEstimateTitle">海洋垃圾量化方法</strong>
+            <small data-i18n="chartSourceMOEEstimateText">用于说明环境省如何按来源和品目估算进入海洋的垃圾量。</small>
+          </a>
+          <a class="source-link-card" href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener">
+            <span data-i18n="chartSourceMOE2025">环境省 FY2025</span>
+            <strong data-i18n="chartSourceMOE2025Title">令和7年度検討結果</strong>
+            <small data-i18n="chartSourceMOE2025Text">用于塑料垃圾总量、微塑料、纤维、洗剂等类别的年度区间。</small>
+          </a>
+          <a class="source-link-card" href="https://www.env.go.jp/water/post_80.html" target="_blank" rel="noopener">
+            <span data-i18n="chartSourceMOESurvey">海洋ごみ実態把握調査</span>
+            <strong data-i18n="chartSourceMOESurveyTitle">调查报告索引</strong>
+            <small data-i18n="chartSourceMOESurveyText">用于追溯日本海洋垃圾调查、漂着垃圾、漂流垃圾和海底垃圾相关年度报告。</small>
+          </a>
+          <a class="source-link-card" href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener">
+            <span data-i18n="chartSourceNote">口径提醒</span>
+            <strong data-i18n="chartSourceNoteTitle">这些数值是暂定估算</strong>
+            <small data-i18n="chartSourceNoteText">页面用来帮助理解数量级和类型差异，不代表海里每一件垃圾都已被精确数完。</small>
+          </a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">copyright © 2026 KCGI group 22 All rights reserved.</footer>
   <script src="../../layout.js"></script>
   <script src="../../shared.js"></script>
   <script src="chart.js"></script>

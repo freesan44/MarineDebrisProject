@@ -9,7 +9,7 @@ This script initializes language support for the actions page and adds interacti
 document.addEventListener('DOMContentLoaded', () => {
   initLanguageSwitcher();
 
-  const actionItems = document.querySelectorAll('.actions ul li');
+  const actionItems = document.querySelectorAll('.action-card');
   actionItems.forEach(item => {
     item.addEventListener('click', () => {
       actionItems.forEach(other => other.classList.remove('selected'));

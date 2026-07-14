@@ -19,24 +19,52 @@
       <p data-i18n="heroSubtitle">通过浮游塑料、渔具、饮料瓶等实例，体验不断增加的垃圾对海洋生命的负担。</p>
       <button class="cta-button" id="startExperience" data-i18n="startButton">开始体验</button>
     </div>
-    <div class="ocean-scene polluted" aria-hidden="true">
-      <div class="wave wave1"></div>
-      <div class="wave wave2"></div>
-      <div class="debris floating debris1">🧴</div>
-      <div class="debris floating debris2">🥤</div>
-      <div class="debris floating debris3">🗑️</div>
-      <div class="debris floating debris4">🐟</div>
-    </div>
+    <figure class="ocean-scene hero-visual">
+      <img src="../../assets/generated/hero-marine-debris.png" alt="日本沿岸の海と海洋ごみを示すビジュアル" />
+    </figure>
   </header>
 
   <main>
-    <section class="section intro" id="intro-page">
-      <h2 data-i18n="introTitle">インタラクティブで学ぶ</h2>
-      <p data-i18n="introText">このページでは、アニメーション、ドラッグ＆ドロップ、データビジュアライゼーションを使って、日本周辺の海洋ゴミ問題を体験できます。</p>
+    <section class="section intro intro-redesign" id="intro-page">
+      <div class="intro-copy-card">
+        <p class="section-kicker" data-i18n="introKicker">学习入口</p>
+        <h2 data-i18n="introTitle">用互动方式理解日本近海垃圾问题</h2>
+        <p data-i18n="introText">从真实影像、清理模拟、数据图表到区域地图，这个页面把“垃圾如何影响海洋”拆成可以观察、点击和比较的学习路径。</p>
+      </div>
+      <div class="intro-metrics">
+        <article>
+          <span data-i18n="introMetricOneLabel">主要来源</span>
+          <strong>80%</strong>
+          <p data-i18n="introMetricOneText">来自陆源输入的估计占比</p>
+        </article>
+        <article>
+          <span data-i18n="introMetricTwoLabel">高频类型</span>
+          <strong>5</strong>
+          <p data-i18n="introMetricTwoText">塑料瓶、渔具、泡沫、瓶罐等重点类别</p>
+        </article>
+        <article>
+          <span data-i18n="introMetricThreeLabel">学习方式</span>
+          <strong>8</strong>
+          <p data-i18n="introMetricThreeText">影像、游戏、模拟、数据、地图和行动模块</p>
+        </article>
+      </div>
+      <div class="intro-module-grid">
+        <a href="../empathy/index.html" class="intro-module-card">
+          <span data-i18n="introModuleVisual">影像观察</span>
+          <strong data-i18n="introModuleVisualTitle">先看见问题</strong>
+        </a>
+        <a href="../cleanup/index.html" class="intro-module-card">
+          <span data-i18n="introModuleSim">参与变化</span>
+          <strong data-i18n="introModuleSimTitle">再模拟修复</strong>
+        </a>
+        <a href="../chart/index.html" class="intro-module-card">
+          <span data-i18n="introModuleData">数据图表</span>
+          <strong data-i18n="introModuleDataTitle">最后比较证据</strong>
+        </a>
+      </div>
     </section>
   </main>
 
-  <footer class="site-footer">copyright © 2026 KCGI group 22 All rights reserved.</footer>
   <script src="../../layout.js"></script>
   <script src="../../shared.js"></script>
   <script src="intro.js"></script>

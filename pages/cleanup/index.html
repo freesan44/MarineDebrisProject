@@ -24,7 +24,6 @@
         <div class="impact-status">
           <div class="status-meter" aria-hidden="true"><div class="status-fill" id="statusFill"></div></div>
           <p id="statusText" data-i18n="statusText">水质恢复: 0%</p>
-          <button id="shareButton" class="share-button" data-i18n="shareButton">分享你的海洋守护成果</button>
           <div class="simulation-panel">
             <h3 data-i18n="simulationTitle">模拟影响</h3>
             <div class="simulation-controls">
@@ -33,7 +32,7 @@
               <button class="simulation-button" type="button" data-scenario="full" data-i18n="simulationFull">完全清理</button>
             </div>
             <div class="simulation-preview">
-              <img id="simulationImage" src="https://images.unsplash.com/photo-1528735583853-468c6d9238d8?auto=format&fit=crop&w=900&q=80" alt="Polluted ocean water with plastic debris" loading="lazy" />
+              <img id="simulationImage" src="../../assets/generated/simulation-current.png" alt="Polluted ocean water with plastic debris" loading="lazy" />
               <p id="simulationImageCaption">污染的海洋与漂浮垃圾</p>
             </div>
             <div class="simulation-results">
@@ -46,23 +45,22 @@
       </div>
       <div class="impact-gallery">
         <figure class="impact-photo-card">
-          <img src="https://kanto.env.go.jp/content/000061845.png" alt="海岸清理现场" loading="lazy" referrerpolicy="no-referrer" onerror="this.src='https://kanto.env.go.jp/content/900155040.jpg';this.onerror=null;" />
-          <figcaption data-i18n="impactPhoto1">海岸清理作业现场（环境省）</figcaption>
+          <img src="../../assets/generated/simulation-current.png" alt="海岸清理前的污染水体" loading="lazy" />
+          <figcaption data-i18n="impactPhoto1">清理前：垃圾较多的沿岸水体</figcaption>
         </figure>
         <figure class="impact-photo-card">
-          <img src="https://chubu.env.go.jp/content/900118204.jpg" alt="清理前后对比" loading="lazy" referrerpolicy="no-referrer" onerror="this.src='https://chubu.env.go.jp/content/900118205.jpg';this.onerror=null;" />
-          <figcaption data-i18n="impactPhoto2">国立公园海岸清理前后对比</figcaption>
+          <img src="../../assets/generated/simulation-partial.png" alt="部分清理后的海岸" loading="lazy" />
+          <figcaption data-i18n="impactPhoto2">部分清理：正在恢复的海洋</figcaption>
         </figure>
         <figure class="impact-photo-card">
-          <img src="https://chubu.env.go.jp/content/900103150.jpg" alt="回收海洋垃圾" loading="lazy" referrerpolicy="no-referrer" onerror="this.src='https://chubu.env.go.jp/content/900106976.jpg';this.onerror=null;" />
-          <figcaption data-i18n="impactPhoto3">回收海洋垃圾与分类处理</figcaption>
+          <img src="../../assets/generated/simulation-full.png" alt="完全清理后的健康海洋" loading="lazy" />
+          <figcaption data-i18n="impactPhoto3">完全清理：健康的海洋环境</figcaption>
         </figure>
       </div>
-      <p class="image-source" data-i18n="cleanupImageNote">以上照片来自日本环境省地方环境事务所公开资料。</p>
+      <p class="image-source" data-i18n="cleanupImageNote">以上图片为基于海洋清理主题生成的模拟图像。</p>
     </section>
   </main>
 
-  <footer class="site-footer">copyright © 2026 KCGI group 22 All rights reserved.</footer>
   <script src="../../layout.js"></script>
   <script src="../../shared.js"></script>
   <script src="cleanup.js"></script>

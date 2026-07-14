@@ -100,7 +100,7 @@ function createTopNav(activePage) {
  */
 function createFooter() {
   const footer = document.createElement('footer');
-  footer.innerHTML = `<p data-i18n="footerText">データは日本近海の海洋ごみ調査をもとにした教育用コンテンツです。</p>`;
+  footer.innerHTML = `<p data-i18n="footerText">copyright © 2026 KCGI group 22 All rights reserved.</p>`;
   return footer;
 }
 
