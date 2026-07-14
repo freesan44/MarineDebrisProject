@@ -11,41 +11,66 @@
 </head>
 <body data-page="map">
   <main>
-    <section class="section map" id="map-page">
-      <div class="section-head">
-        <h2 id="mapTitle" data-i18n="mapTitle">日本沿岸のゴミ分布マップ</h2>
-        <p data-i18n="mapDescription">日本周辺の沿岸で観測されたゴミ濃度を地域別に表示し、海洋生態系への影響を確認できます。</p>
+    <section class="section map map-redesign" id="map-page">
+      <div class="map-hero">
+        <div>
+          <p class="section-kicker" data-i18n="mapKicker">沿海影响</p>
+          <h2 id="mapTitle" data-i18n="mapTitle">把日本沿岸垃圾影响放到地图上看</h2>
+          <p data-i18n="mapDescription">把环境省和研究资料中的可靠量级，放到日本沿海的代表性位置上看：哪里更像“入口”，哪里更像“堆积区”，哪里会先影响渔业、珊瑚和海鸟。</p>
+        </div>
+        <div class="map-hero-card">
+          <span data-i18n="mapHeroLabel">地图阅读</span>
+          <strong data-i18n="mapHeroValue">点位 · 量级 · 影响</strong>
+          <small data-i18n="mapHeroNote">点击地图点，查看对应沿海环境的垃圾来源、数量级和生态影响。</small>
+        </div>
       </div>
       <div class="map-panel">
         <div class="map-container" aria-label="日本の海洋ゴミマップ">
-          <div class="map-wrapper">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Japan_relief_location_map.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="日本实景地图" class="japan-map-image" />
-            <div id="debris-markers" class="debris-markers"></div>
+          <div class="map-shell">
+            <div class="map-wrapper">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Japan_relief_location_map.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="日本实景地图" class="japan-map-image" />
+              <div id="debris-markers" class="debris-markers"></div>
+            </div>
+            <div class="map-side-panel">
+              <span data-i18n="mapReadLabel">读图方式</span>
+              <strong data-i18n="mapReadTitle">点越大，代表这个位置对应的垃圾影响越需要关注</strong>
+              <p data-i18n="mapReadText">点位不是精确到每个港湾的总量统计，而是把官方总量、回收量和调查证据转译成更容易理解的沿海影响地图。</p>
+              <div class="map-legend">
+                <div class="legend-item">
+                  <span class="legend-color low"></span>
+                  <span data-i18n="mapLow">低</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-color medium"></span>
+                  <span data-i18n="mapMedium">中</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-color high"></span>
+                  <span data-i18n="mapHigh">高</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="map-legend">
-          <div class="legend-item">
-            <span class="legend-color" style="background-color: #00ff00;"></span>
-            <span data-i18n="mapLow">低</span>
+          <div id="mapControls" class="map-controls" aria-label="Map filter controls">
+            <button type="button" class="map-control-button active" data-filter="all" data-i18n="mapFilterAll">全部</button>
+            <button type="button" class="map-control-button" data-filter="low" data-i18n="mapLow">低</button>
+            <button type="button" class="map-control-button" data-filter="medium" data-i18n="mapMedium">中</button>
+            <button type="button" class="map-control-button" data-filter="high" data-i18n="mapHigh">高</button>
           </div>
-          <div class="legend-item">
-            <span class="legend-color" style="background-color: #ffff00;"></span>
-            <span data-i18n="mapMedium">中</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-color" style="background-color: #ff0000;"></span>
-            <span data-i18n="mapHigh">高</span>
-          </div>
-        </div>
-        <div id="mapControls" class="map-controls" aria-label="Map filter controls">
-          <button type="button" class="map-control-button active" data-filter="all" data-i18n="mapFilterAll">全部</button>
-          <button type="button" class="map-control-button" data-filter="low" data-i18n="mapLow">低</button>
-          <button type="button" class="map-control-button" data-filter="medium" data-i18n="mapMedium">中</button>
-          <button type="button" class="map-control-button" data-filter="high" data-i18n="mapHigh">高</button>
         </div>
       </div>
       <div id="regionCards" class="region-cards"></div>
       <div id="mapDetail" class="map-detail"></div>
+      <div class="map-source-strip">
+        <a href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener">
+          <span data-i18n="mapSourceOne">环境省 FY2025</span>
+          <strong data-i18n="mapSourceOneTitle">日本海洋塑料垃圾流出量推计</strong>
+        </a>
+        <a href="https://www.env.go.jp/water/post_80.html" target="_blank" rel="noopener">
+          <span data-i18n="mapSourceTwo">环境省调查索引</span>
+          <strong data-i18n="mapSourceTwoTitle">海洋ごみ実態把握調査</strong>
+        </a>
+      </div>
     </section>
   </main>
 
