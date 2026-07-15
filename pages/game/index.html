@@ -11,41 +11,63 @@
 </head>
 <body data-page="game">
   <main>
-    <section class="section game" id="game-page">
-      <div class="section-head">
-        <h2 data-i18n="gameTitle">海ごみ清掃ゲーム</h2>
-        <p data-i18n="gameDescription">ゴミを正しい回収先にドラッグすると、海の健康度が回復します。</p>
+    <section class="section game game-redesign" id="game-page">
+      <div class="game-hero">
+        <div>
+          <p class="section-kicker" data-i18n="gameKicker">清理游戏</p>
+          <h2 data-i18n="gameTitle">海洋垃圾清理游戏</h2>
+          <p data-i18n="gameDescription">点击海面上的垃圾，帮助受困海龟恢复健康，直观看见一次次清理带来的变化。</p>
+        </div>
+        <div class="game-hero-card">
+          <span data-i18n="gameHeroLabel">互动任务</span>
+          <strong data-i18n="gameHeroValue">发现 · 清理 · 恢复</strong>
+          <small data-i18n="gameHeroNote">从塑料、瓶子和废弃渔网开始，理解海洋垃圾对生物的直接影响。</small>
+        </div>
       </div>
+
       <div class="game-layout">
-        <div class="game-board">
-          <div class="game-instructions" id="game-instructions" data-i18n="gameInstructions">每次显示一件垃圾，请点击对应回收船完成分类。</div>
-          <div class="sorting-panel">
-            <p class="current-label" data-i18n="currentDebrisLabel">当前垃圾</p>
-            <div class="debris-card" id="currentDebrisCard">-</div>
-            <div class="choice-buttons">
-              <button class="choice-button" type="button" data-target="recycle" data-i18n="recycleBoat">资源回收船</button>
-              <button class="choice-button" type="button" data-target="trash" data-i18n="trashBoat">一般垃圾船</button>
+        <div class="game-board" aria-label="Marine diagnosis cleanup game">
+          <div class="game-instructions" id="game-instructions" data-i18n="gameInstructions">点击漂浮在海里的垃圾，让海龟的健康度逐步恢复。</div>
+          <div class="diagnosis-sea" id="diagnosisSea">
+            <div class="sea-glow" aria-hidden="true"></div>
+            <div class="sea-shade" aria-hidden="true"></div>
+            <img src="../../assets/game/diagnosis/turtle.png" class="diagnosis-animal" id="diagnosisAnimal" alt="受海洋垃圾影响的海龟" />
+            <div class="diagnosis-debris-layer" id="diagnosisDebrisLayer"></div>
+          </div>
+          <div class="game-stage-footer">
+            <ol class="game-steps">
+              <li id="gameStepOne">第一站固定从海龟问诊开始。</li>
+              <li id="gameStepTwo">清理主要污染物和海面上的其他垃圾。</li>
+              <li id="gameStepThree">完成后将随机进入尚未体验的海域。</li>
+            </ol>
+            <div class="level-actions">
+              <button id="restartGameButton" class="ghost-button" type="button" data-i18n="restartGameButton">重新清理本关</button>
+              <button id="nextLevelButton" class="restart-button" type="button" disabled>清空后随机前往下一关</button>
             </div>
           </div>
         </div>
         <aside class="game-dashboard" aria-live="polite">
+          <p class="dashboard-kicker" data-i18n="gameDashboardKicker">海龟问诊单</p>
           <h3 data-i18n="gameDashboardTitle">清理进度面板</h3>
-          <div class="game-metrics">
-            <p><span data-i18n="gameScoreLabel">得分</span><strong id="gameScore">0</strong></p>
-            <p><span data-i18n="gameCorrectLabel">正确投放</span><strong id="gameCorrect">0</strong></p>
-            <p><span data-i18n="gameRemainingLabel">剩余垃圾</span><strong id="gameRemaining">4</strong></p>
-            <p><span data-i18n="gameAccuracyLabel">正确率</span><strong id="gameAccuracy">0%</strong></p>
+          <div class="game-round-status">
+            <strong id="gameRoundText">第 1 站 / 共 5 站</strong>
+            <span id="gameRemainingText">还有 5 个海域等待问诊</span>
+          </div>
+          <div class="patient-card">
+            <p><span data-i18n="gamePatientNameLabel">对象</span><strong id="levelAnimalName">海龟</strong></p>
+            <p><span data-i18n="gamePatientHabitatLabel">来源海域</span><strong id="levelHabitat">菲律宾</strong></p>
+            <p><span data-i18n="gamePollutionLabel">主要污染</span><strong id="levelPollution">塑料袋</strong></p>
+            <p><span data-i18n="gameTreatmentLabel">治疗内容</span><strong id="levelTreatment">取出塑料袋</strong></p>
+            <p><span data-i18n="gameDebrisCountLabel">海面垃圾</span><strong id="levelDebrisCount">0 / 0 件已清理</strong></p>
+          </div>
+          <div class="health-ring">
+            <div class="health-ring-value" id="healthValue">20%</div>
+            <span data-i18n="gameHealthLabel">健康度</span>
           </div>
           <div class="game-progress">
             <div class="status-meter" aria-hidden="true"><div class="status-fill" id="gameProgressFill"></div></div>
-            <p id="gameProgressText" data-i18n="gameProgressText">已完成: 0%</p>
+            <p id="gameProgressText">已清理 0 / 3 件垃圾</p>
           </div>
-          <button id="restartGameButton" class="restart-button" data-i18n="restartGameButton">再来一局</button>
-          <ol class="game-steps">
-            <li data-i18n="gameStep1">先看垃圾类别，再拖放到对应回收船。</li>
-            <li data-i18n="gameStep2">投放正确会加分，错误不会扣分但会提示重试。</li>
-            <li data-i18n="gameStep3">全部清理完成后，水质恢复条将提升到最高。</li>
-          </ol>
         </aside>
       </div>
     </section>
