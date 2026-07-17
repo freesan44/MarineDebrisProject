@@ -7,7 +7,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>清理游戏 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../../styles.css?v=20260717-7" />
 </head>
 <body data-page="game">
   <main>
@@ -31,7 +31,10 @@
           <div class="diagnosis-sea" id="diagnosisSea">
             <div class="sea-glow" aria-hidden="true"></div>
             <div class="sea-shade" aria-hidden="true"></div>
-            <img src="../../assets/game/diagnosis/turtle.png" class="diagnosis-animal" id="diagnosisAnimal" alt="受海洋垃圾影响的海龟" />
+            <div class="diagnosis-patient" id="diagnosisPatient" data-patient="turtle">
+              <div class="diagnosis-polluted-animal" id="diagnosisPollutedAnimal" role="img" aria-label="被海洋垃圾污染的海龟"></div>
+              <img src="../../assets/game/diagnosis/turtle.png" class="diagnosis-animal" id="diagnosisAnimal" alt="恢复健康的海龟" />
+            </div>
             <div class="diagnosis-debris-layer" id="diagnosisDebrisLayer"></div>
           </div>
           <div class="game-stage-footer">
@@ -73,8 +76,8 @@
     </section>
   </main>
 
-  <script src="../../layout.js"></script>
-  <script src="../../shared.js"></script>
-  <script src="game.js"></script>
+  <script src="../../layout.js?v=20260717-7"></script>
+  <script src="../../shared.js?v=20260717-7"></script>
+  <script src="game.js?v=20260717-7"></script>
 </body>
 </html>

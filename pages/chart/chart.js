@@ -3,39 +3,39 @@ const leadingCategory = document.getElementById('leadingCategory');
 
 const chartTheme = {
   macro: {
-    start: '#0b6e99',
-    end: '#75d5ff',
-    soft: 'rgba(117, 213, 255, 0.18)'
+    start: '#2d5da1',
+    end: '#6f95ca',
+    soft: 'rgba(45, 93, 161, 0.14)'
   },
   micro: {
-    start: '#3157d5',
-    end: '#9eb5ff',
-    soft: 'rgba(49, 87, 213, 0.15)'
+    start: '#ff4d4d',
+    end: '#ff8b83',
+    soft: 'rgba(255, 77, 77, 0.13)'
   },
   additive: {
-    start: '#00a38a',
-    end: '#9cf2d6',
-    soft: 'rgba(0, 163, 138, 0.16)'
+    start: '#2d2d2d',
+    end: '#696969',
+    soft: 'rgba(45, 45, 45, 0.1)'
   },
   fiber: {
-    start: '#7c4fd6',
-    end: '#c5a8ff',
-    soft: 'rgba(124, 79, 214, 0.14)'
+    start: '#2d5da1',
+    end: '#9eb7da',
+    soft: 'rgba(45, 93, 161, 0.12)'
   },
   pellet: {
-    start: '#d77a15',
-    end: '#ffd166',
-    soft: 'rgba(215, 122, 21, 0.16)'
+    start: '#ff4d4d',
+    end: '#ffaaa5',
+    soft: 'rgba(255, 77, 77, 0.12)'
   },
   detergent: {
-    start: '#d24b79',
-    end: '#ff9dbc',
-    soft: 'rgba(210, 75, 121, 0.14)'
+    start: '#2d2d2d',
+    end: '#8a8a8a',
+    soft: 'rgba(45, 45, 45, 0.1)'
   },
   total: {
-    start: '#08304a',
-    end: '#0b6e99',
-    soft: 'rgba(8, 48, 74, 0.15)'
+    start: '#2d2d2d',
+    end: '#2d5da1',
+    soft: 'rgba(45, 93, 161, 0.14)'
   }
 };
 

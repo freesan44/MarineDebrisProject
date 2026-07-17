@@ -7,7 +7,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>参与变化 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../../styles.css?v=20260717-7" />
 </head>
 <body data-page="cleanup">
   <main>
@@ -25,9 +25,33 @@
         </div>
       </div>
       <div class="impact-interactive">
-        <div class="impact-visual" id="impactVisual">
-          <div class="impact-stage before"><span data-i18n="beforeLabel">清理前</span></div>
-          <div class="impact-stage after"><span data-i18n="afterLabel">清理后</span></div>
+        <div class="cleanup-compare-column">
+          <div class="impact-visual" id="impactVisual">
+            <div class="impact-stage before"><span data-i18n="beforeLabel">清理前</span></div>
+            <div class="impact-stage after"><span data-i18n="afterLabel">清理后</span></div>
+          </div>
+          <aside class="cleanup-field-note">
+            <div class="cleanup-field-note-head">
+              <span data-i18n="cleanupFieldKicker">现场观察记录</span>
+              <strong data-i18n="cleanupFieldTitle">清理不只改变照片，也留下可以核对的数据</strong>
+            </div>
+            <div class="cleanup-observation-grid">
+              <article>
+                <strong>263</strong>
+                <span data-i18n="cleanupFieldPeople">名志愿者参加</span>
+              </article>
+              <article>
+                <strong>1,050 kg</strong>
+                <span data-i18n="cleanupFieldWeight">漂着垃圾被回收</span>
+              </article>
+              <article>
+                <strong>3</strong>
+                <span data-i18n="cleanupFieldSteps">个阶段持续观察</span>
+              </article>
+            </div>
+            <p data-i18n="cleanupFieldText">观察重点包括岸线上的垃圾密度、清理中的分类回收，以及清理后是否仍有细碎塑料和渔网残留。</p>
+            <a href="https://www.pref.okinawa.jp/shigoto/nogyo/1010731/1018801/1031714/1032136.html" target="_blank" rel="noopener" data-i18n="cleanupFieldSource">资料：冲绳县 2024 年照间海岸清理成果</a>
+          </aside>
         </div>
         <div class="impact-status">
           <div class="status-meter" aria-hidden="true"><div class="status-fill" id="statusFill"></div></div>
@@ -51,26 +75,42 @@
           </div>
         </div>
       </div>
+      <div class="cleanup-gallery-head">
+        <div>
+          <p class="section-kicker" data-i18n="cleanupEvidenceKicker">日本实景档案</p>
+          <h3 data-i18n="cleanupEvidenceTitle">从发现污染，到清理，再到恢复后的海岸</h3>
+        </div>
+        <p data-i18n="cleanupEvidenceNote">以下为日本环境省与冲绳县公开的真实现场照片；三张照片用于说明不同清理阶段，并非同一地点的连续对照。</p>
+      </div>
       <div class="impact-gallery">
         <figure class="impact-photo-card">
-          <img src="../../assets/generated/simulation-current.png" alt="海岸清理前的污染水体" loading="lazy" />
-          <figcaption data-i18n="impactPhoto1">清理前：垃圾较多的沿岸水体</figcaption>
+          <img src="https://kanto.env.go.jp/content/000252598.jpg" alt="小笠原聟岛海滨植物上缠绕的废弃渔网" loading="lazy" referrerpolicy="no-referrer" />
+          <figcaption>
+            <span data-i18n="impactPhoto1">清理前：垃圾已经缠上海滨植物</span>
+            <a href="https://kanto.env.go.jp/blog/page_00238.html" target="_blank" rel="noopener" data-i18n="impactPhotoSourceOne">出处：环境省关东地方环境事务所</a>
+          </figcaption>
         </figure>
         <figure class="impact-photo-card">
-          <img src="../../assets/generated/simulation-partial.png" alt="部分清理后的海岸" loading="lazy" />
-          <figcaption data-i18n="impactPhoto2">部分清理：正在恢复的海洋</figcaption>
+          <img src="https://www.pref.okinawa.jp/_res/projects/default_project/_page_/001/032/136/new01.jpg" alt="冲绳照间海岸志愿者正在清理漂着垃圾" loading="lazy" referrerpolicy="no-referrer" />
+          <figcaption>
+            <span data-i18n="impactPhoto2">部分清理：志愿者正在分类和回收</span>
+            <a href="https://www.pref.okinawa.jp/shigoto/nogyo/1010731/1018801/1031714/1032136.html" target="_blank" rel="noopener" data-i18n="impactPhotoSourceTwo">出处：冲绳县照间海岸清理成果</a>
+          </figcaption>
         </figure>
         <figure class="impact-photo-card">
-          <img src="../../assets/generated/simulation-full.png" alt="完全清理后的健康海洋" loading="lazy" />
-          <figcaption data-i18n="impactPhoto3">完全清理：健康的海洋环境</figcaption>
+          <img src="https://www.pref.okinawa.jp/_res/projects/default_project/_page_/001/032/136/new04.jpg" alt="完成清理后的冲绳照间海岸" loading="lazy" referrerpolicy="no-referrer" />
+          <figcaption>
+            <span data-i18n="impactPhoto3">完全清理：岸线恢复整洁</span>
+            <a href="https://www.pref.okinawa.jp/shigoto/nogyo/1010731/1018801/1031714/1032136.html" target="_blank" rel="noopener" data-i18n="impactPhotoSourceThree">出处：冲绳县公开的清理后照片</a>
+          </figcaption>
         </figure>
       </div>
-      <p class="image-source" data-i18n="cleanupImageNote">以上图片为基于海洋清理主题生成的模拟图像。</p>
+      <p class="image-source" data-i18n="cleanupImageNote">图片著作权归原发布机构所有，点击每张照片下方的出处可查看原始页面。</p>
     </section>
   </main>
 
-  <script src="../../layout.js"></script>
-  <script src="../../shared.js"></script>
-  <script src="cleanup.js"></script>
+  <script src="../../layout.js?v=20260717-7"></script>
+  <script src="../../shared.js?v=20260717-7"></script>
+  <script src="cleanup.js?v=20260717-7"></script>
 </body>
 </html>

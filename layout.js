@@ -35,15 +35,17 @@ Dependencies:
  * 定义所有页面的路由、国际化键和备用文本
  * @type {Object<string, {href: string, i18n: string, fallback: string}>}
  */
+const siteVersion = '20260717-7';
+
 const pageMap = {
-  intro: { href: '../../pages/intro/index.html', i18n: 'tabIntro', fallback: '概览' },
-  empathy: { href: '../../pages/empathy/index.html', i18n: 'tabEmpathy', fallback: '影像' },
-  game: { href: '../../pages/game/index.html', i18n: 'tabGame', fallback: '清理游戏' },
-  cleanup: { href: '../../pages/cleanup/index.html', i18n: 'tabCleanup', fallback: '参与变化' },
-  chart: { href: '../../pages/chart/index.html', i18n: 'tabChart', fallback: '数据' },
-  map: { href: '../../pages/map/index.html', i18n: 'tabMap', fallback: '地图' },
-  impact: { href: '../../pages/impact/index.html', i18n: 'tabImpact', fallback: '影响' },
-  actions: { href: '../../pages/actions/index.html', i18n: 'tabActions', fallback: '行动' }
+  intro: { href: `../../pages/intro/index.html?v=${siteVersion}`, i18n: 'tabIntro', fallback: '概览' },
+  empathy: { href: `../../pages/empathy/index.html?v=${siteVersion}`, i18n: 'tabEmpathy', fallback: '影像' },
+  game: { href: `../../pages/game/index.html?v=${siteVersion}`, i18n: 'tabGame', fallback: '清理游戏' },
+  cleanup: { href: `../../pages/cleanup/index.html?v=${siteVersion}`, i18n: 'tabCleanup', fallback: '参与变化' },
+  chart: { href: `../../pages/chart/index.html?v=${siteVersion}`, i18n: 'tabChart', fallback: '数据' },
+  map: { href: `../../pages/map/index.html?v=${siteVersion}`, i18n: 'tabMap', fallback: '地图' },
+  impact: { href: `../../pages/impact/index.html?v=${siteVersion}`, i18n: 'tabImpact', fallback: '影响' },
+  actions: { href: `../../pages/actions/index.html?v=${siteVersion}`, i18n: 'tabActions', fallback: '行动' }
 };
 
 // ============================================
@@ -72,8 +74,12 @@ function createTopNav(activePage) {
   nav.innerHTML = `
     <div class="top-nav-inner">
       <div class="brand" data-i18n="heroEyebrow">守护日本周边海洋</div>
-      <div class="tab-nav top-tab-nav" aria-label="学习模块切换">
-        ${links}
+      <div class="tab-scroll-shell">
+        <span class="tab-scroll-cue tab-scroll-cue-left" aria-hidden="true">‹</span>
+        <div class="tab-nav top-tab-nav" aria-label="学习模块切换">
+          ${links}
+        </div>
+        <span class="tab-scroll-cue tab-scroll-cue-right" aria-hidden="true">›</span>
       </div>
       <div class="language-switcher">
         <label for="languageSwitch" data-i18n="languageLabel">语言</label>
@@ -87,6 +93,52 @@ function createTopNav(activePage) {
   `;
 
   return nav;
+}
+
+/**
+ * Keep the active tab visible without changing the page's vertical position.
+ * Right-side pages are centered so the following tabs remain discoverable.
+ */
+function initTabScroll(nav, activePage) {
+  const shell = nav.querySelector('.tab-scroll-shell');
+  const tabNav = nav.querySelector('.top-tab-nav');
+  const activeTab = tabNav?.querySelector('.tab-btn.active');
+  if (!shell || !tabNav || !activeTab) return;
+
+  const updateScrollCues = () => {
+    const threshold = 6;
+    const maxScroll = Math.max(0, tabNav.scrollWidth - tabNav.clientWidth);
+    shell.classList.toggle('can-scroll-left', tabNav.scrollLeft > threshold);
+    shell.classList.toggle('can-scroll-right', tabNav.scrollLeft < maxScroll - threshold);
+  };
+
+  const alignActiveTab = () => {
+    const maxScroll = Math.max(0, tabNav.scrollWidth - tabNav.clientWidth);
+    if (maxScroll <= 0) {
+      tabNav.scrollLeft = 0;
+      updateScrollCues();
+      return;
+    }
+
+    const activeCenter = activeTab.offsetLeft + activeTab.offsetWidth / 2;
+    const rightSidePages = new Set(['map', 'impact', 'actions']);
+    const viewportAnchor = rightSidePages.has(activePage) ? 0.42 : 0.5;
+    const target = Math.min(maxScroll, Math.max(0, activeCenter - tabNav.clientWidth * viewportAnchor));
+
+    tabNav.scrollTo({ left: target, behavior: 'auto' });
+    window.requestAnimationFrame(updateScrollCues);
+  };
+
+  const scheduleAlignment = () => {
+    window.requestAnimationFrame(() => window.requestAnimationFrame(alignActiveTab));
+  };
+
+  tabNav.addEventListener('scroll', updateScrollCues, { passive: true });
+  nav.querySelector('#languageSwitch')?.addEventListener('change', scheduleAlignment);
+  window.addEventListener('resize', scheduleAlignment);
+  document.addEventListener('DOMContentLoaded', scheduleAlignment, { once: true });
+  document.fonts?.ready.then(scheduleAlignment);
+  scheduleAlignment();
 }
 
 // ============================================
@@ -121,6 +173,7 @@ function injectLayout() {
   // 创建并注入顶部导航条
   const nav = createTopNav(activePage);
   body.prepend(nav);
+  initTabScroll(nav, activePage);
 
   // 计算导航条高度并设置页面顶部内边距
   const syncBodyOffset = () => {

@@ -111,6 +111,8 @@ const gameProgressText = document.getElementById('gameProgressText');
 const restartGameButton = document.getElementById('restartGameButton');
 const nextLevelButton = document.getElementById('nextLevelButton');
 const diagnosisSea = document.getElementById('diagnosisSea');
+const diagnosisPatient = document.getElementById('diagnosisPatient');
+const diagnosisPollutedAnimal = document.getElementById('diagnosisPollutedAnimal');
 const diagnosisAnimal = document.getElementById('diagnosisAnimal');
 const diagnosisDebrisLayer = document.getElementById('diagnosisDebrisLayer');
 const levelAnimalName = document.getElementById('levelAnimalName');
@@ -294,6 +296,7 @@ function updateActions() {
 function updateLevelState() {
   const complete = isCurrentLevelComplete();
   diagnosisSea?.classList.toggle('is-restored', complete);
+  diagnosisPatient?.classList.toggle('is-restored', complete);
   updateDashboard();
   updateInstructions();
   updateActions();
@@ -308,9 +311,18 @@ function renderLevel() {
     diagnosisSea.classList.remove('is-restored');
   }
 
+  if (diagnosisPatient) {
+    diagnosisPatient.dataset.patient = level.id;
+    diagnosisPatient.classList.remove('is-restored');
+  }
+
+  if (diagnosisPollutedAnimal) {
+    diagnosisPollutedAnimal.setAttribute('aria-label', t('gamePollutedAnimalAlt', { animal: copy.animal }));
+  }
+
   if (diagnosisAnimal) {
     diagnosisAnimal.src = `${assetBase}${level.animalImage}`;
-    diagnosisAnimal.alt = t('gameAnimalAlt', copy);
+    diagnosisAnimal.alt = t('gameRestoredAnimalAlt', { animal: copy.animal });
   }
 
   renderDebris();

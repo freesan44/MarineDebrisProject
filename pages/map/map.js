@@ -8,9 +8,9 @@ const MAP_CONFIG = {
 };
 
 const markerPalette = {
-  low: '#7dd0ff',
-  medium: '#00a38a',
-  high: '#f08a4b'
+  low: '#2d5da1',
+  medium: '#fff3a6',
+  high: '#ff4d4d'
 };
 
 let selectedRegion = null;

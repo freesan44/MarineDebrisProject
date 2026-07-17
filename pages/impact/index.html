@@ -1,65 +1,169 @@
 <!DOCTYPE html>
 <!-- 海洋垃圾项目 - 影响页面 / Marine Debris Project - Impact Page -->
-<!-- 此页面展示海洋垃圾对生态系统和生物多样性的具体影响 -->
-<!-- This page shows the specific impacts of marine debris on ecosystems and biodiversity -->
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>影响区域 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../../styles.css?v=20260717-7" />
 </head>
 <body data-page="impact">
   <main>
-    <section class="section impact impact-redesign" id="impact-page">
-      <div class="impact-hero-panel">
+    <section class="section impact impact-modern impact-handdrawn" id="impact-page">
+      <section class="impact-modern-hero" aria-labelledby="impact-title">
+        <div class="impact-hero-inner">
+          <div class="impact-hero-copy">
+            <p class="impact-section-badge">
+              <span aria-hidden="true"></span>
+              <span data-i18n="impactKicker">生态影响</span>
+            </p>
+            <h2 id="impact-title" data-i18n="impactTitle">海洋垃圾不是漂在远处的问题</h2>
+            <p data-i18n="impactDescription">它会从海面、海底、食物链和沿岸社区同时进入生态系统。理解影响路径，才能判断清理和减量该从哪里开始。</p>
+            <a class="impact-primary-link" href="#impact-paths">
+              <span data-i18n="impactExploreButton">查看影响路径</span>
+              <span aria-hidden="true">&#8594;</span>
+            </a>
+          </div>
+          <div class="impact-hero-visual">
+            <figure class="impact-hero-photo">
+              <span class="impact-tape" aria-hidden="true"></span>
+              <img src="../../assets/generated/hero-marine-debris.png" alt="日本沿岸海面与水下的海洋垃圾" />
+              <span class="impact-photo-mark" aria-hidden="true">!</span>
+            </figure>
+            <aside class="impact-score-card">
+              <span class="impact-live-label">
+                <i aria-hidden="true"></i>
+                <span data-i18n="impactSignalLabel">风险信号</span>
+              </span>
+              <strong data-i18n="impactSignalValue">缠绕 · 摄入 · 微塑料</strong>
+              <small data-i18n="impactSignalNote">从单件垃圾扩散为长期生态压力</small>
+              <div class="impact-signal-meter" aria-hidden="true"><span></span></div>
+            </aside>
+          </div>
+        </div>
+        <span class="impact-hero-doodle" aria-hidden="true">~~~&gt;</span>
+      </section>
+
+      <section class="impact-story" id="impact-paths" aria-labelledby="impact-chain-title">
+        <header class="impact-section-heading">
+          <div>
+            <p class="impact-section-badge impact-section-badge-light">
+              <span aria-hidden="true"></span>
+              <span data-i18n="impactChainKicker">影响路径</span>
+            </p>
+            <h2 id="impact-chain-title" data-i18n="impactChainTitle">一件垃圾，如何扩散成系统性压力</h2>
+          </div>
+          <p data-i18n="impactChainDescription">选择一条路径，观察海洋垃圾如何从一次接触继续传递到生物、栖息地与食物链。</p>
+        </header>
+
+        <div class="impact-path-layout">
+          <div class="impact-pathway" role="tablist" aria-label="Impact pathways">
+            <button class="impact-path-card active" type="button" role="tab" aria-selected="true" aria-controls="impactPathDetail" data-number="01" data-title-key="impactPathOneTitle" data-text-key="impactPathOneText" data-flow-key="impactPathOneFlow">
+              <span class="impact-path-number">01</span>
+              <span class="impact-path-copy">
+                <strong data-i18n="impactPathOneTitle">误食与营养损失</strong>
+                <small data-i18n="impactPathOneText">透明塑料、瓶盖和泡沫碎片容易被鱼类、海鸟和海龟误认为食物，造成饱腹假象和消化阻塞。</small>
+              </span>
+              <span class="impact-path-arrow" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="impact-path-card" type="button" role="tab" aria-selected="false" aria-controls="impactPathDetail" data-number="02" data-title-key="impactPathTwoTitle" data-text-key="impactPathTwoText" data-flow-key="impactPathTwoFlow">
+              <span class="impact-path-number">02</span>
+              <span class="impact-path-copy">
+                <strong data-i18n="impactPathTwoTitle">渔具缠绕与幽灵捕捞</strong>
+                <small data-i18n="impactPathTwoText">废弃渔网和绳索会持续缠住鱼类、海鸟和哺乳动物，也会破坏海草床与礁体结构。</small>
+              </span>
+              <span class="impact-path-arrow" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="impact-path-card" type="button" role="tab" aria-selected="false" aria-controls="impactPathDetail" data-number="03" data-title-key="impactPathThreeTitle" data-text-key="impactPathThreeText" data-flow-key="impactPathThreeFlow">
+              <span class="impact-path-number">03</span>
+              <span class="impact-path-copy">
+                <strong data-i18n="impactPathThreeTitle">微塑料进入食物链</strong>
+                <small data-i18n="impactPathThreeText">碎裂后的微塑料更难回收，会被浮游生物和小型鱼类摄入，并沿食物链向上移动。</small>
+              </span>
+              <span class="impact-path-arrow" aria-hidden="true">&#8594;</span>
+            </button>
+          </div>
+
+          <aside class="impact-path-detail" id="impactPathDetail" aria-live="polite">
+            <div class="impact-detail-topline">
+              <span id="impactDetailNumber">01</span>
+              <small data-i18n="impactDetailLabel">当前影响链</small>
+            </div>
+            <h3 id="impactDetailTitle">误食与营养损失</h3>
+            <p id="impactDetailText">透明塑料、瓶盖和泡沫碎片容易被鱼类、海鸟和海龟误认为食物，造成饱腹假象和消化阻塞。</p>
+            <div class="impact-flow-note">
+              <span data-i18n="impactDetailFlowLabel">扩散过程</span>
+              <strong id="impactDetailFlow">误认食物 → 摄入 → 营养不足</strong>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="impact-system-band" aria-labelledby="impact-system-title">
+        <header class="impact-system-heading">
+          <p class="impact-section-badge impact-section-badge-dark">
+            <span aria-hidden="true"></span>
+            <span data-i18n="impactSystemKicker">影响范围</span>
+          </p>
+          <h2 id="impact-system-title" data-i18n="impactSystemTitle">影响不会停在海岸线</h2>
+          <p data-i18n="impactSystemDescription">同一件垃圾可能漂浮、沉降、碎裂，最终影响沿岸环境和社区生活。</p>
+        </header>
+        <div class="impact-insight-grid">
+          <article>
+            <span>01</span>
+            <strong data-i18n="impactInsightOneValue">海面</strong>
+            <p data-i18n="impactInsightOneText">漂浮垃圾聚集在港湾、河口和洋流交汇处，影响景观、航行和近岸生物。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <strong data-i18n="impactInsightTwoValue">海底</strong>
+            <p data-i18n="impactInsightTwoText">沉降垃圾会覆盖底栖生物栖息地，改变原本稳定的泥沙和礁石环境。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <strong data-i18n="impactInsightThreeValue">社区</strong>
+            <p data-i18n="impactInsightThreeText">清理成本、渔获品质和旅游体验都会受到影响，环境问题最终回到人的生活。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="impact-lens" aria-labelledby="impact-lens-title">
+        <header class="impact-section-heading impact-lens-heading">
+          <div>
+            <p class="impact-section-badge impact-section-badge-light">
+              <span aria-hidden="true"></span>
+              <span data-i18n="impactLensKicker">视觉对照</span>
+            </p>
+            <h2 id="impact-lens-title" data-i18n="impactLensTitle">同一片海域，两种未来</h2>
+          </div>
+          <p data-i18n="impactLensDescription">切换视角，对比垃圾持续累积与生态恢复之后的环境差异。</p>
+        </header>
+        <div class="impact-lens-toolbar" role="group" aria-label="Ocean condition view">
+          <button class="active" type="button" aria-pressed="true" data-image-src="../../assets/generated/simulation-current.png" data-caption-key="impactLensCurrentCaption" data-alt-key="impactLensCurrentAlt" data-i18n="impactLensCurrent">当前压力</button>
+          <button type="button" aria-pressed="false" data-image-src="../../assets/generated/simulation-full.png" data-caption-key="impactLensRestoredCaption" data-alt-key="impactLensRestoredAlt" data-i18n="impactLensRestored">恢复之后</button>
+        </div>
+        <figure class="impact-lens-visual">
+          <img id="impactLensImage" src="../../assets/generated/simulation-current.png" alt="受到垃圾压力的日本沿岸海域" />
+          <figcaption id="impactLensCaption">垃圾在海面与水下同时累积，生态压力不会停留在肉眼可见的位置。</figcaption>
+        </figure>
+      </section>
+
+      <section class="impact-next-step">
         <div>
-          <p class="section-kicker" data-i18n="impactKicker">生态影响</p>
-          <h2 data-i18n="impactTitle">海洋垃圾不是漂在远处的问题</h2>
-          <p data-i18n="impactDescription">它会从海面、海底、食物链和沿岸社区同时进入生态系统。理解影响路径，才能判断清理和减量该从哪里开始。</p>
+          <p data-i18n="impactNextKicker">下一步</p>
+          <h2 data-i18n="impactNextTitle">看见影响之后，把理解变成行动</h2>
+          <span data-i18n="impactNextDescription">从减少一次性用品、正确分类，到参加沿岸清理，每个动作都在减少下一次进入海洋的垃圾。</span>
         </div>
-        <div class="impact-score-card">
-          <span data-i18n="impactSignalLabel">风险信号</span>
-          <strong data-i18n="impactSignalValue">缠绕 · 摄入 · 微塑料</strong>
-          <small data-i18n="impactSignalNote">从单件垃圾扩散为长期生态压力</small>
-        </div>
-      </div>
-      <div class="impact-pathway">
-        <article class="impact-path-card active">
-          <span>01</span>
-          <h3 data-i18n="impactPathOneTitle">误食与营养损失</h3>
-          <p data-i18n="impactPathOneText">透明塑料、瓶盖和泡沫碎片容易被鱼类、海鸟和海龟误认为食物，造成饱腹假象和消化阻塞。</p>
-        </article>
-        <article class="impact-path-card">
-          <span>02</span>
-          <h3 data-i18n="impactPathTwoTitle">渔具缠绕与幽灵捕捞</h3>
-          <p data-i18n="impactPathTwoText">废弃渔网和绳索会持续缠住鱼类、海鸟和哺乳动物，也会破坏海草床与礁体结构。</p>
-        </article>
-        <article class="impact-path-card">
-          <span>03</span>
-          <h3 data-i18n="impactPathThreeTitle">微塑料进入食物链</h3>
-          <p data-i18n="impactPathThreeText">碎裂后的微塑料更难回收，会被浮游生物和小型鱼类摄入，并沿食物链向上移动。</p>
-        </article>
-      </div>
-      <div class="impact-insight-grid">
-        <article>
-          <strong data-i18n="impactInsightOneValue">海面</strong>
-          <p data-i18n="impactInsightOneText">漂浮垃圾聚集在港湾、河口和洋流交汇处，影响景观、航行和近岸生物。</p>
-        </article>
-        <article>
-          <strong data-i18n="impactInsightTwoValue">海底</strong>
-          <p data-i18n="impactInsightTwoText">沉降垃圾会覆盖底栖生物栖息地，改变原本稳定的泥沙和礁石环境。</p>
-        </article>
-        <article>
-          <strong data-i18n="impactInsightThreeValue">社区</strong>
-          <p data-i18n="impactInsightThreeText">清理成本、渔获品质和旅游体验都会受到影响，环境问题最终回到人的生活。</p>
-        </article>
-      </div>
+        <a href="../actions/index.html">
+          <span data-i18n="impactNextButton">查看行动计划</span>
+          <span aria-hidden="true">&#8594;</span>
+        </a>
+      </section>
     </section>
   </main>
 
-  <script src="../../layout.js"></script>
-  <script src="../../shared.js"></script>
-  <script src="impact.js"></script>
+  <script src="../../layout.js?v=20260717-7"></script>
+  <script src="../../shared.js?v=20260717-7"></script>
+  <script src="impact.js?v=20260717-7"></script>
 </body>
 </html>
