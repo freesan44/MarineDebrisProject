@@ -1,9 +1,17 @@
-/* Marine Debris Project - Cleanup Game */
+/*
+海洋垃圾项目 - 海洋问诊清理游戏
+Marine Debris Project - Diagnosis Cleanup Game
 
+流程：固定从海龟关开始；每关保留主要污染物，再随机加入 1-3 种其他垃圾；
+全部清除后才把污染对象切换为健康素材，并从尚未体验的关卡中随机进入下一关。
+*/
+
+// 健康度按本关清理比例从 20% 线性恢复到 100%。
 const initialHealth = 20;
 const maxHealth = 100;
 const assetBase = '../../assets/game/diagnosis/';
 
+// 垃圾定义只保存素材与名称；出现在哪一关由 createLevelDebris 动态决定。
 const debrisTypes = [
   {
     id: 'plastic',
@@ -32,6 +40,7 @@ const debrisTypes = [
   }
 ];
 
+// 每个关卡指定对象、主题背景和必须出现的主要污染物。
 const gameLevels = [
   {
     id: 'turtle',
@@ -90,6 +99,7 @@ const gameLevels = [
   }
 ];
 
+// 位置类由 CSS 控制，随机打乱后可避免垃圾每次出现在同一处。
 const debrisPositions = [
   'trash-top-left',
   'trash-top-right',
@@ -99,11 +109,13 @@ const debrisPositions = [
   'trash-bottom-right'
 ];
 
+// 会话状态仅保存在当前页面内；刷新页面会重新从海龟关开始。
 let currentLevelIndex = 0;
 let currentRound = 1;
 let currentDebris = [];
 let completedLevels = new Set();
 
+// 缓存频繁更新的界面节点，渲染函数只负责写入状态，不重复查询 DOM。
 const gameInstructionsElement = document.getElementById('game-instructions');
 const healthValue = document.getElementById('healthValue');
 const gameProgressFill = document.getElementById('gameProgressFill');
@@ -126,11 +138,13 @@ const gameStepOne = document.getElementById('gameStepOne');
 const gameStepTwo = document.getElementById('gameStepTwo');
 const gameStepThree = document.getElementById('gameStepThree');
 
+/** 读取当前语言模板并替换 {placeholder}。 */
 function t(key, values = {}) {
   const template = translations[currentLanguage]?.[key] || key;
   return formatTemplate(template, values);
 }
 
+/** 使用 Fisher-Yates 算法返回新数组，不改变原始配置顺序。 */
 function shuffle(items) {
   const result = [...items];
   for (let index = result.length - 1; index > 0; index -= 1) {
@@ -148,6 +162,10 @@ function getDebrisCopy(debris) {
   return debris.labels[currentLanguage] || debris.labels.zh;
 }
 
+/**
+ * 为关卡创建本轮可点击垃圾。
+ * 主要污染物始终出现，额外垃圾数量在 1-3 种之间随机选择。
+ */
 function createLevelDebris(level) {
   const primary = debrisTypes.find(debris => debris.id === level.primaryDebrisId);
   const otherDebris = shuffle(debrisTypes.filter(debris => debris.id !== level.primaryDebrisId));
@@ -181,6 +199,7 @@ function getOverallPercent() {
   return Math.round((completedLevels.size / gameLevels.length) * 100);
 }
 
+// ---------- 海面垃圾渲染 ----------
 function renderDebris() {
   if (!diagnosisDebrisLayer) return;
   diagnosisDebrisLayer.innerHTML = '';
@@ -205,6 +224,7 @@ function renderDebris() {
   });
 }
 
+// ---------- 文案、诊断面板与操作按钮同步 ----------
 function updateInstructions() {
   if (!gameInstructionsElement) return;
   const copy = getLevelCopy();
@@ -293,6 +313,7 @@ function updateActions() {
   }
 }
 
+/** 一次状态变更后集中刷新画面，避免各点击处理器分别更新界面。 */
 function updateLevelState() {
   const complete = isCurrentLevelComplete();
   diagnosisSea?.classList.toggle('is-restored', complete);
@@ -302,6 +323,7 @@ function updateLevelState() {
   updateActions();
 }
 
+/** 根据当前关卡切换背景、污染对象、健康对象和随机垃圾。 */
 function renderLevel() {
   const level = gameLevels[currentLevelIndex];
   const copy = getLevelCopy(level);
@@ -329,6 +351,7 @@ function renderLevel() {
   updateLevelState();
 }
 
+/** 标记垃圾已清除，并在最后一件垃圾移除时完成当前关卡。 */
 function removeDebris(instanceId) {
   const item = currentDebris.find(debris => debris.instanceId === instanceId);
   if (!item || item.removed) return;
@@ -354,6 +377,7 @@ function resetCurrentLevel() {
   renderLevel();
 }
 
+/** 新会话必须从海龟关开始，这是整个游戏的固定入口。 */
 function startNewSession() {
   completedLevels = new Set();
   currentLevelIndex = 0;
@@ -362,6 +386,7 @@ function startNewSession() {
   renderLevel();
 }
 
+/** 通关后只从未完成关卡中随机抽取，五关完成后重新开始。 */
 function openRandomRemainingLevel() {
   if (!isCurrentLevelComplete()) return;
   if (completedLevels.size === gameLevels.length) {
@@ -380,6 +405,7 @@ function openRandomRemainingLevel() {
   renderLevel();
 }
 
+// 切换语言时重新渲染当前状态，不重置随机垃圾或通关进度。
 window.onLanguageChanged = () => renderLevel();
 
 document.addEventListener('DOMContentLoaded', () => {

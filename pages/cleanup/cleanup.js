@@ -6,6 +6,7 @@ Cleanup page script for the Marine Debris Project
 This script handles scenario switching, localization, and cleanup impact visualization for the cleanup page.
 */
 
+// 模拟区域需要同时更新进度、图片、说明和三个结果字段。
 const statusFill = document.getElementById('statusFill');
 const statusText = document.getElementById('statusText');
 const impactVisual = document.getElementById('impactVisual');
@@ -16,8 +17,10 @@ const debrisLevelText = document.getElementById('debrisLevelText');
 const marineLifeText = document.getElementById('marineLifeText');
 const waterColorText = document.getElementById('waterColorText');
 
+// 保存当前场景，确保切换语言后仍停留在用户选择的清理阶段。
 let currentScenario = 'current';
 
+// 场景配置只描述数据，具体 DOM 更新统一由 updateSimulationInfo 完成。
 const simulationScenarios = {
   current: {
     labelKey: 'simulationCurrent',
@@ -57,6 +60,7 @@ const simulationScenarios = {
  */
 function updateCleanupImpact(scenarioKey = currentScenario) {
   const scenario = simulationScenarios[scenarioKey] || simulationScenarios.current;
+  // 恢复度与剩余垃圾量互补，并限制在合法百分比范围内。
   const percent = Math.min(100, Math.max(0, 100 - scenario.debris));
   if (statusFill) statusFill.style.width = `${percent}%`;
   if (statusText) statusText.textContent = translations[currentLanguage].statusText.replace('{percent}', percent);
@@ -74,6 +78,7 @@ function updateSimulationInfo(scenarioKey) {
   const scenario = simulationScenarios[scenarioKey] || simulationScenarios.current;
   currentScenario = scenarioKey;
 
+  // 按钮激活态、图片和结果必须在同一次更新中保持一致。
   simulationButtons.forEach(button => {
     button.classList.toggle('active', button.dataset.scenario === scenarioKey);
   });
@@ -101,6 +106,7 @@ function setupSimulationControls() {
   });
 }
 
+// 语言切换只重绘当前场景，不把用户强制切回“当前状态”。
 window.onLanguageChanged = () => {
   updateSimulationInfo(currentScenario);
 };

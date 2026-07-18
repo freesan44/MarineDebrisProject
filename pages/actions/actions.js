@@ -9,6 +9,7 @@ This script initializes language support for the actions page and adds interacti
 document.addEventListener('DOMContentLoaded', () => {
   initLanguageSwitcher();
 
+  // 行动卡是单选式阅读焦点；选中只改变视觉强调，不保存用户数据。
   const actionItems = document.querySelectorAll('.action-card');
   actionItems.forEach(item => {
     item.addEventListener('click', () => {

@@ -27,6 +27,7 @@ Main contents:
  * Supports Japanese, English, and Chinese
  */
 const translations = {
+  // 三种语言必须保持相同键名；HTML 的 data-i18n 与页面脚本都依赖这些键。
   ja: {
     heroEyebrow: '日本周辺の海を守ろう',
     languageLabel: '言語',
@@ -81,10 +82,13 @@ const translations = {
     chartInputValue: '年間 約1.6万-3.1万トン',
     chartInputNote: '環境省が発生源・品目別に推計した、日本から海へ流出するプラスチックごみ量です。',
     chartPlasticLabel: '大きなプラスチックごみ',
+    chartPlasticValue: '年間 約1,300-8,600トン',
     chartPlasticNote: '投げ捨てごみや海岸ごみなど、目に見えて拾えるプラスチックごみです。',
     chartLandLabel: 'マイクロプラスチック粉じん',
+    chartLandValue: '年間 約1.4万-2.0万トン',
     chartLandNote: 'タイヤ、道路標示材、塗料、人工芝などが摩耗して細かな粒になり、雨水とともに水域へ流れます。',
     chartRiverLabel: '衣類繊維と洗剤類',
+    chartRiverValue: '繊維 約230-240トン',
     chartRiverNote: '洗濯で出る繊維や、洗剤類に含まれる香りカプセルも、汚水経由で海へ届く可能性があります。',
     chartCompositionLabel: '種類別比較',
     chartCompositionTitle: 'どのごみが日本周辺の海へ流れているか',
@@ -218,7 +222,7 @@ const translations = {
     imageCaption2: '沖縄近海の珊瑚と海の生き物',
     imageCaption3: '地域漁業と海洋環境のつながり',
     officialImageNote: '画像出典：環境省（公開ページ）',
-    impactInteractiveTitle: '親手で参加し、変化を観察する',
+    impactInteractiveTitle: '自分の手で参加し、変化を観察する',
     impactInteractiveDescription: '清掃ごとに水質と生態が変化し、「手で修復する」体験ができます。',
     cleanupKicker: '参加して変化を見る',
     cleanupHeroLabel: 'シミュレーション',
@@ -285,6 +289,7 @@ const translations = {
     gameStep2: '主な汚染「{pollution}」を含む{total}個のごみを回収します。',
     gameStep3: '清掃後は、まだ体験していない海域へランダムに進みます。',
     statusText: '水質回復: {percent}%',
+    simulationTitle: '影響シミュレーション',
     simulationCurrent: '現在の状態',
     simulationPartial: '部分的な清掃',
     simulationFull: '完全な清掃',
@@ -294,12 +299,15 @@ const translations = {
     simulationImageCaptionCurrent: '漂うごみで汚れた海水',
     simulationImageCaptionPartial: '部分清掃後でも続く努力が必要',
     simulationImageCaptionFull: '完全清掃後の健康な海',
-    marineLifePoor: '海洋生物状態：受損',
-    marineLifeModerate: '海洋生物状態：回復中',
-    marineLifeHealthy: '海洋生物状態：健康',
-    waterCloudy: '海水の色：濁っている',
-    waterModerate: '海水の色：ややクリア',
-    waterClear: '海水の色：澄んでいる'
+    debrisLevelLabel: 'ごみ量',
+    marineLifeLabel: '海の生きもの',
+    waterColorLabel: '海水',
+    marineLifePoor: '弱っている',
+    marineLifeModerate: '回復中',
+    marineLifeHealthy: '良好',
+    waterCloudy: '濁っている',
+    waterModerate: '少し澄んでいる',
+    waterClear: '澄んでいる'
   },
   zh: {
     heroEyebrow: '守护日本周边海洋',
@@ -355,10 +363,13 @@ const translations = {
     chartInputValue: '每年约 1.6万-3.1万吨',
     chartInputNote: '日本环境省按来源和品目估算进入海洋的塑料垃圾总量。',
     chartPlasticLabel: '大块塑料垃圾',
+    chartPlasticValue: '每年约 1,300-8,600 吨',
     chartPlasticNote: '包含被丢弃的塑料、海岸投弃物等看得见、捡得起的垃圾。',
     chartLandLabel: '微塑料粉尘',
+    chartLandValue: '每年约 1.4万-2.0万吨',
     chartLandNote: '轮胎、道路标线、涂料、人工草坪等磨损后，会变成细小颗粒随雨水进入水域。',
     chartRiverLabel: '衣物纤维与洗剂',
+    chartRiverValue: '纤维约 230-240 吨',
     chartRiverNote: '洗衣掉落的纤维、洗涤用品里的微胶囊，也会通过污水系统进入海洋。',
     chartCompositionLabel: '类型对比',
     chartCompositionTitle: '哪些垃圾正在流向日本周边海洋',
@@ -559,6 +570,7 @@ const translations = {
     gameStep2: '本关共有 {total} 件垃圾，其中主要污染是“{pollution}”。',
     gameStep3: '清空海面后，随机进入一个尚未体验的海域。',
     statusText: '水质恢复: {percent}%',
+    simulationTitle: '模拟影响',
     simulationCurrent: '当前状态',
     simulationPartial: '部分清理',
     simulationFull: '完全清理',
@@ -568,12 +580,15 @@ const translations = {
     simulationImageCaptionCurrent: '漂浮垃圾污染水体',
     simulationImageCaptionPartial: '部分清理后仍需继续努力',
     simulationImageCaptionFull: '彻底清理后的健康海洋',
-    marineLifePoor: '海洋生物状态：受损',
-    marineLifeModerate: '海洋生物状态：恢复中',
-    marineLifeHealthy: '海洋生物状态：健康',
-    waterCloudy: '海水颜色：浑浊',
-    waterModerate: '海水颜色：逐渐清澈',
-    waterClear: '海水颜色：清澈'
+    debrisLevelLabel: '垃圾量',
+    marineLifeLabel: '海洋生物',
+    waterColorLabel: '海水',
+    marineLifePoor: '受损',
+    marineLifeModerate: '恢复中',
+    marineLifeHealthy: '健康',
+    waterCloudy: '浑浊',
+    waterModerate: '逐渐清澈',
+    waterClear: '清澈'
   },
   en: {
     heroEyebrow: 'Protect Japan’s coastal seas',
@@ -629,10 +644,13 @@ const translations = {
     chartInputValue: 'About 16,000-31,000 tons each year',
     chartInputNote: 'MOE estimates Japan’s marine plastic litter outflow by source and item.',
     chartPlasticLabel: 'Large plastic litter',
+    chartPlasticValue: 'About 1,300-8,600 tons each year',
     chartPlasticNote: 'Visible plastic litter such as discarded plastic and coastal litter.',
     chartLandLabel: 'Microplastic dust',
+    chartLandValue: 'About 14,000-20,000 tons each year',
     chartLandNote: 'Tires, road markings, paint, and artificial turf wear down into small particles that can wash into waterways.',
     chartRiverLabel: 'Textile fibers and detergents',
+    chartRiverValue: 'Textile fibers: about 230-240 tons',
     chartRiverNote: 'Laundry fibers and fragrance capsules in detergents can move toward the sea through wastewater systems.',
     chartCompositionLabel: 'Type comparison',
     chartCompositionTitle: 'Which waste types flow toward Japanese waters',
@@ -833,6 +851,7 @@ const translations = {
     gameStep2: 'Clear {total} items, including the main pollutant “{pollution}”.',
     gameStep3: 'After cleanup, continue to a random sea you have not visited yet.',
     statusText: 'Water quality restored: {percent}%',
+    simulationTitle: 'Impact simulation',
     simulationCurrent: 'Current state',
     simulationPartial: 'Partial cleanup',
     simulationFull: 'Full cleanup',
@@ -842,12 +861,15 @@ const translations = {
     simulationImageCaptionCurrent: 'Polluted water with floating debris',
     simulationImageCaptionPartial: 'Partial cleanup still needs more care',
     simulationImageCaptionFull: 'Healthy ocean after full cleanup',
-    marineLifePoor: 'Marine life: stressed',
-    marineLifeModerate: 'Marine life: recovering',
-    marineLifeHealthy: 'Marine life: healthy',
-    waterCloudy: 'Water color: cloudy',
-    waterModerate: 'Water color: clearer',
-    waterClear: 'Water color: clear'
+    debrisLevelLabel: 'Debris amount',
+    marineLifeLabel: 'Marine life',
+    waterColorLabel: 'Seawater',
+    marineLifePoor: 'Stressed',
+    marineLifeModerate: 'Recovering',
+    marineLifeHealthy: 'Healthy',
+    waterCloudy: 'Cloudy',
+    waterModerate: 'Clearing',
+    waterClear: 'Clear'
   }
 };
 
@@ -871,6 +893,7 @@ const debrisPieces = {
  * Annual item/source indicators for marine debris around Japan
  */
 const chartData = [
+  // 数值单位统一为“吨/年”；min/max 表示官方推计区间，不是现场逐件统计。
   { key: 'japanPlasticOutflowTotal', labelKey: 'chartJapanPlasticOutflowTotal', sourceKey: 'chartSourceMOE2025Short', min: 16000, max: 31000, type: 'total' },
   { key: 'japanMacroPlastic', labelKey: 'chartJapanMacroPlastic', sourceKey: 'chartSourceMOE2025Short', min: 1300, max: 8600, type: 'macro' },
   { key: 'japanUnintentionalMicroplastic', labelKey: 'chartJapanUnintentionalMicroplastic', sourceKey: 'chartSourceMOE2025Short', min: 14000, max: 20000, type: 'micro' },
@@ -887,6 +910,7 @@ const chartData = [
  * Explains debris impact along Japan's coast using reliable national-scale evidence and representative coastal settings
  */
 const regionMapData = [
+  // value 是 0-100 的展示指数，只控制点位大小和关注等级，不代表该地点的垃圾吨数。
   {
     id: 'tokyo_bay',
     lat: 35.55,
@@ -994,6 +1018,11 @@ const regionMapData = [
   }
 ];
 
+/**
+ * 动态数据专用标签。
+ * translations 负责页面固定文案；这里负责 chartData 与 regionMapData 中通过 *Key 引用的名称。
+ * 两张表分开可避免大段地区说明混入页面级翻译，同时仍由 getLocalizedLabel 统一读取。
+ */
 const localizedLabels = {
   ja: {
     chartJapanPlasticOutflowTotal: '海洋プラスチックごみ総量',
@@ -1159,6 +1188,7 @@ const localizedLabels = {
   }
 };
 
+// 当前语言是所有页面脚本共享的运行时状态，由 initLanguageSwitcher 统一初始化。
 let currentLanguage = 'ja';
 
 /**
@@ -1170,6 +1200,7 @@ let currentLanguage = 'ja';
  * @returns {string} 本地化文本 / Localized text
  */
 function getLocalizedLabel(key) {
+  // 页面翻译优先，动态图表/地图标签作为后备，最后返回键名便于发现缺失项。
   return translations[currentLanguage][key] || localizedLabels[currentLanguage][key] || key;
 }
 
@@ -1193,6 +1224,7 @@ function formatTemplate(template, values) {
  */
 function translatePage() {
   document.documentElement.lang = currentLanguage;
+  // 只替换明确声明 data-i18n 的文本，图片 alt 与动态组件由各页面脚本更新。
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     if (!translations[currentLanguage] || !translations[currentLanguage][key]) return;
@@ -1205,6 +1237,7 @@ function translatePage() {
  * Initialize the language selector and load saved语言设置
  */
 function initLanguageSwitcher() {
+  // 优先使用用户上次选择；首次访问时再根据浏览器语言判断。
   const savedLanguage = localStorage.getItem('marineDebrisLanguage');
   currentLanguage = savedLanguage || (navigator.language.startsWith('zh') ? 'zh' : navigator.language.startsWith('en') ? 'en' : 'ja');
 
@@ -1215,6 +1248,7 @@ function initLanguageSwitcher() {
       currentLanguage = event.target.value;
       localStorage.setItem('marineDebrisLanguage', currentLanguage);
       translatePage();
+      // 动态生成的图表、地图、游戏和图片说明通过此钩子自行重绘。
       if (typeof window.onLanguageChanged === 'function') {
         window.onLanguageChanged();
       }

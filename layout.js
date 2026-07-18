@@ -35,7 +35,8 @@ Dependencies:
  * 定义所有页面的路由、国际化键和备用文本
  * @type {Object<string, {href: string, i18n: string, fallback: string}>}
  */
-const siteVersion = '20260717-7';
+// 发布新版本时同步修改此值与各页面的资源查询参数，避免 GitHub Pages 继续使用旧缓存。
+const siteVersion = '20260718-1';
 
 const pageMap = {
   intro: { href: `../../pages/intro/index.html?v=${siteVersion}`, i18n: 'tabIntro', fallback: '概览' },
@@ -96,8 +97,10 @@ function createTopNav(activePage) {
 }
 
 /**
- * Keep the active tab visible without changing the page's vertical position.
- * Right-side pages are centered so the following tabs remain discoverable.
+ * 保证当前标签始终可见，但只移动导航条本身，不改变页面纵向位置。
+ * 【地图】【影响】【行动】会停在偏左位置，给右侧后续标签留出可发现空间。
+ * @param {HTMLElement} nav - 已插入页面的顶部导航元素
+ * @param {string} activePage - 当前页面标识
  */
 function initTabScroll(nav, activePage) {
   const shell = nav.querySelector('.tab-scroll-shell');
@@ -106,6 +109,7 @@ function initTabScroll(nav, activePage) {
   if (!shell || !tabNav || !activeTab) return;
 
   const updateScrollCues = () => {
+    // 留出少量阈值，避免小数滚动值让左右提示反复闪烁。
     const threshold = 6;
     const maxScroll = Math.max(0, tabNav.scrollWidth - tabNav.clientWidth);
     shell.classList.toggle('can-scroll-left', tabNav.scrollLeft > threshold);
@@ -130,6 +134,7 @@ function initTabScroll(nav, activePage) {
   };
 
   const scheduleAlignment = () => {
+    // 连续两帧等待字体和导航尺寸稳定，避免按旧宽度计算目标位置。
     window.requestAnimationFrame(() => window.requestAnimationFrame(alignActiveTab));
   };
 

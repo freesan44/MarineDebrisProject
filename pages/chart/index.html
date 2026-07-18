@@ -7,11 +7,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>数据图表 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css?v=20260717-7" />
+  <link rel="stylesheet" href="../../styles.css?v=20260718-1" />
 </head>
 <body data-page="chart">
   <main>
     <section class="section chart summary-page data-redesign" id="chart-page">
+      <!-- 数据页标题卡：限定范围为日本周边海洋及年度估算量。 -->
       <div class="data-hero">
         <div>
           <p class="section-kicker" data-i18n="chartKicker">数据证据</p>
@@ -25,6 +26,7 @@
         </div>
       </div>
 
+      <!-- 四张摘要卡直接对应环境省资料中的总量和三类重点来源。 -->
       <div class="summary-grid evidence-grid" id="dataSourceInfo">
         <article class="summary-tile evidence-tile">
           <span data-i18n="chartInputLabel">年度总量</span>
@@ -34,24 +36,25 @@
         </article>
         <article class="summary-tile evidence-tile emphasis">
           <span data-i18n="chartPlasticLabel">大块塑料垃圾</span>
-          <strong>每年约 1,300-8,600 吨</strong>
+          <strong data-i18n="chartPlasticValue">每年约 1,300-8,600 吨</strong>
           <small data-i18n="chartPlasticNote">包含被丢弃的塑料、海岸投弃物等看得见、捡得起的垃圾。</small>
           <a href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener" data-i18n="chartSourceMOE2025">环境省 FY2025</a>
         </article>
         <article class="summary-tile evidence-tile">
           <span data-i18n="chartLandLabel">微塑料粉尘</span>
-          <strong>每年约 1.4万-2.0万吨</strong>
+          <strong data-i18n="chartLandValue">每年约 1.4万-2.0万吨</strong>
           <small data-i18n="chartLandNote">轮胎、道路标线、涂料、人工草坪等磨损后，会变成细小颗粒随雨水进入水域。</small>
           <a href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener" data-i18n="chartSourceMOE2025">环境省 FY2025</a>
         </article>
         <article class="summary-tile evidence-tile">
           <span data-i18n="chartRiverLabel">衣物纤维与洗剂</span>
-          <strong>纤维约 230-240 吨</strong>
+          <strong data-i18n="chartRiverValue">纤维约 230-240 吨</strong>
           <small data-i18n="chartRiverNote">洗衣掉落的纤维、洗涤用品里的微胶囊，也会通过污水系统进入海洋。</small>
           <a href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener" data-i18n="chartSourceMOE2025">环境省 FY2025</a>
         </article>
       </div>
 
+      <!-- chartBars 由 chart.js 动态创建，静态 HTML 只保留总量摘要与容器。 -->
       <div class="chart-panel marine-volume-board">
         <div class="volume-spotlight">
           <p data-i18n="chartCompositionLabel">类型对比</p>
@@ -68,6 +71,7 @@
         <div class="chart-bars spatial-bars" id="chartBars" aria-label="日本周边海洋垃圾类型数量柱状图"></div>
       </div>
 
+      <!-- 来源区明确区分估算资料、调查索引和数值口径提醒。 -->
       <div class="chart-details source-panel" id="chartDetails">
         <div class="chart-details-head">
           <p data-i18n="chartDetailsKicker">来源说明</p>
@@ -99,8 +103,9 @@
     </section>
   </main>
 
-  <script src="../../layout.js?v=20260717-7"></script>
-  <script src="../../shared.js?v=20260717-7"></script>
-  <script src="chart.js?v=20260717-7"></script>
+  <!-- shared.js 提供 chartData，chart.js 负责单位格式化和条形渲染。 -->
+  <script src="../../layout.js?v=20260718-1"></script>
+  <script src="../../shared.js?v=20260718-1"></script>
+  <script src="chart.js?v=20260718-1"></script>
 </body>
 </html>

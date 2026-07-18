@@ -9,6 +9,7 @@ This script initializes language support for the empathy page and adds image car
 document.addEventListener('DOMContentLoaded', () => {
   initLanguageSwitcher();
 
+  // 点击卡片在新标签查看原图；noopener 防止新页面访问当前窗口对象。
   const imageCards = document.querySelectorAll('.image-card');
   imageCards.forEach(card => {
     card.addEventListener('click', () => {

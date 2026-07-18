@@ -7,11 +7,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>参与变化 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css?v=20260717-7" />
+  <link rel="stylesheet" href="../../styles.css?v=20260718-1" />
 </head>
 <body data-page="cleanup">
   <main>
     <section class="section cleanup-impact cleanup-redesign" id="cleanup-page">
+      <!-- 页面标题卡：概括三档清理模拟的观察方法。 -->
       <div class="cleanup-hero">
         <div>
           <p class="section-kicker" data-i18n="cleanupKicker">参与变化</p>
@@ -24,12 +25,14 @@
           <small data-i18n="cleanupHeroNote">切换清理程度，观察水质、垃圾量和海洋生物状态如何变化。</small>
         </div>
       </div>
+      <!-- 对比区左侧展示清理前后和现场数据，右侧提供可切换的模拟结果。 -->
       <div class="impact-interactive">
         <div class="cleanup-compare-column">
           <div class="impact-visual" id="impactVisual">
             <div class="impact-stage before"><span data-i18n="beforeLabel">清理前</span></div>
             <div class="impact-stage after"><span data-i18n="afterLabel">清理后</span></div>
           </div>
+          <!-- 冲绳县公开清理成果的摘要；原始页面链接保留在卡片底部。 -->
           <aside class="cleanup-field-note">
             <div class="cleanup-field-note-head">
               <span data-i18n="cleanupFieldKicker">现场观察记录</span>
@@ -56,6 +59,7 @@
         <div class="impact-status">
           <div class="status-meter" aria-hidden="true"><div class="status-fill" id="statusFill"></div></div>
           <p id="statusText" data-i18n="statusText">水质恢复: 0%</p>
+          <!-- cleanup.js 根据 data-scenario 同步图片、恢复度和三个状态字段。 -->
           <div class="simulation-panel">
             <h3 data-i18n="simulationTitle">模拟影响</h3>
             <div class="simulation-controls">
@@ -65,7 +69,7 @@
             </div>
             <div class="simulation-preview">
               <img id="simulationImage" src="../../assets/generated/simulation-current.png" alt="Polluted ocean water with plastic debris" loading="lazy" />
-              <p id="simulationImageCaption">污染的海洋与漂浮垃圾</p>
+              <p id="simulationImageCaption" data-i18n="simulationImageCaptionCurrent">污染的海洋与漂浮垃圾</p>
             </div>
             <div class="simulation-results">
               <p><strong data-i18n="debrisLevelLabel">垃圾量</strong>: <span id="debrisLevelText">80%</span></p>
@@ -75,6 +79,7 @@
           </div>
         </div>
       </div>
+      <!-- 官方实景照片用于说明不同清理阶段，不表示同一地点的连续对照。 -->
       <div class="cleanup-gallery-head">
         <div>
           <p class="section-kicker" data-i18n="cleanupEvidenceKicker">日本实景档案</p>
@@ -109,8 +114,9 @@
     </section>
   </main>
 
-  <script src="../../layout.js?v=20260717-7"></script>
-  <script src="../../shared.js?v=20260717-7"></script>
-  <script src="cleanup.js?v=20260717-7"></script>
+  <!-- 共用布局和翻译先加载，cleanup.js 最后接管模拟控件。 -->
+  <script src="../../layout.js?v=20260718-1"></script>
+  <script src="../../shared.js?v=20260718-1"></script>
+  <script src="cleanup.js?v=20260718-1"></script>
 </body>
 </html>

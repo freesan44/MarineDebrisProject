@@ -7,11 +7,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>清理游戏 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css?v=20260717-7" />
+  <link rel="stylesheet" href="../../styles.css?v=20260718-1" />
 </head>
 <body data-page="game">
   <main>
     <section class="section game game-redesign" id="game-page">
+      <!-- 游戏标题卡：解释问诊、清理和恢复的核心玩法。 -->
       <div class="game-hero">
         <div>
           <p class="section-kicker" data-i18n="gameKicker">清理游戏</p>
@@ -25,9 +26,11 @@
         </div>
       </div>
 
+      <!-- 左侧为可操作海面，右侧为实时诊断与整体通关进度。 -->
       <div class="game-layout">
         <div class="game-board" aria-label="Marine diagnosis cleanup game">
           <div class="game-instructions" id="game-instructions" data-i18n="gameInstructions">点击漂浮在海里的垃圾，让海龟的健康度逐步恢复。</div>
+          <!-- 污染对象、健康对象和随机垃圾都由 game.js 根据当前关卡更新。 -->
           <div class="diagnosis-sea" id="diagnosisSea">
             <div class="sea-glow" aria-hidden="true"></div>
             <div class="sea-shade" aria-hidden="true"></div>
@@ -49,6 +52,7 @@
             </div>
           </div>
         </div>
+        <!-- aria-live 让辅助技术能感知关卡、健康度和清理数量变化。 -->
         <aside class="game-dashboard" aria-live="polite">
           <p class="dashboard-kicker" data-i18n="gameDashboardKicker">海龟问诊单</p>
           <h3 data-i18n="gameDashboardTitle">清理进度面板</h3>
@@ -76,8 +80,9 @@
     </section>
   </main>
 
-  <script src="../../layout.js?v=20260717-7"></script>
-  <script src="../../shared.js?v=20260717-7"></script>
-  <script src="game.js?v=20260717-7"></script>
+  <!-- shared.js 提供翻译模板，game.js 负责关卡配置与状态机。 -->
+  <script src="../../layout.js?v=20260718-1"></script>
+  <script src="../../shared.js?v=20260718-1"></script>
+  <script src="game.js?v=20260718-1"></script>
 </body>
 </html>

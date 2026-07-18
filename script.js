@@ -38,8 +38,12 @@ Dependencies:
 - shared.js (shared data and translations)
 - layout.js (page layout)
 - styles.css (styles)
+
+维护说明：此文件保留早期单页版本的聚合逻辑。当前 pages/* 页面使用 shared.js、layout.js
+和各自目录中的页面脚本；修改线上页面时应优先更新拆分后的对应文件。
 */
 
+// 旧单页版本的完整翻译表；键名与拆分后的 shared.js 保持同一语义。
 const translations = {
   ja: {
     heroEyebrow: '日本周辺の海を守ろう',
@@ -349,6 +353,7 @@ const translations = {
   }
 };
 
+// 旧版分类游戏、图表和地图所需的静态数据。
 const debrisPieces = {
   plastic: { target: 'recycle', labelKey: 'debrisPlastic', score: 10 },
   fishing: { target: 'trash', labelKey: 'debrisFishing', score: 8 },
@@ -440,6 +445,7 @@ const localizedLabels = {
   }
 };
 
+// 缓存旧单页中可能存在的 DOM；对应模块不存在时，后续函数会直接跳过。
 const gameInstructionsElement = document.getElementById('game-instructions');
 const languageSelect = document.getElementById('languageSwitch');
 const regionCards = document.getElementById('regionCards');
@@ -468,6 +474,7 @@ const choiceButtons = document.querySelectorAll('.choice-button');
 const restartGameButton = document.getElementById('restartGameButton');
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabPages = document.querySelectorAll('.tab-page');
+// 单页运行时状态：语言、得分、地图选择、游戏队列和模拟场景。
 let currentLanguage = 'ja';
 let totalScore = 0;
 let selectedRegion = null;
@@ -478,6 +485,7 @@ let gameQueue = [];
 let currentDebrisType = null;
 let currentScenario = 'current';
 
+// 三档模拟共用一套数据结构，按钮只传递场景键，不直接操作图片和数值。
 const simulationScenarios = {
   current: {
     labelKey: 'simulationCurrent',
@@ -511,6 +519,7 @@ const simulationScenarios = {
   }
 };
 
+// ---------- 国际化与通用格式化 ----------
 function translatePage() {
   document.documentElement.lang = currentLanguage;
 
@@ -554,6 +563,7 @@ function getWeightColor(weight) {
   return 'var(--map-low)';
 }
 
+// ---------- 地图渲染 ----------
 function updateRegionCards() {
   if (!regionCards) return;
   regionCards.innerHTML = '';
@@ -582,6 +592,7 @@ function showRegionDetail(region) {
   `;
 }
 
+// ---------- 清理前后模拟 ----------
 function updateCleanupImpact(scenarioKey = currentScenario) {
   const scenario = simulationScenarios[scenarioKey] || simulationScenarios.current;
   const percent = Math.min(100, Math.max(0, 100 - scenario.debris));
@@ -619,6 +630,7 @@ function setupSimulationControls() {
   });
 }
 
+// ---------- 旧版垃圾分类游戏 ----------
 function updateGameDashboard() {
   const remaining = currentDebrisType ? gameQueue.length + 1 : gameQueue.length;
   const cleaned = Math.max(0, totalDebrisCount - remaining);
@@ -682,6 +694,7 @@ function setupRestartGameButton() {
   });
 }
 
+// ---------- 单页导航与分享入口 ----------
 function setupTabs() {
   if (!tabButtons.length || !tabPages.length) return;
   tabButtons.forEach(btn => {
@@ -753,6 +766,7 @@ function setMapColors() {
   });
 }
 
+// ---------- 旧版 Canvas 图表 ----------
 function updateChartLabels() {
   chartData.forEach(item => {
     item.label = getLocalizedLabel(item.labelKey);
@@ -833,6 +847,7 @@ function drawChart() {
   renderChartBars();
 }
 
+// ---------- 用户选择与计分 ----------
 function handleChoice(target) {
   const type = currentDebrisType;
   const debris = debrisPieces[type];
@@ -924,6 +939,7 @@ window.addEventListener('resize', () => {
   drawChart();
 });
 
+// ---------- 旧单页初始化 ----------
 function init() {
   const savedLanguage = localStorage.getItem('marineDebrisLanguage');
   currentLanguage = savedLanguage || (navigator.language.startsWith('zh') ? 'zh' : navigator.language.startsWith('en') ? 'en' : 'ja');

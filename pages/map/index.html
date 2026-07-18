@@ -7,11 +7,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>地图分析 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css?v=20260717-7" />
+  <link rel="stylesheet" href="../../styles.css?v=20260718-1" />
 </head>
 <body data-page="map">
   <main>
     <section class="section map map-redesign" id="map-page">
+      <!-- 地图标题卡：说明点位是沿岸影响提示，不是港湾精确吨数。 -->
       <div class="map-hero">
         <div>
           <p class="section-kicker" data-i18n="mapKicker">沿海影响</p>
@@ -24,6 +25,7 @@
           <small data-i18n="mapHeroNote">点击地图点，查看对应沿海环境的垃圾来源、数量级和生态影响。</small>
         </div>
       </div>
+      <!-- 静态日本底图上叠加由 map.js 根据经纬度生成的交互点。 -->
       <div class="map-panel">
         <div class="map-container" aria-label="日本の海洋ゴミマップ">
           <div class="map-shell">
@@ -59,8 +61,10 @@
           </div>
         </div>
       </div>
+      <!-- 下列两个容器由 map.js 重绘，切换筛选或语言时会保持选中地区。 -->
       <div id="regionCards" class="region-cards"></div>
       <div id="mapDetail" class="map-detail"></div>
+      <!-- 地图量级与地区说明的主要资料入口。 -->
       <div class="map-source-strip">
         <a href="https://www.env.go.jp/content/000401106.pdf" target="_blank" rel="noopener">
           <span data-i18n="mapSourceOne">环境省 FY2025</span>
@@ -74,8 +78,9 @@
     </section>
   </main>
 
-  <script src="../../layout.js?v=20260717-7"></script>
-  <script src="../../shared.js?v=20260717-7"></script>
-  <script src="map.js?v=20260717-7"></script>
+  <!-- shared.js 提供 regionMapData，map.js 负责定位、筛选和详情渲染。 -->
+  <script src="../../layout.js?v=20260718-1"></script>
+  <script src="../../shared.js?v=20260718-1"></script>
+  <script src="map.js?v=20260718-1"></script>
 </body>
 </html>

@@ -24,6 +24,9 @@ Main style sections:
 - Chart Styles
 - Map Styles
 - Responsive Design
+
+维护顺序：文件前半部分保留基础海洋主题和组件结构，后半部分的手绘主题按页面
+data-page 覆盖基础样式。新增规则应尽量放进对应页面分区，避免继续叠加无范围选择器。
 */
 
 /* ========================================
@@ -119,6 +122,7 @@ img {
   white-space: nowrap; /* 防止换行 / Prevent wrapping */
 }
 
+/* 标签滚动容器：JS 只改变内部 scrollLeft，并通过状态类控制两侧提示。 */
 .tab-scroll-shell {
   position: relative;
   flex: 1;
@@ -215,6 +219,7 @@ img {
   transform: translate(0, -50%) rotate(4deg);
 }
 
+/* 首页首屏与通用内容骨架；具体手绘效果在文件后半部分按页面覆盖。 */
 header.hero {
   position: relative;
   overflow: hidden;

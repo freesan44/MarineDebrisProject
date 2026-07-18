@@ -1,6 +1,16 @@
+/*
+海洋垃圾项目 - 数据页动态图表
+Marine Debris Project - Data Chart
+
+chartData 在 shared.js 中保存统一的“吨/年”数值，本文件负责本地化单位、
+把区间换算为相对长度，并生成可响应布局的横向比较条。
+*/
+
+// 图表容器与顶部总量摘要。
 const chartBars = document.getElementById('chartBars');
 const leadingCategory = document.getElementById('leadingCategory');
 
+// 各垃圾类型的颜色通过 CSS 自定义属性传给同一套条形组件。
 const chartTheme = {
   macro: {
     start: '#2d5da1',
@@ -39,6 +49,7 @@ const chartTheme = {
   }
 };
 
+/** 将共享数据补充为当前语言可直接渲染的对象。 */
 function getChartItems() {
   return chartData.map(item => ({
     ...item,
@@ -53,6 +64,10 @@ function trimDecimal(value) {
   return Number(value.toFixed(1)).toLocaleString();
 }
 
+/**
+ * 按语言习惯格式化吨数：日中使用“万”，英文使用 thousand。
+ * @param {number} value - 每年估算重量（吨）
+ */
 function formatWeight(value) {
   if (currentLanguage === 'ja') {
     if (value >= 10000) return `${trimDecimal(value / 10000)}万トン`;
@@ -68,6 +83,7 @@ function formatWeight(value) {
   return `${value.toLocaleString()} 吨`;
 }
 
+/** 将 min/max 区间转换为完整的“每年约……”文本。 */
 function formatRange(item) {
   const prefixes = {
     ja: '年間 約',
@@ -126,6 +142,7 @@ function setLeadingMetric(items) {
   leadingCategory.textContent = total ? formatRange(total) : '';
 }
 
+/** 重新创建全部条形项；语言切换时也调用此函数。 */
 function renderChartBars() {
   if (!chartBars) return;
 
@@ -139,6 +156,7 @@ function renderChartBars() {
 
   spatialItems.forEach((item, index) => {
     const palette = chartTheme[item.type] || chartTheme.micro;
+    // 最小 7% 保证极小数量仍可被看见；右端按最大估值对齐。
     const width = Math.max(7, (item.maxValue / maxValue) * 100);
     const markerLeft = Math.min(100, Math.max(0, (item.minValue / maxValue) * 100));
     const rangeLabel = item.minValue === item.maxValue ? '' : formatMinimumLabel(item.minValue);
@@ -174,6 +192,7 @@ function renderChartBars() {
   chartBars.appendChild(fragment);
 }
 
+// 固定 HTML 文案由 shared.js 翻译，动态生成的条形项在这里重绘。
 window.onLanguageChanged = renderChartBars;
 
 document.addEventListener('DOMContentLoaded', () => {

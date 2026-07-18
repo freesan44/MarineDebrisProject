@@ -7,11 +7,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>海洋影像 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css?v=20260717-7" />
+  <link rel="stylesheet" href="../../styles.css?v=20260718-1" />
 </head>
 <body data-page="empathy">
   <main>
     <section class="section empathy empathy-redesign" id="empathy-page">
+      <!-- 页面标题卡：说明影像页的观察目标与阅读重点。 -->
       <div class="empathy-hero">
         <div>
           <p class="section-kicker" data-i18n="empathyKicker">影像观察</p>
@@ -24,6 +25,7 @@
           <small data-i18n="empathyHeroNote">先看垃圾如何进入海洋，再看它与沿岸风景、生态和人类活动的关系。</small>
         </div>
       </div>
+      <!-- 主题视频使用用户指定的 YouTube 嵌入地址。 -->
       <div class="video-feature">
         <div class="video-copy">
           <p class="section-kicker" data-i18n="videoKicker">主题视频</p>
@@ -34,6 +36,7 @@
           <iframe width="560" height="315" src="https://www.youtube.com/embed/_6xlNyWPpB8?si=l1zaZWYrgUDmkZ1S" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
       </div>
+      <!-- 日本环境省相关公开影像；点击卡片由 empathy.js 在新标签打开原图。 -->
       <div class="image-grid">
         <figure class="image-card">
           <img src="https://chushikoku.env.go.jp/park/daisen/viewpoint/img/kuniga_coast/view_temple1.jpg" alt="日本海岸の風景" loading="lazy" referrerpolicy="no-referrer" onerror="this.src='https://chushikoku.env.go.jp/content/000037087.jpg';this.onerror=null;" />
@@ -52,8 +55,9 @@
     </section>
   </main>
 
-  <script src="../../layout.js?v=20260717-7"></script>
-  <script src="../../shared.js?v=20260717-7"></script>
-  <script src="empathy.js?v=20260717-7"></script>
+  <!-- 共用布局和翻译必须先于页面交互脚本加载。 -->
+  <script src="../../layout.js?v=20260718-1"></script>
+  <script src="../../shared.js?v=20260718-1"></script>
+  <script src="empathy.js?v=20260718-1"></script>
 </body>
 </html>

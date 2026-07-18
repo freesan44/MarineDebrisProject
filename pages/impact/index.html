@@ -5,11 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>影响区域 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css?v=20260717-7" />
+  <link rel="stylesheet" href="../../styles.css?v=20260718-1" />
 </head>
 <body data-page="impact">
   <main>
     <section class="section impact impact-modern impact-handdrawn" id="impact-page">
+      <!-- 首屏：用真实主题图和风险信号概括海洋垃圾的系统性影响。 -->
       <section class="impact-modern-hero" aria-labelledby="impact-title">
         <div class="impact-hero-inner">
           <div class="impact-hero-copy">
@@ -44,6 +45,7 @@
         <span class="impact-hero-doodle" aria-hidden="true">~~~&gt;</span>
       </section>
 
+      <!-- 影响路径：按钮上的 data-* 键用于驱动右侧动态详情。 -->
       <section class="impact-story" id="impact-paths" aria-labelledby="impact-chain-title">
         <header class="impact-section-heading">
           <div>
@@ -89,16 +91,17 @@
               <span id="impactDetailNumber">01</span>
               <small data-i18n="impactDetailLabel">当前影响链</small>
             </div>
-            <h3 id="impactDetailTitle">误食与营养损失</h3>
-            <p id="impactDetailText">透明塑料、瓶盖和泡沫碎片容易被鱼类、海鸟和海龟误认为食物，造成饱腹假象和消化阻塞。</p>
+            <h3 id="impactDetailTitle" data-i18n="impactPathOneTitle">误食与营养损失</h3>
+            <p id="impactDetailText" data-i18n="impactPathOneText">透明塑料、瓶盖和泡沫碎片容易被鱼类、海鸟和海龟误认为食物，造成饱腹假象和消化阻塞。</p>
             <div class="impact-flow-note">
               <span data-i18n="impactDetailFlowLabel">扩散过程</span>
-              <strong id="impactDetailFlow">误认食物 → 摄入 → 营养不足</strong>
+              <strong id="impactDetailFlow" data-i18n="impactPathOneFlow">误认食物 → 摄入 → 营养不足</strong>
             </div>
           </aside>
         </div>
       </section>
 
+      <!-- 影响范围：从海面、海底延伸到沿岸社区。 -->
       <section class="impact-system-band" aria-labelledby="impact-system-title">
         <header class="impact-system-heading">
           <p class="impact-section-badge impact-section-badge-dark">
@@ -127,6 +130,7 @@
         </div>
       </section>
 
+      <!-- 视觉对照：impact.js 根据按钮上的图片与翻译键切换内容。 -->
       <section class="impact-lens" aria-labelledby="impact-lens-title">
         <header class="impact-section-heading impact-lens-heading">
           <div>
@@ -144,10 +148,11 @@
         </div>
         <figure class="impact-lens-visual">
           <img id="impactLensImage" src="../../assets/generated/simulation-current.png" alt="受到垃圾压力的日本沿岸海域" />
-          <figcaption id="impactLensCaption">垃圾在海面与水下同时累积，生态压力不会停留在肉眼可见的位置。</figcaption>
+          <figcaption id="impactLensCaption" data-i18n="impactLensCurrentCaption">垃圾在海面与水下同时累积，生态压力不会停留在肉眼可见的位置。</figcaption>
         </figure>
       </section>
 
+      <!-- 将影响认知引导到行动页面。 -->
       <section class="impact-next-step">
         <div>
           <p data-i18n="impactNextKicker">下一步</p>
@@ -162,8 +167,9 @@
     </section>
   </main>
 
-  <script src="../../layout.js?v=20260717-7"></script>
-  <script src="../../shared.js?v=20260717-7"></script>
-  <script src="impact.js?v=20260717-7"></script>
+  <!-- impact.js 依赖 shared.js 的当前语言与影响路径文案。 -->
+  <script src="../../layout.js?v=20260718-1"></script>
+  <script src="../../shared.js?v=20260718-1"></script>
+  <script src="impact.js?v=20260718-1"></script>
 </body>
 </html>
