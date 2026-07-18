@@ -7,7 +7,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>清理游戏 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css?v=20260718-1" />
+  <link rel="stylesheet" href="../../styles.css?v=20260718-7" />
 </head>
 <body data-page="game">
   <main>
@@ -16,28 +16,30 @@
       <div class="game-hero">
         <div>
           <p class="section-kicker" data-i18n="gameKicker">清理游戏</p>
-          <h2 data-i18n="gameTitle">海洋垃圾清理游戏</h2>
-          <p data-i18n="gameDescription">点击海面上的垃圾，帮助受困海龟恢复健康，直观看见一次次清理带来的变化。</p>
+          <h2 data-i18n="gameTitle">海洋问诊清理游戏</h2>
+          <p data-i18n="gameDescription">从海龟问诊开始，在诊疗室中找出污染物；全部清理完成后，见证动物恢复健康，再随机接诊下一位海洋患者。</p>
         </div>
         <div class="game-hero-card">
           <span data-i18n="gameHeroLabel">互动任务</span>
-          <strong data-i18n="gameHeroValue">发现 · 清理 · 恢复</strong>
-          <small data-i18n="gameHeroNote">从塑料、瓶子和废弃渔网开始，理解海洋垃圾对生物的直接影响。</small>
+          <strong data-i18n="gameHeroValue">观察 · 清理 · 恢复</strong>
+          <small data-i18n="gameHeroNote">观察病例、清除污染物，让昏暗的诊疗现场和受困动物一起恢复明亮。</small>
         </div>
       </div>
 
-      <!-- 左侧为可操作海面，右侧为实时诊断与整体通关进度。 -->
+      <!-- 诊室舞台由背景、病例夹、治疗前后对象和可点击污染物分层组成。 -->
       <div class="game-layout">
         <div class="game-board" aria-label="Marine diagnosis cleanup game">
-          <div class="game-instructions" id="game-instructions" data-i18n="gameInstructions">点击漂浮在海里的垃圾，让海龟的健康度逐步恢复。</div>
-          <!-- 污染对象、健康对象和随机垃圾都由 game.js 根据当前关卡更新。 -->
+          <div class="game-instructions" id="game-instructions" data-i18n="gameInstructions">找出诊疗室中的全部污染物，先帮助第一位海龟恢复健康。</div>
+          <!-- 每关素材由 game.js 切换；治疗前后对象共享坐标，避免恢复时发生跳位。 -->
           <div class="diagnosis-sea" id="diagnosisSea">
+            <img class="diagnosis-room-image" id="diagnosisRoomImage" src="../../assets/game/clinic/turtle-room.png" alt="海洋动物诊疗室" />
             <div class="sea-glow" aria-hidden="true"></div>
             <div class="sea-shade" aria-hidden="true"></div>
             <div class="diagnosis-patient" id="diagnosisPatient" data-patient="turtle">
               <div class="diagnosis-polluted-animal" id="diagnosisPollutedAnimal" role="img" aria-label="被海洋垃圾污染的海龟"></div>
-              <img src="../../assets/game/diagnosis/turtle.png" class="diagnosis-animal" id="diagnosisAnimal" alt="恢复健康的海龟" />
+              <img src="../../assets/game/clinic/turtle-after.png" class="diagnosis-animal" id="diagnosisAnimal" alt="恢复健康的海龟" />
             </div>
+            <img class="diagnosis-chart-image" id="diagnosisChartImage" src="../../assets/game/clinic/turtle-chart.png" alt="海龟诊断记录" aria-hidden="true" />
             <div class="diagnosis-debris-layer" id="diagnosisDebrisLayer"></div>
           </div>
           <div class="game-stage-footer">
@@ -54,11 +56,13 @@
         </div>
         <!-- aria-live 让辅助技术能感知关卡、健康度和清理数量变化。 -->
         <aside class="game-dashboard" aria-live="polite">
-          <p class="dashboard-kicker" data-i18n="gameDashboardKicker">海龟问诊单</p>
-          <h3 data-i18n="gameDashboardTitle">清理进度面板</h3>
+          <div class="game-dashboard-heading">
+            <p class="dashboard-kicker" data-i18n="gameDashboardKicker">海洋问诊单</p>
+            <h3 data-i18n="gameDashboardTitle">清理进度面板</h3>
+          </div>
           <div class="game-round-status">
-            <strong id="gameRoundText">第 1 站 / 共 5 站</strong>
-            <span id="gameRemainingText">还有 5 个海域等待问诊</span>
+            <strong id="gameRoundText">第 1 站 / 共 4 站</strong>
+            <span id="gameRemainingText">还有 4 个海域等待问诊</span>
           </div>
           <div class="patient-card">
             <p><span data-i18n="gamePatientNameLabel">对象</span><strong id="levelAnimalName">海龟</strong></p>
@@ -73,16 +77,41 @@
           </div>
           <div class="game-progress">
             <div class="status-meter" aria-hidden="true"><div class="status-fill" id="gameProgressFill"></div></div>
-            <p id="gameProgressText">已清理 0 / 3 件垃圾</p>
+            <p id="gameProgressText">已完成 0 / 4 个关卡</p>
           </div>
         </aside>
       </div>
+
+      <!-- Godot Web 导出作为独立的沉浸式救援任务延迟加载，避免阻塞上方问诊游戏。 -->
+      <section class="godot-game-section" aria-labelledby="godotGameTitle">
+        <header class="godot-game-heading">
+          <div>
+            <p class="section-kicker" data-i18n="godotGameKicker">扩展体验</p>
+            <h3 id="godotGameTitle" data-i18n="godotGameTitle">海洋救援实战</h3>
+            <p data-i18n="godotGameDescription">进入独立的海洋救援现场，把污染识别、动物救助与生态恢复连接成一次完整行动。</p>
+          </div>
+          <div class="godot-game-stamp" aria-hidden="true">
+            <span>GODOT WEB</span>
+            <strong>OCEAN RESCUE</strong>
+          </div>
+        </header>
+        <div class="godot-frame-shell">
+          <iframe
+            class="godot-game-frame"
+            src="../../scripts/ocean-web/index.html?v=20260718-7"
+            title="Ocean Rescue Godot Web game"
+            loading="lazy"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </section>
     </section>
   </main>
 
   <!-- shared.js 提供翻译模板，game.js 负责关卡配置与状态机。 -->
-  <script src="../../layout.js?v=20260718-1"></script>
-  <script src="../../shared.js?v=20260718-1"></script>
-  <script src="game.js?v=20260718-1"></script>
+  <script src="../../layout.js?v=20260718-7"></script>
+  <script src="../../shared.js?v=20260718-7"></script>
+  <script src="game.js?v=20260718-7"></script>
 </body>
 </html>

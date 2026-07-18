@@ -36,7 +36,7 @@ Dependencies:
  * @type {Object<string, {href: string, i18n: string, fallback: string}>}
  */
 // 发布新版本时同步修改此值与各页面的资源查询参数，避免 GitHub Pages 继续使用旧缓存。
-const siteVersion = '20260718-1';
+const siteVersion = '20260718-7';
 
 const pageMap = {
   intro: { href: `../../pages/intro/index.html?v=${siteVersion}`, i18n: 'tabIntro', fallback: '概览' },

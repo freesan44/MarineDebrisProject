@@ -9,34 +9,29 @@ Marine Debris Project - Diagnosis Cleanup Game
 // 健康度按本关清理比例从 20% 线性恢复到 100%。
 const initialHealth = 20;
 const maxHealth = 100;
-const assetBase = '../../assets/game/diagnosis/';
+const clinicAssetBase = '../../assets/game/clinic/';
 
 // 垃圾定义只保存素材与名称；出现在哪一关由 createLevelDebris 动态决定。
 const debrisTypes = [
   {
     id: 'plastic',
-    image: 'plastic.png',
+    image: `${clinicAssetBase}turtle-debris.png`,
     labels: { zh: '塑料袋', ja: 'ビニール袋', en: 'Plastic bag' }
   },
   {
     id: 'fragments',
-    image: 'fragments.png',
+    image: `${clinicAssetBase}albatross-debris.png`,
     labels: { zh: '塑料碎片', ja: 'プラスチック片', en: 'Plastic fragments' }
   },
   {
     id: 'net',
-    image: 'net.png',
+    image: `${clinicAssetBase}seal-debris.png`,
     labels: { zh: '废弃渔网', ja: '廃棄漁網', en: 'Discarded fishing net' }
   },
   {
-    id: 'bottle',
-    image: 'bottle.png',
-    labels: { zh: '塑料瓶', ja: 'プラスチックボトル', en: 'Plastic bottle' }
-  },
-  {
-    id: 'coral-debris',
-    image: 'coral-debris.png',
-    labels: { zh: '珊瑚区塑料垃圾', ja: 'サンゴ礁のプラスチックごみ', en: 'Plastic debris on coral' }
+    id: 'film',
+    image: `${clinicAssetBase}dolphin-debris.png`,
+    labels: { zh: '塑料薄膜', ja: 'プラスチックフィルム', en: 'Plastic film' }
   }
 ];
 
@@ -45,7 +40,14 @@ const gameLevels = [
   {
     id: 'turtle',
     theme: 'philippines',
-    animalImage: 'turtle.png',
+    roomImage: `${clinicAssetBase}turtle-room.png`,
+    chartImages: {
+      ja: `${clinicAssetBase}turtle-chart.png`,
+      zh: `${clinicAssetBase}turtle-chart-zh.webp`,
+      en: `${clinicAssetBase}turtle-chart-en.webp`
+    },
+    pollutedImage: `${clinicAssetBase}turtle-before.png`,
+    animalImage: `${clinicAssetBase}turtle-after.png`,
     primaryDebrisId: 'plastic',
     labels: {
       zh: { animal: '海龟', sea: '菲律宾', pollution: '塑料袋', treatment: '取出塑料袋' },
@@ -56,7 +58,14 @@ const gameLevels = [
   {
     id: 'albatross',
     theme: 'hawaii',
-    animalImage: 'albatross.png',
+    roomImage: `${clinicAssetBase}albatross-room.png`,
+    chartImages: {
+      ja: `${clinicAssetBase}albatross-chart.png`,
+      zh: `${clinicAssetBase}albatross-chart-zh.webp`,
+      en: `${clinicAssetBase}albatross-chart-en.webp`
+    },
+    pollutedImage: `${clinicAssetBase}albatross-before.png`,
+    animalImage: `${clinicAssetBase}albatross-after.png`,
     primaryDebrisId: 'fragments',
     labels: {
       zh: { animal: '信天翁', sea: '夏威夷附近', pollution: '塑料碎片', treatment: '清理胃中塑料' },
@@ -67,7 +76,14 @@ const gameLevels = [
   {
     id: 'seal',
     theme: 'north-pacific',
-    animalImage: 'seal.png',
+    roomImage: `${clinicAssetBase}seal-room.png`,
+    chartImages: {
+      ja: `${clinicAssetBase}seal-chart.png`,
+      zh: `${clinicAssetBase}seal-chart-zh.webp`,
+      en: `${clinicAssetBase}seal-chart-en.webp`
+    },
+    pollutedImage: `${clinicAssetBase}seal-before.png`,
+    animalImage: `${clinicAssetBase}seal-after.png`,
     primaryDebrisId: 'net',
     labels: {
       zh: { animal: '海豹', sea: '北太平洋', pollution: '废弃渔网', treatment: '剪断渔网' },
@@ -78,23 +94,19 @@ const gameLevels = [
   {
     id: 'dolphin',
     theme: 'mediterranean',
-    animalImage: 'dolphin.png',
-    primaryDebrisId: 'bottle',
+    roomImage: `${clinicAssetBase}dolphin-room.png`,
+    chartImages: {
+      ja: `${clinicAssetBase}dolphin-chart.png`,
+      zh: `${clinicAssetBase}dolphin-chart-zh.webp`,
+      en: `${clinicAssetBase}dolphin-chart-en.webp`
+    },
+    pollutedImage: `${clinicAssetBase}dolphin-before.png`,
+    animalImage: `${clinicAssetBase}dolphin-after.png`,
+    primaryDebrisId: 'film',
     labels: {
-      zh: { animal: '海豚', sea: '地中海', pollution: '塑料瓶', treatment: '清除垃圾' },
-      ja: { animal: 'イルカ', sea: '地中海', pollution: 'プラスチックボトル', treatment: 'ごみを取り除く' },
-      en: { animal: 'Dolphin', sea: 'Mediterranean Sea', pollution: 'Plastic bottle', treatment: 'Remove the debris' }
-    }
-  },
-  {
-    id: 'coral',
-    theme: 'australia',
-    animalImage: 'coral.png',
-    primaryDebrisId: 'coral-debris',
-    labels: {
-      zh: { animal: '珊瑚', sea: '澳大利亚', pollution: '塑料与白化', treatment: '清理垃圾并恢复生态' },
-      ja: { animal: 'サンゴ', sea: 'オーストラリア', pollution: 'プラスチックと白化', treatment: 'ごみを除去し生態を回復する' },
-      en: { animal: 'Coral', sea: 'Australia', pollution: 'Plastic and bleaching', treatment: 'Clean debris and restore the ecosystem' }
+      zh: { animal: '海豚', sea: '北太平洋', pollution: '塑料薄膜', treatment: '移除覆盖呼吸孔的薄膜' },
+      ja: { animal: 'イルカ', sea: '北太平洋', pollution: 'プラスチックフィルム', treatment: '噴気孔を覆うフィルムを取り除く' },
+      en: { animal: 'Dolphin', sea: 'North Pacific', pollution: 'Plastic film', treatment: 'Remove film covering the blowhole' }
     }
   }
 ];
@@ -123,9 +135,11 @@ const gameProgressText = document.getElementById('gameProgressText');
 const restartGameButton = document.getElementById('restartGameButton');
 const nextLevelButton = document.getElementById('nextLevelButton');
 const diagnosisSea = document.getElementById('diagnosisSea');
+const diagnosisRoomImage = document.getElementById('diagnosisRoomImage');
 const diagnosisPatient = document.getElementById('diagnosisPatient');
 const diagnosisPollutedAnimal = document.getElementById('diagnosisPollutedAnimal');
 const diagnosisAnimal = document.getElementById('diagnosisAnimal');
+const diagnosisChartImage = document.getElementById('diagnosisChartImage');
 const diagnosisDebrisLayer = document.getElementById('diagnosisDebrisLayer');
 const levelAnimalName = document.getElementById('levelAnimalName');
 const levelHabitat = document.getElementById('levelHabitat');
@@ -176,6 +190,7 @@ function createLevelDebris(level) {
   return selectedDebris.map((debris, index) => ({
     instanceId: `${level.id}-${debris.id}-${index}`,
     debris,
+    isPrimary: debris.id === level.primaryDebrisId,
     positionClass: positions[index],
     removed: false
   }));
@@ -199,7 +214,7 @@ function getOverallPercent() {
   return Math.round((completedLevels.size / gameLevels.length) * 100);
 }
 
-// ---------- 海面垃圾渲染 ----------
+// ---------- 诊疗室污染物渲染 ----------
 function renderDebris() {
   if (!diagnosisDebrisLayer) return;
   diagnosisDebrisLayer.innerHTML = '';
@@ -210,14 +225,14 @@ function renderDebris() {
     const image = document.createElement('img');
 
     button.type = 'button';
-    button.className = `diagnosis-trash ${item.positionClass}`;
+    button.className = `diagnosis-trash ${item.positionClass}${item.isPrimary ? ' is-primary' : ''}`;
     button.dataset.debris = item.debris.id;
     button.dataset.debrisInstance = item.instanceId;
     button.setAttribute('aria-label', t('gameDebrisButtonLabel', { debris: debrisName }));
     button.title = debrisName;
     button.addEventListener('click', () => removeDebris(item.instanceId));
 
-    image.src = `${assetBase}${item.debris.image}`;
+    image.src = item.debris.image;
     image.alt = t('gameDebrisAlt', { debris: debrisName });
     button.appendChild(image);
     diagnosisDebrisLayer.appendChild(button);
@@ -327,10 +342,17 @@ function updateLevelState() {
 function renderLevel() {
   const level = gameLevels[currentLevelIndex];
   const copy = getLevelCopy(level);
+  const chartImage = level.chartImages[currentLanguage] || level.chartImages.ja;
 
   if (diagnosisSea) {
     diagnosisSea.dataset.theme = level.theme;
+    diagnosisSea.dataset.scene = 'clinic';
     diagnosisSea.classList.remove('is-restored');
+  }
+
+  if (diagnosisRoomImage) {
+    diagnosisRoomImage.src = level.roomImage;
+    diagnosisRoomImage.alt = t('gameClinicRoomAlt', { animal: copy.animal });
   }
 
   if (diagnosisPatient) {
@@ -339,12 +361,19 @@ function renderLevel() {
   }
 
   if (diagnosisPollutedAnimal) {
+    diagnosisPollutedAnimal.style.backgroundImage = `url("${level.pollutedImage}")`;
     diagnosisPollutedAnimal.setAttribute('aria-label', t('gamePollutedAnimalAlt', { animal: copy.animal }));
   }
 
   if (diagnosisAnimal) {
-    diagnosisAnimal.src = `${assetBase}${level.animalImage}`;
+    diagnosisAnimal.src = level.animalImage;
     diagnosisAnimal.alt = t('gameRestoredAnimalAlt', { animal: copy.animal });
+  }
+
+  if (diagnosisChartImage) {
+    diagnosisChartImage.hidden = false;
+    diagnosisChartImage.src = chartImage;
+    diagnosisChartImage.alt = t('gameDiagnosisChartAlt', { animal: copy.animal });
   }
 
   renderDebris();
@@ -386,7 +415,7 @@ function startNewSession() {
   renderLevel();
 }
 
-/** 通关后只从未完成关卡中随机抽取，五关完成后重新开始。 */
+/** 通关后只从未完成关卡中随机抽取，四关完成后重新开始。 */
 function openRandomRemainingLevel() {
   if (!isCurrentLevelComplete()) return;
   if (completedLevels.size === gameLevels.length) {

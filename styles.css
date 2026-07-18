@@ -912,8 +912,7 @@ main {
   width: clamp(86px, 13vw, 138px);
 }
 
-.diagnosis-trash[data-debris="net"],
-.diagnosis-trash[data-debris="coral-debris"] {
+.diagnosis-trash[data-debris="net"] {
   width: clamp(86px, 12vw, 132px);
 }
 
@@ -5855,37 +5854,11 @@ body[data-page="game"] .diagnosis-patient .diagnosis-animal {
 }
 
 body[data-page="game"] .diagnosis-polluted-animal {
-  background-image: url('assets/game/diagnosis/polluted-patients.png');
   background-repeat: no-repeat;
   filter: saturate(0.82) contrast(1.08) drop-shadow(0 24px 24px rgba(2, 24, 37, 0.38));
   opacity: 1;
   -webkit-mask-image: radial-gradient(ellipse at center, #000 42%, rgba(0, 0, 0, 0.9) 60%, transparent 78%);
   mask-image: radial-gradient(ellipse at center, #000 42%, rgba(0, 0, 0, 0.9) 60%, transparent 78%);
-}
-
-body[data-page="game"] .diagnosis-patient[data-patient="turtle"] .diagnosis-polluted-animal {
-  background-size: 300% 200%;
-  background-position: 0 0;
-}
-
-body[data-page="game"] .diagnosis-patient[data-patient="coral"] .diagnosis-polluted-animal {
-  background-size: 300% 200%;
-  background-position: 50% 0;
-}
-
-body[data-page="game"] .diagnosis-patient[data-patient="seal"] .diagnosis-polluted-animal {
-  background-size: 300% 200%;
-  background-position: 100% 0;
-}
-
-body[data-page="game"] .diagnosis-patient[data-patient="albatross"] .diagnosis-polluted-animal {
-  background-size: 200% 200%;
-  background-position: 0 100%;
-}
-
-body[data-page="game"] .diagnosis-patient[data-patient="dolphin"] .diagnosis-polluted-animal {
-  background-size: 200% 200%;
-  background-position: 100% 100%;
 }
 
 body[data-page="game"] .diagnosis-patient .diagnosis-animal {
@@ -6105,5 +6078,479 @@ body[data-page="cleanup"] .impact-photo-card figcaption a {
 
   body[data-page="cleanup"] .cleanup-gallery-head h3 {
     font-size: 2rem;
+  }
+}
+
+/* Ocean clinic game: supplied room, case-file and treatment layers share one stage. */
+body[data-page="game"] .game-layout {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.35rem;
+}
+
+body[data-page="game"] .game-board {
+  gap: 0.9rem;
+  padding: 1rem;
+  background: #f9fbf8;
+  box-shadow: 9px 9px 0 var(--sketch-ink);
+}
+
+body[data-page="game"] .game-instructions {
+  position: relative;
+  z-index: 6;
+  width: min(760px, calc(100% - 1rem));
+  margin: 0 auto -1.4rem 1.25rem;
+  box-shadow: 4px 4px 0 var(--sketch-ink);
+}
+
+body[data-page="game"] .diagnosis-sea {
+  min-height: 0;
+  aspect-ratio: 1672 / 941;
+  border-radius: 32px 9px 29px 11px / 10px 31px 8px 28px;
+  background: #d9f0f2;
+  box-shadow: 7px 7px 0 var(--sketch-blue);
+  animation: none;
+  isolation: isolate;
+}
+
+body[data-page="game"] .diagnosis-sea::before,
+body[data-page="game"] .diagnosis-sea::after {
+  content: none;
+}
+
+body[data-page="game"] .diagnosis-room-image,
+body[data-page="game"] .diagnosis-chart-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: filter 0.7s ease, opacity 0.5s ease;
+}
+
+body[data-page="game"] .diagnosis-room-image {
+  z-index: 0;
+  object-fit: cover;
+  filter: brightness(0.92) saturate(1) contrast(1.02);
+}
+
+body[data-page="game"] .diagnosis-chart-image {
+  z-index: 2;
+  object-fit: fill;
+  filter: brightness(0.96) saturate(1);
+}
+
+body[data-page="game"] .diagnosis-chart-image[hidden] {
+  display: none;
+}
+
+body[data-page="game"] .diagnosis-sea.is-restored :is(.diagnosis-room-image, .diagnosis-chart-image) {
+  filter: brightness(1) saturate(1) contrast(1);
+}
+
+body[data-page="game"] .sea-glow {
+  z-index: 1;
+  inset: 3% 42% 18% 1%;
+  background: radial-gradient(circle at 28% 26%, rgba(255, 244, 184, 0.35), transparent 64%);
+  filter: none;
+  animation: clinicLight 5.8s ease-in-out infinite alternate;
+}
+
+body[data-page="game"] .sea-shade {
+  z-index: 5;
+  background:
+    linear-gradient(110deg, rgba(8, 30, 42, 0.34), rgba(7, 43, 55, 0.12) 58%, rgba(8, 31, 43, 0.26)),
+    radial-gradient(circle at 34% 58%, transparent 0 17%, rgba(4, 24, 35, 0.2) 72%);
+  opacity: 0;
+}
+
+body[data-page="game"] .diagnosis-sea.is-restored .sea-shade {
+  opacity: 0;
+}
+
+body[data-page="game"] .diagnosis-patient {
+  z-index: 3;
+  left: 33%;
+  top: 59%;
+  width: 40%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+
+body[data-page="game"] .diagnosis-patient[data-patient="turtle"] { width: 43%; }
+body[data-page="game"] .diagnosis-patient[data-patient="albatross"] { left: 35%; width: 34%; }
+body[data-page="game"] .diagnosis-patient[data-patient="seal"] { left: 34%; width: 39%; }
+body[data-page="game"] .diagnosis-patient[data-patient="dolphin"] { left: 35%; top: 60%; width: 48%; }
+
+body[data-page="game"] .diagnosis-polluted-animal,
+body[data-page="game"] .diagnosis-patient .diagnosis-animal {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  filter: drop-shadow(0 18px 18px rgba(18, 57, 64, 0.28));
+}
+
+body[data-page="game"] .diagnosis-polluted-animal {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 1;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+body[data-page="game"] .diagnosis-patient .diagnosis-polluted-animal {
+  background-position: center;
+  background-size: contain;
+}
+
+body[data-page="game"] .diagnosis-patient .diagnosis-animal {
+  max-width: none;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0;
+}
+
+body[data-page="game"] .diagnosis-sea.is-restored .diagnosis-patient,
+body[data-page="game"] .diagnosis-sea.is-restored .diagnosis-patient .diagnosis-animal,
+body[data-page="game"] .diagnosis-sea.is-restored .diagnosis-polluted-animal {
+  transform: translate(-50%, -50%);
+}
+
+body[data-page="game"] .diagnosis-sea.is-restored .diagnosis-patient .diagnosis-animal,
+body[data-page="game"] .diagnosis-sea.is-restored .diagnosis-polluted-animal {
+  transform: none;
+}
+
+body[data-page="game"] .diagnosis-sea.is-restored .diagnosis-patient .diagnosis-animal { opacity: 1; }
+body[data-page="game"] .diagnosis-sea.is-restored .diagnosis-polluted-animal { opacity: 0; }
+
+body[data-page="game"] .diagnosis-debris-layer {
+  z-index: 6;
+}
+
+body[data-page="game"] .diagnosis-trash {
+  width: clamp(56px, 7vw, 88px);
+  border: 2px solid rgba(255, 255, 255, 0.86);
+  background: rgba(225, 248, 252, 0.68);
+  box-shadow: 0 8px 0 rgba(28, 101, 125, 0.34), 0 16px 28px rgba(4, 45, 59, 0.2);
+  backdrop-filter: blur(3px);
+}
+
+body[data-page="game"] .diagnosis-trash.is-primary,
+body[data-page="game"] .diagnosis-trash[data-debris="net"] {
+  width: clamp(72px, 9vw, 116px);
+  border-color: rgba(255, 238, 166, 0.95);
+  background: rgba(255, 246, 199, 0.7);
+}
+
+body[data-page="game"] .diagnosis-trash.trash-top-left { left: 4%; top: 9%; }
+body[data-page="game"] .diagnosis-trash.trash-top-right { left: 46%; right: auto; top: 10%; }
+body[data-page="game"] .diagnosis-trash.trash-mid-left { left: 7%; top: 43%; }
+body[data-page="game"] .diagnosis-trash.trash-mid-right { left: 49%; right: auto; top: 43%; }
+body[data-page="game"] .diagnosis-trash.trash-bottom-left { left: 15%; bottom: 5%; }
+body[data-page="game"] .diagnosis-trash.trash-bottom-right { left: 44%; right: auto; bottom: 5%; }
+
+body[data-page="game"] .game-stage-footer {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.62fr);
+  align-items: end;
+  gap: 1.25rem;
+}
+
+body[data-page="game"] .game-dashboard {
+  grid-template-columns: minmax(180px, 0.7fr) minmax(420px, 1.65fr) 170px;
+  grid-template-areas:
+    "heading patient health"
+    "round patient health"
+    "progress progress progress";
+  align-items: stretch;
+  gap: 1rem 1.25rem;
+  padding: 1.2rem 1.35rem;
+  background: var(--sketch-yellow);
+  transform: rotate(0.2deg);
+}
+
+body[data-page="game"] .game-dashboard-heading {
+  grid-area: heading;
+  align-self: end;
+}
+
+body[data-page="game"] .game-dashboard-heading h3 {
+  margin-top: 0.75rem;
+  font-size: 1.7rem;
+}
+
+body[data-page="game"] .game-round-status {
+  grid-area: round;
+  align-self: start;
+  display: grid;
+  justify-content: stretch;
+}
+
+body[data-page="game"] .game-round-status span {
+  text-align: left;
+}
+
+body[data-page="game"] .patient-card {
+  grid-area: patient;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: center;
+  gap: 0.55rem;
+  padding: 0.4rem;
+}
+
+body[data-page="game"] .patient-card p {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.6rem 0.7rem;
+  border: 2px solid rgba(45, 45, 45, 0.78);
+  border-radius: 7px 3px 6px 4px;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+body[data-page="game"] .patient-card strong {
+  text-align: left;
+}
+
+body[data-page="game"] .health-ring {
+  grid-area: health;
+  width: 150px;
+  align-self: center;
+}
+
+body[data-page="game"] .game-progress {
+  grid-area: progress;
+}
+
+/* Godot Web 游戏沿用站内手绘纸张与粗线框架，iframe 内部保留原生画布比例。 */
+body[data-page="game"] .godot-game-section {
+  margin-top: clamp(2.8rem, 6vw, 5rem);
+  padding-top: clamp(1.8rem, 4vw, 3rem);
+  border-top: 3px dashed rgba(45, 45, 45, 0.72);
+}
+
+body[data-page="game"] .godot-game-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 1.5rem;
+}
+
+body[data-page="game"] .godot-game-heading h3 {
+  max-width: 18ch;
+  margin: 0.75rem 0 0;
+  color: var(--sketch-ink);
+  font-family: var(--sketch-heading);
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  line-height: 1.05;
+}
+
+body[data-page="game"] .godot-game-heading p:last-child {
+  max-width: 62ch;
+  margin: 0.9rem 0 0;
+  color: var(--sketch-muted);
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  line-height: 1.75;
+}
+
+body[data-page="game"] .godot-game-stamp {
+  display: grid;
+  min-width: 210px;
+  padding: 0.85rem 1.1rem;
+  border: 3px solid var(--sketch-ink);
+  border-radius: 5px 2px 6px 3px;
+  background: var(--sketch-yellow);
+  box-shadow: 5px 6px 0 var(--sketch-ink);
+  color: var(--sketch-ink);
+  transform: rotate(1.2deg);
+}
+
+body[data-page="game"] .godot-game-stamp span {
+  color: var(--sketch-red);
+  font-weight: 800;
+}
+
+body[data-page="game"] .godot-game-stamp strong {
+  margin-top: 0.25rem;
+  font-family: Georgia, serif;
+  font-size: 1.15rem;
+}
+
+body[data-page="game"] .godot-frame-shell {
+  position: relative;
+  margin-top: 1.6rem;
+  padding: clamp(0.5rem, 1.2vw, 0.85rem);
+  border: 3px solid var(--sketch-ink);
+  border-radius: 7px 3px 8px 4px;
+  background: #dff3f7;
+  box-shadow: 10px 12px 0 var(--sketch-ink);
+  transform: rotate(-0.12deg);
+}
+
+body[data-page="game"] .godot-frame-shell::before,
+body[data-page="game"] .godot-frame-shell::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  top: -17px;
+  width: clamp(78px, 10vw, 124px);
+  height: 29px;
+  background: rgba(231, 220, 192, 0.82);
+  box-shadow: 0 1px 1px rgba(45, 45, 45, 0.12);
+  pointer-events: none;
+}
+
+body[data-page="game"] .godot-frame-shell::before {
+  left: 8%;
+  transform: rotate(-2deg);
+}
+
+body[data-page="game"] .godot-frame-shell::after {
+  right: 9%;
+  transform: rotate(2.4deg);
+}
+
+body[data-page="game"] .godot-game-frame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  border: 2px solid var(--sketch-ink);
+  border-radius: 3px;
+  background: #000;
+}
+
+@keyframes clinicLight {
+  from { opacity: 0.5; transform: translate3d(-1%, 1%, 0); }
+  to { opacity: 1; transform: translate3d(2%, -1%, 0); }
+}
+
+@media (max-width: 980px) {
+  body[data-page="game"] .game-dashboard {
+    grid-template-columns: minmax(180px, 0.65fr) minmax(0, 1.35fr) 145px;
+  }
+
+  body[data-page="game"] .health-ring {
+    width: 132px;
+  }
+}
+
+@media (max-width: 760px) {
+  body[data-page="game"] .godot-game-heading {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  body[data-page="game"] .godot-game-stamp {
+    min-width: 0;
+    width: min(100%, 250px);
+  }
+
+  body[data-page="game"] .godot-frame-shell {
+    margin-inline: -0.2rem;
+    box-shadow: 6px 7px 0 var(--sketch-ink);
+  }
+
+  body[data-page="game"] .game-board {
+    padding: 0.75rem;
+  }
+
+  body[data-page="game"] .game-instructions {
+    width: calc(100% - 1.2rem);
+    margin: 0 auto -1rem;
+    font-size: 0.88rem;
+  }
+
+  body[data-page="game"] .diagnosis-sea {
+    min-height: 330px;
+    aspect-ratio: auto;
+  }
+
+  body[data-page="game"] .diagnosis-room-image {
+    object-position: 31% center;
+    filter: brightness(0.62) saturate(0.72) contrast(1.06);
+  }
+
+  body[data-page="game"] .sea-shade {
+    opacity: 1;
+  }
+
+  body[data-page="game"] .diagnosis-sea.is-restored .diagnosis-room-image {
+    filter: brightness(1) saturate(1) contrast(1);
+  }
+
+  body[data-page="game"] .diagnosis-sea.is-restored .sea-shade {
+    opacity: 0;
+  }
+
+  body[data-page="game"] .diagnosis-chart-image {
+    display: none !important;
+  }
+
+  body[data-page="game"] .diagnosis-patient,
+  body[data-page="game"] .diagnosis-patient[data-patient="turtle"],
+  body[data-page="game"] .diagnosis-patient[data-patient="albatross"],
+  body[data-page="game"] .diagnosis-patient[data-patient="seal"],
+  body[data-page="game"] .diagnosis-patient[data-patient="dolphin"] {
+    left: 50%;
+    top: 58%;
+    width: min(76vw, 310px);
+  }
+
+  body[data-page="game"] .diagnosis-patient[data-patient="dolphin"] {
+    width: min(88vw, 350px);
+  }
+
+  body[data-page="game"] .diagnosis-trash {
+    width: 58px;
+  }
+
+  body[data-page="game"] .diagnosis-trash.is-primary,
+  body[data-page="game"] .diagnosis-trash[data-debris="net"] {
+    width: 76px;
+  }
+
+  body[data-page="game"] .diagnosis-trash.trash-top-left { left: 3%; top: 10%; }
+  body[data-page="game"] .diagnosis-trash.trash-top-right { left: auto; right: 3%; top: 10%; }
+  body[data-page="game"] .diagnosis-trash.trash-mid-left { left: 2%; top: 43%; }
+  body[data-page="game"] .diagnosis-trash.trash-mid-right { left: auto; right: 2%; top: 43%; }
+  body[data-page="game"] .diagnosis-trash.trash-bottom-left { left: 8%; bottom: 4%; }
+  body[data-page="game"] .diagnosis-trash.trash-bottom-right { left: auto; right: 8%; bottom: 4%; }
+
+  body[data-page="game"] .game-stage-footer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body[data-page="game"] .game-dashboard {
+    grid-template-columns: minmax(0, 1fr) 128px;
+    grid-template-areas:
+      "heading health"
+      "round health"
+      "patient patient"
+      "progress progress";
+    padding: 1rem;
+  }
+
+  body[data-page="game"] .health-ring {
+    width: 118px;
+  }
+}
+
+@media (max-width: 480px) {
+  body[data-page="game"] .game-dashboard {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "heading" "round" "patient" "health" "progress";
+  }
+
+  body[data-page="game"] .patient-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body[data-page="game"] .health-ring {
+    width: 126px;
+  }
+
+  body[data-page="game"] .level-actions {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
