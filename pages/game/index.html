@@ -7,7 +7,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>清理游戏 | Marine Debris Project</title>
-  <link rel="stylesheet" href="../../styles.css?v=20260718-7" />
+  <link rel="stylesheet" href="../../styles.css?v=20260720-1" />
 </head>
 <body data-page="game">
   <main>
@@ -85,7 +85,7 @@
       <!-- Godot Web 导出作为独立的沉浸式救援任务延迟加载，避免阻塞上方问诊游戏。 -->
       <section class="godot-game-section" aria-labelledby="godotGameTitle">
         <header class="godot-game-heading">
-          <div>
+          <div class="godot-game-copy">
             <p class="section-kicker" data-i18n="godotGameKicker">扩展体验</p>
             <h3 id="godotGameTitle" data-i18n="godotGameTitle">海洋救援实战</h3>
             <p data-i18n="godotGameDescription">进入独立的海洋救援现场，把污染识别、动物救助与生态恢复连接成一次完整行动。</p>
@@ -95,23 +95,41 @@
             <strong>OCEAN RESCUE</strong>
           </div>
         </header>
-        <div class="godot-frame-shell">
-          <iframe
-            class="godot-game-frame"
-            src="../../scripts/ocean-web/index.html?v=20260718-7"
-            title="Ocean Rescue Godot Web game"
-            loading="lazy"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-          ></iframe>
+        <div class="godot-game-showcase">
+          <figure class="godot-preview-photo godot-preview-top-left">
+            <img src="../../assets/game/clinic/游戏截图1.png" alt="海洋救援游戏中的诊疗室任务" loading="lazy" />
+            <figcaption><span>01</span><strong data-i18n="godotPreviewOne">现场任务</strong></figcaption>
+          </figure>
+          <figure class="godot-preview-photo godot-preview-top-right">
+            <img src="../../assets/game/clinic/游戏截图2.png" alt="海洋救援游戏中的海龟救治操作" loading="lazy" />
+            <figcaption><span>02</span><strong data-i18n="godotPreviewTwo">诊疗操作</strong></figcaption>
+          </figure>
+          <figure class="godot-preview-photo godot-preview-bottom-left">
+            <img src="../../assets/game/clinic/游戏截图3.png" alt="海洋救援游戏中的救助完成画面" loading="lazy" />
+            <figcaption><span>03</span><strong data-i18n="godotPreviewThree">救助完成</strong></figcaption>
+          </figure>
+          <figure class="godot-preview-photo godot-preview-bottom-right">
+            <img src="../../assets/game/clinic/游戏截图4.jpg" alt="海洋救援游戏中的徽章收集画面" loading="lazy" />
+            <figcaption><span>04</span><strong data-i18n="godotPreviewFour">救援图鉴</strong></figcaption>
+          </figure>
+          <div class="godot-frame-shell">
+            <iframe
+              class="godot-game-frame"
+              src="../../scripts/ocean-web/index.html?v=20260720-1"
+              title="Ocean Rescue Godot Web game"
+              loading="lazy"
+              allow="autoplay; fullscreen"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
       </section>
     </section>
   </main>
 
   <!-- shared.js 提供翻译模板，game.js 负责关卡配置与状态机。 -->
-  <script src="../../layout.js?v=20260718-7"></script>
-  <script src="../../shared.js?v=20260718-7"></script>
-  <script src="game.js?v=20260718-7"></script>
+  <script src="../../layout.js?v=20260720-1"></script>
+  <script src="../../shared.js?v=20260720-1"></script>
+  <script src="game.js?v=20260720-1"></script>
 </body>
 </html>

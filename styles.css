@@ -6326,7 +6326,7 @@ body[data-page="game"] .game-progress {
 /* Godot Web 游戏沿用站内手绘纸张与粗线框架，iframe 内部保留原生画布比例。 */
 body[data-page="game"] .godot-game-section {
   margin-top: clamp(2.8rem, 6vw, 5rem);
-  padding-top: clamp(1.8rem, 4vw, 3rem);
+  padding: clamp(1.8rem, 4vw, 3rem) 0 clamp(2rem, 4vw, 3.5rem);
   border-top: 3px dashed rgba(45, 45, 45, 0.72);
 }
 
@@ -6346,12 +6346,22 @@ body[data-page="game"] .godot-game-heading h3 {
   line-height: 1.05;
 }
 
+body[data-page="game"] .godot-game-copy {
+  min-width: 0;
+}
+
 body[data-page="game"] .godot-game-heading p:last-child {
-  max-width: 62ch;
-  margin: 0.9rem 0 0;
-  color: var(--sketch-muted);
+  width: min(100%, 66ch);
+  margin: 1rem 0 0;
+  padding: 0.9rem 1.05rem;
+  border: 2px solid var(--sketch-ink);
+  border-radius: 4px 2px 5px 3px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 5px 5px 0 rgba(45, 45, 45, 0.2);
+  color: #203b45;
   font-size: clamp(0.95rem, 1.4vw, 1.1rem);
-  line-height: 1.75;
+  font-weight: 700;
+  line-height: 1.65;
 }
 
 body[data-page="game"] .godot-game-stamp {
@@ -6377,15 +6387,89 @@ body[data-page="game"] .godot-game-stamp strong {
   font-size: 1.15rem;
 }
 
+body[data-page="game"] .godot-game-showcase {
+  position: relative;
+  margin-top: 2rem;
+  padding: clamp(2.5rem, 4.8vw, 4.1rem) clamp(3.2rem, 6vw, 5.2rem);
+}
+
 body[data-page="game"] .godot-frame-shell {
   position: relative;
-  margin-top: 1.6rem;
+  z-index: 1;
   padding: clamp(0.5rem, 1.2vw, 0.85rem);
   border: 3px solid var(--sketch-ink);
   border-radius: 7px 3px 8px 4px;
   background: #dff3f7;
   box-shadow: 10px 12px 0 var(--sketch-ink);
   transform: rotate(-0.12deg);
+}
+
+body[data-page="game"] .godot-preview-photo {
+  position: absolute;
+  z-index: 3;
+  width: clamp(130px, 15vw, 190px);
+  margin: 0;
+  padding: 0.38rem 0.38rem 0.55rem;
+  border: 2px solid var(--sketch-ink);
+  border-radius: 3px 2px 4px 2px;
+  background: #fffdf5;
+  box-shadow: 7px 8px 0 rgba(45, 45, 45, 0.85);
+  pointer-events: none;
+}
+
+body[data-page="game"] .godot-preview-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgba(45, 45, 45, 0.55);
+  object-fit: cover;
+}
+
+body[data-page="game"] .godot-preview-photo figcaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.45rem;
+  color: var(--sketch-ink);
+  font-size: 0.76rem;
+  line-height: 1.2;
+}
+
+body[data-page="game"] .godot-preview-photo figcaption span {
+  color: var(--sketch-red);
+  font-family: Georgia, serif;
+  font-weight: 800;
+}
+
+body[data-page="game"] .godot-preview-photo figcaption strong {
+  font-family: var(--sketch-heading);
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+body[data-page="game"] .godot-preview-top-left {
+  top: 0;
+  left: 0;
+  transform: rotate(-3.6deg);
+}
+
+body[data-page="game"] .godot-preview-top-right {
+  top: 0.25rem;
+  right: 0;
+  transform: rotate(3.2deg);
+}
+
+body[data-page="game"] .godot-preview-bottom-left {
+  bottom: 0.2rem;
+  left: 0.3rem;
+  transform: rotate(2.8deg);
+}
+
+body[data-page="game"] .godot-preview-bottom-right {
+  right: 0.25rem;
+  bottom: 0;
+  transform: rotate(-3deg);
 }
 
 body[data-page="game"] .godot-frame-shell::before,
@@ -6446,10 +6530,36 @@ body[data-page="game"] .godot-game-frame {
     width: min(100%, 250px);
   }
 
+  body[data-page="game"] .godot-game-heading p:last-child {
+    padding: 0.8rem 0.9rem;
+  }
+
+  body[data-page="game"] .godot-game-showcase {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+    padding: 0;
+  }
+
   body[data-page="game"] .godot-frame-shell {
+    grid-column: 1 / -1;
+    order: 0;
     margin-inline: -0.2rem;
     box-shadow: 6px 7px 0 var(--sketch-ink);
   }
+
+  body[data-page="game"] .godot-preview-photo {
+    position: static;
+    order: 1;
+    width: 100%;
+    pointer-events: auto;
+  }
+
+  body[data-page="game"] .godot-preview-top-left { transform: rotate(-1.5deg); }
+  body[data-page="game"] .godot-preview-top-right { transform: rotate(1.2deg); }
+  body[data-page="game"] .godot-preview-bottom-left { transform: rotate(1deg); }
+  body[data-page="game"] .godot-preview-bottom-right { transform: rotate(-1.3deg); }
 
   body[data-page="game"] .game-board {
     padding: 0.75rem;
